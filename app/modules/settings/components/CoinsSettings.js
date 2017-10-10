@@ -30,8 +30,6 @@ class CoinsSettings extends Component {
   render() {
     const { coins, handleSubmit, followedCoins } = this.props;
 
-    console.log(followedCoins);
-
     if (isEmpty(coins)) {
       return <div>Loading...</div>;
     }

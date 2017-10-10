@@ -3,7 +3,6 @@ import axios from 'axios';
 export const BASE_IMAGE_URL = 'https://www.cryptocompare.com';
 
 export function getCoinPriceApi(symbol) {
-  console.log('get coin price for ', symbol);
   const url = `https://min-api.cryptocompare.com/data/price?fsym=${symbol}&tsyms=USD`;
   return axios
     .get(url)

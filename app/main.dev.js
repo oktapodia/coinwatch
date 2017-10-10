@@ -55,7 +55,7 @@ app.on('window-all-closed', () => {
 
 
 function createTray() {
-  tray = new Tray(path.join(__dirname, 'modules', 'menubar', 'IconTemplate.png'));
+  tray = new Tray(path.join(__dirname, 'defaultIcon.png'));
 }
 
 function initWindow() {
@@ -107,19 +107,10 @@ app.on('ready', async () => {
   ipcMain.on('tray-update', (event, prices) => {
     console.log('IPCMAINUPDATE', prices);
 
-    let trayDisplay = map(prices, (price, coinName) => {
+    const trayDisplay = map(prices, (price, coinName) => {
       return `${coinName}: $${price.USD}`;
     });
 
-    console.log(trayDisplay);
-
     tray.setTitle(trayDisplay.join(' | '));
-/*    if (!appIcon.isDestroyed()) {
-      if (arg === 'TrayActive') {
-        appIcon.setImage(iconActive);
-      } else {
-        appIcon.setImage(iconIdle);
-      }
-    }*/
   });
 });

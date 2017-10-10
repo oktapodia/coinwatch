@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 class ValueComponent extends Component {
   render () {
-    console.log('TOTOTOTOTOTO');
-
     return (
       <div className="Select-value" title={this.props.value.title}>
 				<span className="Select-value-label">

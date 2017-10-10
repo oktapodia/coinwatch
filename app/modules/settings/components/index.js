@@ -6,8 +6,6 @@ import CoinsSettings from './CoinsSettings';
 
 class Settings extends Component {
   render() {
-    console.log(this.props.settings);
-
     return (
       <div>
         <MainSettings settings={this.props.settings} />
