@@ -5,7 +5,8 @@
       "useBuiltIns": true
     }],
     "stage-0",
-    "react"
+    "react",
+    "bluebird"
   ],
   "plugins": ["add-module-exports", "dynamic-import-webpack"],
   "env": {
