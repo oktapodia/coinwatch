@@ -227,7 +227,7 @@ export default merge.smart(baseConfig, {
       verbose: true,
       disableDotRule: false,
     },
-    before() {
+    setup() {
       if (process.env.START_HOT) {
         console.log('Staring Main Process...');
         spawn(
