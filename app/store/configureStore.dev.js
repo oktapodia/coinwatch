@@ -6,6 +6,8 @@ import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 import * as counterActions from '../actions/counter';
 import type { counterStateType } from '../reducers/counter';
+import api from '../middleware/api';
+import handler from '../middleware/handler';
 
 const history = createHashHistory();
 
@@ -16,6 +18,12 @@ const configureStore = (initialState?: counterStateType) => {
 
   // Thunk Middleware
   middleware.push(thunk);
+
+  // Api middleware
+  middleware.push(api);
+
+  // Handler middleware
+  middleware.push(handler);
 
   // Logging Middleware
   const logger = createLogger({

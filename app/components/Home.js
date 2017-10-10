@@ -1,17 +1,29 @@
 // @flow
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import styles from './Home.css';
+import { connect } from 'react-redux';
+import { map } from 'lodash';
+import Coin from '../modules/coins/components/Coin';
 
-export default class Home extends Component {
+class Home extends Component {
   render() {
+    const { coins } = this.props;
+
+    const list = map(coins, (coin) => {
+      return <Coin coin={coin} key={coin.Id} />;
+    });
+
     return (
       <div>
-        <div className={styles.container} data-tid="container">
-          <h2>Home</h2>
-          <Link to="/counter">to Counter</Link>
-        </div>
+        {list}
       </div>
     );
   }
 }
+
+function mapStateToProps({ settings }) {
+  return {
+    coins: settings.coins,
+  };
+}
+
+export default connect(mapStateToProps)(Home);

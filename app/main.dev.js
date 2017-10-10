@@ -10,19 +10,17 @@
  *
  * @flow
  */
-import { app, BrowserWindow } from 'electron';
-import MenuBuilder from './menu';
+import { app, BrowserWindow, Tray, ipcMain } from 'electron';
+import path from 'path';
+import { forEach, map } from 'lodash';
+// import { createMenubar } from './modules/menubar';
 
-let mainWindow = null;
-
-if (process.env.NODE_ENV === 'production') {
-  const sourceMapSupport = require('source-map-support');
-  sourceMapSupport.install();
-}
+let window = null;
+let appWindow = null;
+let tray = null;
 
 if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
   require('electron-debug')();
-  const path = require('path');
   const p = path.join(__dirname, '..', 'app', 'node_modules');
   require('module').globalPaths.push(p);
 }
@@ -54,33 +52,74 @@ app.on('window-all-closed', () => {
 });
 
 
+
+
+function createTray() {
+  tray = new Tray(path.join(__dirname, 'modules', 'menubar', 'IconTemplate.png'));
+}
+
+function initWindow() {
+  const defaults = {
+    width: 500,
+    height: 600,
+    minHeight: 300,
+    minWidth: 500,
+    show: false,
+    center: true,
+    fullscreenable: false,
+    titleBarStyle: 'hidden-inset',
+    webPreferences: {
+      overlayScrollbars: true,
+    },
+  };
+
+  appWindow = new BrowserWindow(defaults);
+  appWindow.loadURL(`file://${__dirname}/index.html`);
+  appWindow.show();
+  appWindow.openDevTools();
+
+
+  appWindow.on('close', function(event) {
+    // TODO: manage gracefull quit
+/*    if (!isQuitting) {
+      event.preventDefault();
+      appWindow.hide();
+    }*/
+  });
+
+/*  const menu = Menu.buildFromTemplate(appMenuTemplate);
+  Menu.setApplicationMenu(menu);
+  checkAutoUpdate(false);*/
+}
+
+
+
+
+
 app.on('ready', async () => {
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
     await installExtensions();
   }
 
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 1024,
-    height: 728
+  createTray();
+  initWindow();
+
+  ipcMain.on('tray-update', (event, prices) => {
+    console.log('IPCMAINUPDATE', prices);
+
+    let trayDisplay = map(prices, (price, coinName) => {
+      return `${coinName}: $${price.USD}`;
+    });
+
+    console.log(trayDisplay);
+
+    tray.setTitle(trayDisplay.join(' | '));
+/*    if (!appIcon.isDestroyed()) {
+      if (arg === 'TrayActive') {
+        appIcon.setImage(iconActive);
+      } else {
+        appIcon.setImage(iconIdle);
+      }
+    }*/
   });
-
-  mainWindow.loadURL(`file://${__dirname}/app.html`);
-
-  // @TODO: Use 'ready-to-show' event
-  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-  mainWindow.webContents.on('did-finish-load', () => {
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
-    }
-    mainWindow.show();
-    mainWindow.focus();
-  });
-
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
-
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
 });

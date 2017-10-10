@@ -1,0 +1,36 @@
+$sidebar-color: #393a3b;
+$lighter-sidebar-color: #6b6f72;
+$font-color: #c9cdd1;
+$blue-color: #011525;
+
+body {
+  color: #fff;
+}
+
+a {
+  color: $font-color;
+}
+
+a:hover {
+  color: #fff;
+}
+
+.app-container {
+  display: flex;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: row;
+  background: $sidebar-color;
+  width: 100px;
+  height: 100vh;
+  padding: 30px 10px;
+}
+
+.main-container {
+  flex-direction: row;
+  width: 100%;
+  padding: 30px 10px;
+  background: $font-color;
+}
