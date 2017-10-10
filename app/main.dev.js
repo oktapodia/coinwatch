@@ -55,7 +55,7 @@ app.on('window-all-closed', () => {
 
 
 function createTray() {
-  tray = new Tray(path.join(__dirname, 'defaultIcon.png'));
+  tray = new Tray(path.join(__dirname, 'dist', 'appIcon.png'));
 }
 
 function initWindow() {
@@ -76,8 +76,9 @@ function initWindow() {
   appWindow = new BrowserWindow(defaults);
   appWindow.loadURL(`file://${__dirname}/index.html`);
   appWindow.show();
-  appWindow.openDevTools();
-
+  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+    appWindow.openDevTools();
+  }
 
   appWindow.on('close', function(event) {
     // TODO: manage gracefull quit

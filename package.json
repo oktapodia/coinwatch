@@ -1,8 +1,8 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "ElectronReact",
-  "version": "0.12.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "name": "coinwatch",
+  "productName": "CoinWatch",
+  "version": "0.0.1",
+  "description": "Follow your cryptocurrencies from your Osx menubar",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
@@ -29,14 +29,15 @@
     "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js e2e",
     "test-watch": "npm test -- --watch"
   },
+  "main": "main.prod.js",
   "browserslist": "electron 1.6",
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.develar.ElectronReact",
+    "productName": "CoinWatch",
+    "appId": "org.oktapodia.CoinWatch",
     "files": [
       "dist/",
       "node_modules/",
-      "app.html",
+      "index.html",
       "main.prod.js",
       "main.prod.js.map",
       "package.json"
@@ -73,7 +74,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chentsulin/electron-react-boilerplate.git"
+    "url": "git+https://github.com/oktapodia/coinwatch.git"
   },
   "author": {
     "name": "C. T. Lin",
@@ -82,7 +83,7 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chentsulin/electron-react-boilerplate/issues"
+    "url": "https://github.com/oktapodia/coinwatch/issues"
   },
   "keywords": [
     "electron",
@@ -95,7 +96,7 @@
     "hot",
     "reload"
   ],
-  "homepage": "https://github.com/chentsulin/electron-react-boilerplate#readme",
+  "homepage": "https://github.com/oktapodia/coinwatch#readme",
   "jest": {
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
@@ -136,11 +137,12 @@
     "babili-webpack-plugin": "^0.1.2",
     "chalk": "^2.0.1",
     "concurrently": "^3.5.0",
+    "copy-webpack-plugin": "^4.1.1",
     "cross-env": "^5.0.0",
     "cross-spawn": "^5.1.0",
     "css-loader": "^0.28.3",
-    "electron": "^1.6.10",
-    "electron-builder": "^19.8.0",
+    "electron": "^1.6.14",
+    "electron-builder": "^19.35.0",
     "electron-devtools-installer": "^2.2.0",
     "enzyme": "^2.9.1",
     "enzyme-to-json": "^1.5.1",
@@ -159,7 +161,7 @@
     "express": "^4.15.3",
     "extract-text-webpack-plugin": "^3.0.1",
     "fbjs-scripts": "^0.8.0",
-    "file-loader": "^0.11.1",
+    "file-loader": "^1.1.5",
     "flow-bin": "^0.48.0",
     "flow-runtime": "^0.13.0",
     "flow-typed": "^2.1.2",

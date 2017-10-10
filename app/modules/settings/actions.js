@@ -4,7 +4,11 @@ import { findIndex, find, forEach } from 'lodash';
 export const SETTINGS_SAVE_COIN = 'SETTINGS_SAVE_COIN';
 export const SETTINGS_SAVE_COIN_FAILED = 'SETTINGS_SAVE_COIN_FAILED';
 export function saveCoinSettings(coin) {
+  if (!settings.has('coins')) {
+    settings.set('coins', []);
+  }
   const coins = settings.get('coins');
+
   if (find(coins, (c) => c.Id === coin.Id)) {
     return (dispatch) => {
       dispatch({ type: SETTINGS_SAVE_COIN_FAILED });

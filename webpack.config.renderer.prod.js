@@ -8,14 +8,13 @@ import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import merge from 'webpack-merge';
 import BabiliPlugin from 'babili-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import baseConfig from './webpack.config.base';
 import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
 
 CheckNodeEnv('production');
 
 export default merge.smart(baseConfig, {
-  devtool: 'source-map',
-
   target: 'electron-renderer',
 
   entry: './app/index',
@@ -28,54 +27,21 @@ export default merge.smart(baseConfig, {
 
   module: {
     rules: [
-      // Extract all .global.css to style.css as is
-      {
-        test: /\.global\.css$/,
-        use: ExtractTextPlugin.extract({
-          use: 'css-loader',
-          fallback: 'style-loader',
-        })
-      },
       // Pipe other styles through css modules and append to style.css
       {
-        test: /^((?!\.global).)*\.css$/,
+        test: /\.css$/,
         use: ExtractTextPlugin.extract({
           use: {
             loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]',
-            }
           }
         }),
       },
-      // Add SASS support  - compile all .global.scss files and pipe it to style.css
-      {
-        test: /\.global\.scss$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            {
-              loader: 'css-loader'
-            },
-            {
-              loader: 'sass-loader'
-            }
-          ],
-          fallback: 'style-loader',
-        })
-      },
       // Add SASS support  - compile all other .scss files and pipe it to style.css
       {
-        test: /^((?!\.global).)*\.scss$/,
+        test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           use: [{
             loader: 'css-loader',
-            options: {
-              modules: true,
-              importLoaders: 1,
-              localIdentName: '[name]__[local]__[hash:base64:5]',
-            }
           },
           {
             loader: 'sass-loader'
@@ -140,6 +106,7 @@ export default merge.smart(baseConfig, {
   },
 
   plugins: [
+    new CopyWebpackPlugin([{ from: 'app/appIcon.png', to: 'appIcon.png' }]),
     /**
      * Create global constants which can be configured at compile time.
      *
