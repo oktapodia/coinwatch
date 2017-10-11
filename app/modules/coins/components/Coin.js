@@ -13,15 +13,29 @@ class Coin extends Component {
   }
 
   render() {
-    const { coin, prices } = this.props;
+    const { coin, prices, removeButtonHandler } = this.props;
 
     const currentPriceDisplayed = !isUndefined(prices) ? prices.USD : 'Loading...';
 
+    let removeButtonHandlerDisplay = null;
+    if (removeButtonHandler) {
+      removeButtonHandlerDisplay = (
+        <span className="glyphicon glyphicon-remove-circle" onClick={() => removeButtonHandler(fc)} />
+      );
+    }
+
     return (
       <div className="coin">
-        <img src={`${BASE_IMAGE_URL}${coin.ImageUrl}`} className="img-circle" width={15} />
-        <span>{coin.FullName}</span>
-        <span className="text-right">{currentPriceDisplayed}</span>
+        <div className="name">
+          <img src={`${BASE_IMAGE_URL}${coin.ImageUrl}`} className="img-circle" />
+          <span>{coin.FullName}</span>
+        </div>
+        <div className="price">
+          <span className="text-right">{currentPriceDisplayed}</span>
+        </div>
+        <div className="actions">
+          {removeButtonHandlerDisplay}
+        </div>
       </div>
     );
   }

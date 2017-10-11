@@ -20,12 +20,15 @@ a:hover {
 }
 
 .sidebar {
-  display: flex;
   flex-direction: row;
   background: $sidebar-color;
-  width: 100px;
+  width: 170px;
   height: 100vh;
   padding: 30px 10px;
+
+  h1 {
+    font-size: 1.2em;
+  }
 }
 
 .main-container {
@@ -33,4 +36,41 @@ a:hover {
   width: 100%;
   padding: 30px 10px;
   background: $font-color;
+}
+
+.coin {
+  display: flex;
+  .name {
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+
+    span {
+      margin-left: 5px;
+      margin-top: 5px;
+    }
+  }
+
+  .price {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 50px;
+  }
+
+  .actions {
+    margin-top: 5px;
+    display: flex;
+    flex-direction: row;
+    color: red;
+    text-align: right;
+
+    & > span {
+      cursor: pointer;
+    }
+  }
 }

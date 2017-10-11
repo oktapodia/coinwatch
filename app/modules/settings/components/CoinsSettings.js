@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { find, isEmpty, map, values } from 'lodash';
 import SelectField from '../../form/SelectField/index';
 import { getCoins } from '../../coins/actions';
+import Coin from '../../coins/components/Coin';
 import { saveCoinSettings, removeCoinSettings } from '../actions';
 
 class CoinsSettings extends Component {
@@ -38,11 +39,7 @@ class CoinsSettings extends Component {
 
     const followedCoinsDisplay = map(followedCoins, (fc) => {
       return (
-        <div key={fc.Id}>
-          <img src={`${coins.BaseImageUrl}${fc.ImageUrl}`} width={30} />
-          {fc.FullName}
-          <span className="glyphicon glyphicon-remove-circle" onClick={() => this.onRemove(fc)} />
-        </div>
+        <Coin key={fc.Id} coin={fc} removeButtonHandler={this.onRemove} />
       );
     });
 

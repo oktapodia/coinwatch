@@ -6,10 +6,10 @@ class Sidebar extends Component {
   render() {
     return (
       <nav className="sidebar">
-        <div className="text-left">
-          Coin Watch
+        <div className="title">
+          <h1>Coin Watch</h1>
         </div>
-        <div className="text-right">
+        <div className="content">
           <Link to="/settings"><span className="glyphicon glyphicon-cog" aria-hidden="true" /></Link>
         </div>
       </nav>
