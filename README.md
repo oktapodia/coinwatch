@@ -1,4 +1,6 @@
 # coinwatch [![travis][travis-image]][travis-url]
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/oktapodia/coinwatch.svg)](https://greenkeeper.io/)
 Follow your cryptocurrency prices in your OSX menubar
 
 ![Coinwatch](images/press.jpg)
