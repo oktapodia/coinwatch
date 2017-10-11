@@ -13,7 +13,8 @@
 import { app, BrowserWindow, Tray, ipcMain, Menu } from 'electron';
 import path from 'path';
 import { map } from 'lodash';
-import { isDarwin } from './helpers/env';
+import packageJson from '../package.json';
+import { isDarwin, isWindows } from './helpers/env';
 
 let appWindow = null;
 let tray = null;
@@ -51,11 +52,58 @@ app.on('window-all-closed', () => {
   }
 });
 
-
-
-
 function createTray() {
   tray = new Tray(path.join(__dirname, 'dist', 'appIcon.png'));
+  tray.on('click', toggleWindow);
+  tray.on('double-click', toggleWindow);
+  tray.on('right-click', toggleWindow);
+
+  const trayMenu = Menu.buildFromTemplate([
+    {
+      label: 'Toggle window',
+      click() {
+        toggleWindow();
+      },
+    },
+    {
+      label: 'About',
+      click() {
+        if (!isWindows) {
+          let aboutWindow = new BrowserWindow({ width: 200, height: 200, show: false, autoHideMenuBar: true, resizable: true });
+          aboutWindow.on("closed", () => {
+            aboutWindow = null;
+          });
+
+          // Load a remote URL
+          aboutWindow.loadURL(`file://${__dirname}/about/about.html`);
+
+          aboutWindow.once('ready-to-show', () => {
+            aboutWindow.webContents.send('get-version', packageJson.version);
+            aboutWindow.show();
+          });
+        }
+      }
+    },
+    {
+      type: 'separator',
+    },
+    {
+      label: 'Quit',
+      accelerator: isDarwin ? 'Command+Q' : 'Alt+F4',
+      role: 'quit',
+    },
+  ]);
+
+  tray.setContextMenu(trayMenu);
+}
+
+function toggleWindow() {
+  if (appWindow.isVisible()) {
+    appWindow.hide();
+    return;
+  }
+
+  appWindow.show();
 }
 
 function initWindow() {
