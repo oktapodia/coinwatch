@@ -10,14 +10,14 @@
  *
  * @flow
  */
-import { app, BrowserWindow, Tray, ipcMain } from 'electron';
+import { app, BrowserWindow, Tray, ipcMain, Menu } from 'electron';
 import path from 'path';
-import { forEach, map } from 'lodash';
-// import { createMenubar } from './modules/menubar';
+import { map } from 'lodash';
+import { isDarwin } from './helpers/env';
 
-let window = null;
 let appWindow = null;
 let tray = null;
+let isQuitting = false;
 
 if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
   require('electron-debug')();
@@ -80,12 +80,11 @@ function initWindow() {
     appWindow.openDevTools();
   }
 
-  appWindow.on('close', function(event) {
-    // TODO: manage gracefull quit
-/*    if (!isQuitting) {
+  appWindow.on('close', (event) => {
+    if (!isQuitting) {
       event.preventDefault();
       appWindow.hide();
-    }*/
+    }
   });
 
 /*  const menu = Menu.buildFromTemplate(appMenuTemplate);
@@ -94,8 +93,9 @@ function initWindow() {
 }
 
 
-
-
+app.on('before-quit', () => {
+  isQuitting = true;
+});
 
 app.on('ready', async () => {
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
