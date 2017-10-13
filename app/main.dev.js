@@ -61,9 +61,7 @@ app.on('ready', async () => {
     }
   });
 
+  const autoUpdater = new AutoUpdater();
   new Menu(appWindow);
   new Tray(appWindow);
-  new AutoUpdater();
-
-  // autoUpdater.checkForUpdates();
 });

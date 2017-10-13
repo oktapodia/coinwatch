@@ -16,7 +16,7 @@ class Tray {
     const basePath = __dirname + (process.env.NODE_ENV === 'development' ? '/../' : '/dist/');
     this.tray = new TrayElectron(path.join(basePath, 'appIcon.png'));
 
-    const trayMenu = new TrayMenu(this);
+    const trayMenu = new TrayMenu(this, this.autoUpdater);
     this.tray.setContextMenu(trayMenu.getMenu());
     this.registerHandlers();
   }

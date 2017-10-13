@@ -1,4 +1,5 @@
 import { Menu, BrowserWindow } from 'electron';
+import { autoUpdater } from 'electron-updater';
 import { isDarwin, isWindows } from '../helpers/env';
 import packageJson from '../../package.json';
 
@@ -16,6 +17,12 @@ class TrayMenu {
         click: () => {
           this.tray.toggleWindow();
         },
+      },
+      {
+        label: 'Check for update...',
+        click: () => {
+          autoUpdater.checkForUpdates();
+        }
       },
       {
         label: 'About',
