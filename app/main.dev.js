@@ -17,6 +17,7 @@ import { isDarwin } from './helpers/env';
 
 import initWindow from './main/initWindow';
 import AutoUpdater from './main/AutoUpdater';
+import AutoLaunch from './main/AutoLaunch';
 import Tray from './main/Tray';
 import Menu from './main/menu';
 import { installExtensions } from './helpers/devTools';
@@ -61,7 +62,8 @@ app.on('ready', async () => {
     }
   });
 
-  const autoUpdater = new AutoUpdater();
+  new AutoUpdater();
+  new AutoLaunch();
   new Menu(appWindow);
   new Tray(appWindow);
 });
