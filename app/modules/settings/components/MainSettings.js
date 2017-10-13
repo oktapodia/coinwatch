@@ -48,4 +48,6 @@ function mapStateToProps({ settings }) {
   };
 }
 
-export default reduxForm({ form: 'settings/main' })(connect(mapStateToProps, { updateMainSettings })(MainSettings));
+const form = reduxForm({ form: 'settings/main' })(MainSettings);
+
+export default connect(mapStateToProps, { updateMainSettings })(form);
