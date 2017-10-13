@@ -13,6 +13,7 @@ class CoinsSettings extends Component {
     super();
 
     this.onSubmit = this.onSubmit.bind(this);
+    this.onRemove = this.onRemove.bind(this);
   }
   componentWillMount() {
     if (isEmpty(this.props.coins)) {

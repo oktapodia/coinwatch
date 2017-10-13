@@ -21,7 +21,7 @@ class Coin extends Component {
     let removeButtonHandlerDisplay = null;
     if (removeButtonHandler) {
       removeButtonHandlerDisplay = (
-        <span className="glyphicon glyphicon-remove-circle" onClick={() => removeButtonHandler(fc)} />
+        <span className="glyphicon glyphicon-remove-circle" onClick={() => removeButtonHandler(coin)} />
       );
     }
 
