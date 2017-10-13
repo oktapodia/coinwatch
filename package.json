@@ -194,6 +194,7 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "auto-launch": "^5.0.1",
     "axios": "^0.16.2",
     "bootstrap": "^3.3.7",
     "devtron": "^1.4.0",
