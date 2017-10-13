@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`reducers coins should handle GET_COIN_PRICE_SUCCESS 1`] = `
+Object {
+  "data": Array [],
+  "prices": Object {
+    "foo": "bar",
+  },
+}
+`;
+
+exports[`reducers coins should handle GET_COINS_SUCCESS 1`] = `
+Object {
+  "data": Array [
+    Object {
+      "Name": "foo",
+    },
+  ],
+  "prices": Object {},
+}
+`;
+
+exports[`reducers coins should handle initial state 1`] = `
+Object {
+  "data": Array [],
+  "prices": Object {},
+}
+`;
+
+exports[`reducers coins should handle unknown action type 1`] = `
+Object {
+  "data": Array [],
+  "prices": Object {},
+}
+`;

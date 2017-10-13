@@ -1,5 +1,6 @@
 // @flow
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isUndefined, find } from 'lodash';
 import { BASE_IMAGE_URL } from '../../../connectors/cryptocompare/api';
@@ -41,8 +42,18 @@ class Coin extends Component {
   }
 }
 
-function mapStateToProps({ coins }, { coin }) {
+Coin.propTypes = {
+  coin: PropTypes.shape({
+    ImageUrl: PropTypes.string.isRequired,
+    FullName: PropTypes.string.isRequired,
+  }).isRequired,
+  prices: PropTypes.shape({
+    USD: PropTypes.number.isRequired,
+  }).isRequired,
+  removeButtonHandler: PropTypes.func.isRequired,
+};
 
+function mapStateToProps({ coins }, { coin }) {
   return {
     prices: coins.prices[coin.Symbol],
   };

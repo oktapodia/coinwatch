@@ -11,10 +11,81 @@
  * @flow
  */
 import { app, BrowserWindow, Tray, ipcMain, Menu } from 'electron';
+import { autoUpdater } from 'electron-updater';
+import log from 'electron-log';
 import path from 'path';
 import { map } from 'lodash';
 import packageJson from '../package.json';
 import { isDarwin, isWindows } from './helpers/env';
+
+
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
+log.info('App starting...');
+
+let template = []
+if (process.platform === 'darwin') {
+  // OS X
+  const name = app.getName();
+  console.log(name);
+  console.log(name);
+  console.log(name);
+  console.log(name);
+  template.unshift({
+    label: name,
+    submenu: [
+      {
+        label: 'About ' + name,
+        role: 'about'
+      },
+      {
+        label: 'Quit',
+        accelerator: 'Command+Q',
+        click() { app.quit(); }
+      },
+    ]
+  })
+}
+
+/*
+function sendStatusToWindow(text) {
+  log.info(text);
+  aboutWindow.webContents.send('message', text);
+}
+
+autoUpdater.on('checking-for-update', () => {
+  sendStatusToWindow('Checking for update...');
+})
+autoUpdater.on('update-available', (info) => {
+  sendStatusToWindow('Update available.');
+})
+autoUpdater.on('update-not-available', (info) => {
+  sendStatusToWindow('Update not available.');
+})
+autoUpdater.on('error', (err) => {
+  sendStatusToWindow('Error in auto-updater.');
+})
+autoUpdater.on('download-progress', (progressObj) => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+  sendStatusToWindow(log_message);
+})
+autoUpdater.on('update-downloaded', (info) => {
+  sendStatusToWindow('Update downloaded; will install in 5 seconds');
+});
+*/
+
+
+autoUpdater.on('update-downloaded', (info) => {
+  // Wait 5 seconds, then quit and install
+  // In your application, you don't need to wait 5 seconds.
+  // You could call autoUpdater.quitAndInstall(); immediately
+  autoUpdater.quitAndInstall();
+});
+
+
+
 
 let appWindow = null;
 let tray = null;
@@ -152,6 +223,10 @@ app.on('ready', async () => {
 
   createTray();
   initWindow();
+  autoUpdater.checkForUpdates();
+
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
 
   ipcMain.on('tray-update', (event, prices) => {
     console.log('IPCMAINUPDATE', prices);
