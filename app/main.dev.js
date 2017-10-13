@@ -23,7 +23,6 @@ import { installExtensions } from './helpers/devTools';
 
 log.debug('App starting...');
 
-let appWindow = null;
 let isQuitting = false;
 
 if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
@@ -65,4 +64,6 @@ app.on('ready', async () => {
   new Menu(appWindow);
   new Tray(appWindow);
   new AutoUpdater();
+
+  // autoUpdater.checkForUpdates();
 });

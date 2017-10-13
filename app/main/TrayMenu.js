@@ -27,7 +27,8 @@ class TrayMenu {
             });
 
             // Load a remote URL
-            aboutWindow.loadURL(`file://${__dirname}/../about/about.html`);
+            const basePath = __dirname + (process.env.NODE_ENV === 'development' ? '/..' : '');
+            aboutWindow.loadURL(`file://${basePath}/windows/about/about.html`);
 
             aboutWindow.once('ready-to-show', () => {
               aboutWindow.webContents.send('get-version', packageJson.version);

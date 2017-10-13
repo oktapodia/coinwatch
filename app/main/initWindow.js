@@ -15,8 +15,10 @@ export default function initWindow() {
     },
   };
 
+  const basePath = __dirname + (process.env.NODE_ENV === 'development' ? '/..' : '');
+
   const appWindow = new BrowserWindow(defaults);
-  appWindow.loadURL(`file://${__dirname}/../index.html`);
+  appWindow.loadURL(`file://${basePath}/windows/main/main.html`);
   appWindow.show();
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
     appWindow.openDevTools();

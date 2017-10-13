@@ -2,18 +2,20 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 
 class AutoUpdater {
-  autoUpdater = null;
+  autoUpdater: autoUpdater = null;
   constructor() {
     this.autoUpdater = autoUpdater;
     this.autoUpdater.logger = log;
     this.autoUpdater.logger.transports.file.level = 'info';
 
-    this.autoUpdater.on('update-downloaded', this.onUpdateDownloaded);
-    this.autoUpdater.on('checking-for-update', this.onCheckingForUpdate);
-    this.autoUpdater.on('update-available', this.onUpdateAvailable);
-    this.autoUpdater.on('update-not-available', this.onUpdateNotAvailable);
-    this.autoUpdater.on('download-progress', this.onDownloadProgress);
-    this.autoUpdater.on('error', this.onError);
+/*    this.autoUpdater.on('update-downloaded', this.onUpdateDownloaded.bind(this));
+    this.autoUpdater.on('checking-for-update', this.onCheckingForUpdate.bind(this));
+    this.autoUpdater.on('update-available', this.onUpdateAvailable.bind(this));
+    this.autoUpdater.on('update-not-available', this.onUpdateNotAvailable.bind(this));
+    this.autoUpdater.on('download-progress', this.onDownloadProgress.bind(this));
+    this.autoUpdater.on('error', this.onError.bind(this));
+
+    this.autoUpdater.checkForUpdates();*/
   }
 
   onUpdateDownloaded(info) {
@@ -23,10 +25,9 @@ class AutoUpdater {
     this.autoUpdater.quitAndInstall();
   }
 
-  onCheckingForUpdate(info) {
+  onCheckingForUpdate() {
     log.debug('onCheckingForUpdate');
     log.debug('Checking for update...');
-    log.debug(info);
     this.autoUpdater.quitAndInstall();
   }
 
