@@ -2,7 +2,6 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <script src="about.js"></script>
   <title>About</title>
   <style>
     body {
@@ -27,5 +26,21 @@
   <h1>Coin watch v<span id="version"></span></h1>
   <a target="_blank" id="whatsNewLink" href="https://github.com/oktapodia/coinwatch#donate">What's New</a>
 </div>
+<script>
+  {
+    const scripts = [];
+    console.log(process.env.NODE_ENV);
+    const basePath = (process.env.NODE_ENV === 'development') ? '.' : '.';
+
+    // Dynamically insert the DLL script in development env in the
+    // renderer process
+    scripts.push(basePath + '/about.js');
+    document.write(
+      scripts
+        .map(script => '<script defer src="' + script + '"><\/script>')
+        .join('')
+    );
+  }
+</script>
 </body>
 </html>

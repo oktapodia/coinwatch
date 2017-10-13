@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`actions should get the coin price from a symbol 1`] = `
+Object {
+  Symbol(Call Handler): Object {
+    "data": "ETH",
+    "handler": [Function],
+    "types": Array [
+      "GET_COIN_PRICE_ATTEMPT",
+      "GET_COIN_PRICE_SUCCESS",
+      "GET_COIN_PRICE_FAILURE",
+    ],
+  },
+}
+`;
+
+exports[`actions should get the coins list 1`] = `
+Object {
+  Symbol(Call Handler): Object {
+    "handler": [Function],
+    "types": Array [
+      "GET_COINS_ATTEMPT",
+      "GET_COINS_SUCCESS",
+      "GET_COINS_FAILURE",
+    ],
+  },
+}
+`;

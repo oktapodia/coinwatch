@@ -10,14 +10,19 @@
  *
  * @flow
  */
-import { app, BrowserWindow, Tray, ipcMain, Menu } from 'electron';
+import { app } from 'electron';
+import log from 'electron-log';
 import path from 'path';
-import { map } from 'lodash';
-import packageJson from '../package.json';
-import { isDarwin, isWindows } from './helpers/env';
+import { isDarwin } from './helpers/env';
 
-let appWindow = null;
-let tray = null;
+import initWindow from './main/initWindow';
+import AutoUpdater from './main/AutoUpdater';
+import Tray from './main/Tray';
+import Menu from './main/menu';
+import { installExtensions } from './helpers/devTools';
+
+log.debug('App starting...');
+
 let isQuitting = false;
 
 if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
@@ -26,20 +31,6 @@ if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true')
   require('module').globalPaths.push(p);
 }
 
-const installExtensions = async () => {
-  const installer = require('electron-devtools-installer');
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  const extensions = [
-    'REACT_DEVELOPER_TOOLS',
-    'REDUX_DEVTOOLS'
-  ];
-
-  return Promise
-    .all(extensions.map(name => installer.default(installer[name], forceDownload)))
-    .catch(console.log);
-};
-
-
 /**
  * Add event listeners...
  */
@@ -47,99 +38,10 @@ const installExtensions = async () => {
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
   // after all windows have been closed
-  if (process.platform !== 'darwin') {
+  if (!isDarwin) {
     app.quit();
   }
 });
-
-function createTray() {
-  tray = new Tray(path.join(__dirname, 'dist', 'appIcon.png'));
-  tray.on('click', toggleWindow);
-  tray.on('double-click', toggleWindow);
-  tray.on('right-click', toggleWindow);
-
-  const trayMenu = Menu.buildFromTemplate([
-    {
-      label: 'Toggle window',
-      click() {
-        toggleWindow();
-      },
-    },
-    {
-      label: 'About',
-      click() {
-        if (!isWindows) {
-          let aboutWindow = new BrowserWindow({ width: 200, height: 200, show: false, autoHideMenuBar: true, resizable: true });
-          aboutWindow.on("closed", () => {
-            aboutWindow = null;
-          });
-
-          // Load a remote URL
-          aboutWindow.loadURL(`file://${__dirname}/about/about.html`);
-
-          aboutWindow.once('ready-to-show', () => {
-            aboutWindow.webContents.send('get-version', packageJson.version);
-            aboutWindow.show();
-          });
-        }
-      }
-    },
-    {
-      type: 'separator',
-    },
-    {
-      label: 'Quit',
-      accelerator: isDarwin ? 'Command+Q' : 'Alt+F4',
-      role: 'quit',
-    },
-  ]);
-
-  tray.setContextMenu(trayMenu);
-}
-
-function toggleWindow() {
-  if (appWindow.isVisible()) {
-    appWindow.hide();
-    return;
-  }
-
-  appWindow.show();
-}
-
-function initWindow() {
-  const defaults = {
-    width: 500,
-    height: 600,
-    minHeight: 300,
-    minWidth: 500,
-    show: false,
-    center: true,
-    fullscreenable: false,
-    titleBarStyle: 'hidden-inset',
-    webPreferences: {
-      overlayScrollbars: true,
-    },
-  };
-
-  appWindow = new BrowserWindow(defaults);
-  appWindow.loadURL(`file://${__dirname}/index.html`);
-  appWindow.show();
-  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
-    appWindow.openDevTools();
-  }
-
-  appWindow.on('close', (event) => {
-    if (!isQuitting) {
-      event.preventDefault();
-      appWindow.hide();
-    }
-  });
-
-/*  const menu = Menu.buildFromTemplate(appMenuTemplate);
-  Menu.setApplicationMenu(menu);
-  checkAutoUpdate(false);*/
-}
-
 
 app.on('before-quit', () => {
   isQuitting = true;
@@ -150,16 +52,16 @@ app.on('ready', async () => {
     await installExtensions();
   }
 
-  createTray();
-  initWindow();
+  const appWindow = initWindow();
 
-  ipcMain.on('tray-update', (event, prices) => {
-    console.log('IPCMAINUPDATE', prices);
-
-    const trayDisplay = map(prices, (price, coinName) => {
-      return `${coinName}: $${price.USD}`;
-    });
-
-    tray.setTitle(trayDisplay.join(' | '));
+  appWindow.on('close', (event) => {
+    if (!isQuitting) {
+      event.preventDefault();
+      appWindow.hide();
+    }
   });
+
+  const autoUpdater = new AutoUpdater();
+  new Menu(appWindow);
+  new Tray(appWindow);
 });
