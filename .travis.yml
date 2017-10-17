@@ -29,8 +29,8 @@ install:
   - npm install
 
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then yarn release; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn release -- --mac --win; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then DEBUG=* yarn release; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then DEBUG=* yarn release -- --mac --win; fi
 
 before_cache:
   - rm -rf $HOME/.cache/electron-builder/wine
