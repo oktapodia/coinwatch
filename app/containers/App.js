@@ -19,7 +19,10 @@ export default class App extends Component {
         <div className="main-container">
           {this.props.children}
         </div>
-        <Tray />
+        <footer>
+          Footer
+          <Tray />
+        </footer>
       </div>
     );
   }

@@ -6,9 +6,7 @@ import CoinSettings from '../modules/settings/components/CoinsSettings';
 class Home extends Component {
   render() {
     return (
-      <div>
-        <CoinSettings />
-      </div>
+      <CoinSettings />
     );
   }
 }
