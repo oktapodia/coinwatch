@@ -100,10 +100,15 @@ a:hover {
 .coin {
   display: flex;
 
+  & > div {
+    flex-grow: 1;
+  }
+
   .name {
     display: flex;
     flex-direction: row;
     text-align: left;
+    flex-grow: 2;
 
     img {
       width: 30px;
@@ -124,8 +129,6 @@ a:hover {
 
   .actions {
     margin-top: 5px;
-    display: flex;
-    flex-direction: row;
     color: red;
     text-align: right;
 

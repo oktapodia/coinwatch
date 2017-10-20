@@ -32,7 +32,7 @@ class Coin extends Component {
           <span>{coin.FullName}</span>
         </div>
         <div className="price">
-          <span className="text-right">{currentPriceDisplayed}</span>
+          ${currentPriceDisplayed}
         </div>
         <div className="actions">
           {removeButtonHandlerDisplay}
