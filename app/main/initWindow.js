@@ -9,7 +9,6 @@ export default function initWindow() {
     show: false,
     center: true,
     fullscreenable: false,
-    titleBarStyle: 'hidden-inset',
     webPreferences: {
       overlayScrollbars: true,
     },

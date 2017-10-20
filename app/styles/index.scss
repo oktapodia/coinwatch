@@ -1,5 +1,5 @@
-$sidebar-color: #393a3b;
-$lighter-sidebar-color: #6b6f72;
+$navbar-color: #393a3b;
+$lighter-navbar-color: #6b6f72;
 $font-color: #c9cdd1;
 $blue-color: #011525;
 
@@ -16,23 +16,34 @@ a:hover {
 }
 
 .app-container {
-  display: flex;
+
 }
 
-.sidebar {
-  flex-direction: row;
-  background: $sidebar-color;
-  width: 170px;
-  height: 100vh;
+.navbar {
+  background: $navbar-color;
   padding: 30px 10px;
+  margin: 0;
+  display: flex;
 
   h1 {
     font-size: 1.2em;
+    margin: 0;
+  }
+
+  .title {
+    display: flex;
+    flex-direction: row;
+    width: 20%;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
   }
 }
 
 .main-container {
-  flex-direction: row;
   width: 100%;
   padding: 30px 10px;
   background: $font-color;

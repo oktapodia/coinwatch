@@ -2,14 +2,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class Sidebar extends Component {
+class Navbar extends Component {
   render() {
     return (
-      <nav className="sidebar">
+      <nav className="navbar navbar-default navbar-static-top">
         <div className="title">
-          <h1>Coin Watch</h1>
+          <h1><Link to="/">Coin Watch</Link></h1>
         </div>
         <div className="content">
+        </div>
+        <div className="toolbar pull-right">
           <Link to="/settings"><span className="glyphicon glyphicon-cog" aria-hidden="true" /></Link>
         </div>
       </nav>
@@ -17,4 +19,4 @@ class Sidebar extends Component {
   }
 }
 
-export default Sidebar;
+export default Navbar;
