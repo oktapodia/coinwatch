@@ -69,9 +69,10 @@ class CoinsSettings extends Component {
   }
 }
 
-function mapStateToProps({ coins }) {
+function mapStateToProps({ coins, settings }) {
   return {
     coins: coins.data,
+    followedCoins: settings.coins,
   };
 }
 

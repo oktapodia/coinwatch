@@ -48,8 +48,8 @@ Coin.propTypes = {
     FullName: PropTypes.string.isRequired,
   }).isRequired,
   prices: PropTypes.shape({
-    USD: PropTypes.number.isRequired,
-  }).isRequired,
+    USD: PropTypes.number,
+  }),
   removeButtonHandler: PropTypes.func.isRequired,
 };
 

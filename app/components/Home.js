@@ -1,29 +1,16 @@
 // @flow
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { map } from 'lodash';
-import Coin from '../modules/coins/components/Coin';
+import CoinSettings from '../modules/settings/components/CoinsSettings';
 
 class Home extends Component {
   render() {
-    const { coins } = this.props;
-
-    const list = map(coins, (coin) => {
-      return <Coin coin={coin} key={coin.Id} />;
-    });
-
     return (
       <div>
-        {list}
+        <CoinSettings />
       </div>
     );
   }
 }
 
-function mapStateToProps({ settings }) {
-  return {
-    coins: settings.coins,
-  };
-}
-
-export default connect(mapStateToProps)(Home);
+export default Home;
