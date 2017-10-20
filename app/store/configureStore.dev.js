@@ -53,9 +53,6 @@ const configureStore = (initialState) => {
   const enhancer = composeEnhancers(...enhancers);
 
   // Create Store
-  console.log(rootReducer);
-  console.log(initialState);
-  console.log(enhancer);
   const store = createStore(rootReducer, initialState, enhancer);
 
 
