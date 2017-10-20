@@ -1,4 +1,4 @@
-import { Menu, BrowserWindow } from 'electron';
+import { Menu, BrowserWindow, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import { isDarwin, isWindows } from '../helpers/env';
 import packageJson from '../../package.json';
@@ -21,6 +21,19 @@ class TrayMenu {
       {
         label: 'Check for update...',
         click: () => {
+          if (process.env.NODE_ENV === 'development') {
+            dialog.showMessageBox(
+              {
+                type: 'info',
+                buttons: ['Ok'],
+                title: 'Development env',
+                message:
+                  'Not available into the dev mode',
+              }
+            );
+            return;
+          }
+
           autoUpdater.checkForUpdates();
         }
       },
