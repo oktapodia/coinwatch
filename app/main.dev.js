@@ -68,7 +68,7 @@ app.on('ready', async () => {
     }
   });
 
-  // new AutoLaunch();
+  new AutoLaunch();
   new AutoUpdater(setQuitState);
   new Menu(appWindow);
   new Tray(appWindow);

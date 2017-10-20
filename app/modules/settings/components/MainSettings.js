@@ -68,10 +68,11 @@ function mapStateToProps({ settings }) {
     settings,
     initialValues: {
       decimal: settings.decimal,
+      autoLaunch: settings.autoLaunch,
     },
   };
 }
 
 const form = reduxForm({ form: 'settings/main' })(MainSettings);
 
-export default connect(mapStateToProps, { updateMainSettings })(form);
+export default connect(mapStateToProps, { updateMainSettings, updateAutolaunchSettings })(form);
