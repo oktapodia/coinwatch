@@ -26,6 +26,10 @@ log.debug('App starting...');
 
 let isQuitting = false;
 
+function setQuitState(state) {
+  isQuitting = state;
+}
+
 if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
   require('electron-debug')();
   const p = path.join(__dirname, '..', 'app', 'node_modules');
@@ -45,7 +49,8 @@ app.on('window-all-closed', () => {
 });
 
 app.on('before-quit', () => {
-  isQuitting = true;
+  console.log('CALLED beforequit');
+  setQuitState(true);
 });
 
 app.on('ready', async () => {
@@ -56,14 +61,15 @@ app.on('ready', async () => {
   const appWindow = initWindow();
 
   appWindow.on('close', (event) => {
+    console.log('CALLED closed', event);
     if (!isQuitting) {
       event.preventDefault();
       appWindow.hide();
     }
   });
 
-  new AutoUpdater();
-  new AutoLaunch();
+  // new AutoLaunch();
+  new AutoUpdater(setQuitState);
   new Menu(appWindow);
   new Tray(appWindow);
 });

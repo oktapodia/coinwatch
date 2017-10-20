@@ -4,7 +4,9 @@ import log from 'electron-log';
 
 class AutoUpdater {
   autoUpdater: autoUpdater = null;
-  constructor() {
+  setQuitState = null;
+  constructor(setQuitState) {
+    this.setQuitState = setQuitState;
     this.autoUpdater = autoUpdater;
     this.autoUpdater.logger = log;
     this.autoUpdater.logger.transports.file.level = 'info';
@@ -21,10 +23,9 @@ class AutoUpdater {
 
   onUpdateDownloaded(info) {
     log.debug('onUpdateDownloaded');
-    log.debug('Update downloaded; will install in 5 seconds');
+    log.debug('Update downloaded;');
 
     log.debug(info);
-    // this.autoUpdater.quitAndInstall();
   }
 
   onCheckingForUpdate() {
@@ -75,6 +76,7 @@ class AutoUpdater {
         console.log('Exit: ' + response); // eslint-disable-line no-console
 
         if (response === 0) {
+          this.setQuitState(true);
           autoUpdater.quitAndInstall();
         }
       }
