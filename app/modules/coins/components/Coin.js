@@ -6,7 +6,7 @@ import { isUndefined, find } from 'lodash';
 import { BASE_IMAGE_URL } from '../../../connectors/cryptocompare/api';
 import { getCoinPrice } from '../actions';
 
-class Coin extends Component {
+export class Coin extends Component {
   componentWillMount() {
     if (isUndefined(this.props.prices)) {
       this.props.getCoinPrice(this.props.coin);
@@ -16,7 +16,7 @@ class Coin extends Component {
   render() {
     const { coin, prices, removeButtonHandler } = this.props;
 
-    const currentPriceDisplayed = !isUndefined(prices) ? prices.USD : 'Loading...';
+    const currentPriceDisplayed = !isUndefined(prices) ? `$${prices.USD}` : 'Loading...';
 
     let removeButtonHandlerDisplay = null;
     if (removeButtonHandler) {
@@ -32,7 +32,7 @@ class Coin extends Component {
           <span>{coin.FullName}</span>
         </div>
         <div className="price">
-          ${currentPriceDisplayed}
+          {currentPriceDisplayed}
         </div>
         <div className="actions">
           {removeButtonHandlerDisplay}

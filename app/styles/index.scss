@@ -5,6 +5,10 @@ $footer-background-color: rgba(0, 0, 0, 0.6);
 $font-color: #c9cdd1;
 $blue-color: #011525;
 
+@import "tabs";
+@import "icos";
+@import "coins";
+
 html,
 body,
 #root {
@@ -45,43 +49,31 @@ a:hover {
 
   h1 {
     font-size: 1.2em;
+    text-transform: uppercase;
     margin: 0;
+    padding-bottom: 15px;
+    color: #fff;
   }
 
   .title {
     display: flex;
     flex-direction: row;
-    width: 20%;
+    flex-grow: 1;
   }
 
   .content {
     display: flex;
+    flex-grow: 2;
     flex-direction: row;
-    width: 80%;
   }
 
   .link-settings {
     font-size: 16px;
   }
 
-  .top-container,
-  .tabs {
+  .top-container {
     display: flex;
     flex-direction: row;
-
-    .tab {
-      width: auto;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-      text-align: center;
-
-      &.active {
-        font-weight: bold;
-        color: #fff;
-        border-bottom: 3px solid #fff;
-      }
-    }
   }
 
   .top-container {
@@ -90,52 +82,16 @@ a:hover {
 }
 
 .main-container {
-  padding: 30px 10px;
   background: $content-background-color;
   display: flex;
   flex-direction: row;
   flex: 1;
 }
 
-.coin {
+.column-container {
   display: flex;
-
-  & > div {
-    flex-grow: 1;
-  }
-
-  .name {
-    display: flex;
-    flex-direction: row;
-    text-align: left;
-    flex-grow: 2;
-
-    img {
-      width: 30px;
-      height: 30px;
-    }
-
-    span {
-      margin-left: 5px;
-      margin-top: 5px;
-    }
-  }
-
-  .price {
-    display: flex;
-    flex-direction: row;
-    margin: 5px 50px;
-  }
-
-  .actions {
-    margin-top: 5px;
-    color: red;
-    text-align: right;
-
-    & > span {
-      cursor: pointer;
-    }
-  }
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 footer {

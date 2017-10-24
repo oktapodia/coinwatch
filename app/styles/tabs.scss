@@ -1,0 +1,18 @@
+.tabs {
+  display: flex;
+  flex-direction: row;
+
+  .tab {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: center;
+
+    &.active {
+      font-weight: bold;
+      color: #fff;
+      border-bottom: 3px solid #fff;
+    }
+  }
+}

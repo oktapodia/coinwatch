@@ -4,9 +4,9 @@ import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { find, isEmpty, map, values } from 'lodash';
 import SelectField from '../../form/SelectField/index';
-import { getCoins } from '../../coins/actions';
-import Coin from '../../coins/components/Coin';
-import { saveCoinSettings, removeCoinSettings } from '../actions';
+import { getCoins } from '../actions';
+import Coin from '../components/Coin';
+import { saveCoinSettings, removeCoinSettings } from '../../settings/actions';
 
 class CoinsSettings extends Component {
   constructor() {

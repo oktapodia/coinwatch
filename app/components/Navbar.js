@@ -18,7 +18,6 @@ class Navbar extends Component {
         </div>
         <div className="tabs">
           <NavLink to="/coins" className="tab">Home</NavLink>
-          <NavLink to="/icos" className="tab">ICOs</NavLink>
         </div>
       </nav>
     );

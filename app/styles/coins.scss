@@ -1,0 +1,44 @@
+.coins {
+  padding: 10px;
+
+  .coin {
+    display: flex;
+
+    & > div {
+      flex-grow: 1;
+    }
+
+    .name {
+      display: flex;
+      flex-direction: row;
+      text-align: left;
+      flex-grow: 2;
+
+      img {
+        width: 30px;
+        height: 30px;
+      }
+
+      span {
+        margin-left: 5px;
+        margin-top: 5px;
+      }
+    }
+
+    .price {
+      display: flex;
+      flex-direction: row;
+      margin: 5px 50px;
+    }
+
+    .actions {
+      margin-top: 5px;
+      color: red;
+      text-align: right;
+
+      & > span {
+        cursor: pointer;
+      }
+    }
+  }
+}

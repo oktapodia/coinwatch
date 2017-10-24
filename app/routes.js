@@ -1,7 +1,8 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router';
 import App from './containers/App';
-import HomePage from './containers/HomePage';
+import CoinsPage from './modules/coins/containers/CoinsPage';
+import IcosPage from './modules/icos/containers/IcosPage';
 import SettingsPage from './modules/settings/components';
 
 export default () => (
@@ -9,8 +10,9 @@ export default () => (
     <Switch>
       <Redirect exact from="/" to="/coins" />
       <Route path="/settings" component={SettingsPage} />
-      <Route path="/coins" component={HomePage} />
-      <Route path="/icos" component={HomePage} />
+      <Route path="/coins" component={CoinsPage} />
+      <Redirect exact from="/icos" to="/icos/live" />
+      <Route path="/icos/:status" component={IcosPage} />
     </Switch>
   </App>
 );

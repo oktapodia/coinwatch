@@ -9,6 +9,8 @@ class Tray {
 
   constructor(mainWindow: BrowserWindow) {
     this.mainWindow = mainWindow;
+
+    this.onTrayUpdate = this.onTrayUpdate.bind(this);
     this.init();
   }
 
@@ -35,7 +37,7 @@ class Tray {
     this.tray.on('double-click', this.toggleWindow);
     this.tray.on('right-click', this.toggleWindow);
 
-    ipcMain.on('tray-update', this.onTrayUpdate.bind(this));
+    ipcMain.on('tray-update', this.onTrayUpdate);
   }
 
   onTrayUpdate(event, prices) {

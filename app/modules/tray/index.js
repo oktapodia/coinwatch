@@ -25,6 +25,9 @@ class Tray extends Component {
 }
 
 function mapStateToProps({ settings, coins }) {
+  console.log('--------------------------------------');
+  console.log(settings.coins, coins);
+  console.log('--------------------------------------');
   return {
     coins: settings.coins,
     prices: coins.prices,
