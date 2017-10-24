@@ -8,8 +8,8 @@ import SettingsPage from './modules/settings/components';
 export default () => (
   <App>
     <Switch>
-      <Redirect exact from="/" to="/coins" />
       <Route path="/settings" component={SettingsPage} />
+      <Route path="/" component={CoinsPage} />
       <Route path="/coins" component={CoinsPage} />
       <Redirect exact from="/icos" to="/icos/live" />
       <Route path="/icos/:status" component={IcosPage} />
