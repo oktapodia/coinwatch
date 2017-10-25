@@ -46,14 +46,23 @@ To prepare the app for distribution run:
 
 ### Todo list
 
+#### Global
+
 - [ ] Add tests
 - [ ] Improve code coverage
 - [ ] Clean dependencies
 - [ ] Improve UX/UI
-- [ ] Add design
-- [ ] Add price alert
-- [ ] Add Options
-- [ ] Add Notifications
+
+#### Crypto
+
+- [ ] Add price alert notifications
+- [ ] Get the price for your exchange
+
+#### ICO
+
+- [ ] Add ICOs view
+- [ ] List the different Live, Upcoming and Finished ICOs
+- [ ] ICO reminder
 
 ### Donate
 
