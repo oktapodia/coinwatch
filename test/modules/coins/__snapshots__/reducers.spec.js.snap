@@ -3,9 +3,11 @@
 exports[`reducers coins should handle GET_COIN_PRICE_SUCCESS 1`] = `
 Object {
   "data": Array [],
+  "exchanges": Array [],
   "prices": Object {
     "foo": "bar",
   },
+  "symbols": Array [],
 }
 `;
 
@@ -16,20 +18,48 @@ Object {
       "Name": "foo",
     },
   ],
+  "exchanges": Array [],
   "prices": Object {},
+  "symbols": Array [],
+}
+`;
+
+exports[`reducers coins should handle GET_EXCHANGE_LIST_SUCCESS 1`] = `
+Object {
+  "data": Array [],
+  "exchanges": Array [
+    "foo",
+  ],
+  "prices": Object {},
+  "symbols": Array [],
+}
+`;
+
+exports[`reducers coins should handle GET_SYMBOL_LIST_SUCCESS 1`] = `
+Object {
+  "data": Array [],
+  "exchanges": Array [],
+  "prices": Object {},
+  "symbols": Array [
+    "foo",
+  ],
 }
 `;
 
 exports[`reducers coins should handle initial state 1`] = `
 Object {
   "data": Array [],
+  "exchanges": Array [],
   "prices": Object {},
+  "symbols": Array [],
 }
 `;
 
 exports[`reducers coins should handle unknown action type 1`] = `
 Object {
   "data": Array [],
+  "exchanges": Array [],
   "prices": Object {},
+  "symbols": Array [],
 }
 `;

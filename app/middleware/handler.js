@@ -16,14 +16,20 @@ const callHandler = (handler, data) => {
     };
   })
   .then((response) => {
-    if (!response.statusText === 'OK') {
+    if (response.Response === 'Error') {
+      const error = {};
+      error.raw = response;
+      error.message = response.message;
+
+      return Promise.reject(error);
+    }
+/*    if (!(response.statusText === 'OK')) {
       const error = new Error('API middleware: response is not OK');
       error.json = response.data;
       error.response = response;
 
       return Promise.reject(error);
-    }
-
+    }*/
     return response.response.data;
   });
 };

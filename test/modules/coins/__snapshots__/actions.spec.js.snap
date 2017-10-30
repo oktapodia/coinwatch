@@ -1,9 +1,49 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`actions should get the coin price from a symbol 1`] = `
+exports[`actions should get the coin price with a coin and symbol and exchange arguments 1`] = `
 Object {
   Symbol(Call Handler): Object {
-    "data": "ETH",
+    "data": Object {
+      "exchange": "Bitfinex",
+      "from": "ETH",
+      "to": "USD",
+    },
+    "handler": [Function],
+    "types": Array [
+      "GET_COIN_PRICE_ATTEMPT",
+      "GET_COIN_PRICE_SUCCESS",
+      "GET_COIN_PRICE_FAILURE",
+    ],
+  },
+}
+`;
+
+exports[`actions should get the coin price with a coin and symbol arguments 1`] = `
+Object {
+  Symbol(Call Handler): Object {
+    "data": Object {
+      "exchange": undefined,
+      "from": "ETH",
+      "to": "USD",
+    },
+    "handler": [Function],
+    "types": Array [
+      "GET_COIN_PRICE_ATTEMPT",
+      "GET_COIN_PRICE_SUCCESS",
+      "GET_COIN_PRICE_FAILURE",
+    ],
+  },
+}
+`;
+
+exports[`actions should get the coin price with a coin argument only 1`] = `
+Object {
+  Symbol(Call Handler): Object {
+    "data": Object {
+      "exchange": undefined,
+      "from": "ETH",
+      "to": undefined,
+    },
     "handler": [Function],
     "types": Array [
       "GET_COIN_PRICE_ATTEMPT",
@@ -22,6 +62,19 @@ Object {
       "GET_COINS_ATTEMPT",
       "GET_COINS_SUCCESS",
       "GET_COINS_FAILURE",
+    ],
+  },
+}
+`;
+
+exports[`actions should get the exchanges list 1`] = `
+Object {
+  Symbol(Call Handler): Object {
+    "handler": [Function],
+    "types": Array [
+      "GET_EXCHANGE_LIST_ATTEMPT",
+      "GET_EXCHANGE_LIST_SUCCESS",
+      "GET_EXCHANGE_LIST_FAILURE",
     ],
   },
 }

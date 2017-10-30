@@ -15,7 +15,7 @@ class Tray extends Component {
 
   refresh() {
     forEach(this.props.coins, (coin) => {
-      this.props.getCoinPrice(coin);
+      return this.props.getCoinPrice(coin);
     });
   }
 

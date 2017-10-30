@@ -36,8 +36,8 @@
       color: red;
       text-align: right;
 
-      & > span {
-        cursor: pointer;
+      & > a {
+        margin: 0px 5px;
       }
     }
   }

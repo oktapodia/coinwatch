@@ -5,25 +5,33 @@ import { connect } from 'react-redux';
 import { isUndefined, find } from 'lodash';
 import { BASE_IMAGE_URL } from '../../../connectors/cryptocompare/api';
 import { getCoinPrice } from '../actions';
+import { removeCoinSettings } from '../../settings/actions';
 
 export class Coin extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onRemove = ::this.onRemove;
+    this.onToggleVisibility = ::this.onToggleVisibility;
+  }
+
   componentWillMount() {
     if (isUndefined(this.props.prices)) {
-      this.props.getCoinPrice(this.props.coin);
+      this.props.getCoinPrice(this.props);
     }
   }
 
+  onRemove(coin) {
+    this.props.removeCoinSettings(coin);
+  }
+
+  onToggleVisibility(coin) {
+    this.props.removeCoinSettings(coin);
+  }
+
   render() {
-    const { coin, prices, removeButtonHandler } = this.props;
-
-    const currentPriceDisplayed = !isUndefined(prices) ? `$${prices.USD}` : 'Loading...';
-
-    let removeButtonHandlerDisplay = null;
-    if (removeButtonHandler) {
-      removeButtonHandlerDisplay = (
-        <span className="glyphicon glyphicon-remove-circle" onClick={() => removeButtonHandler(coin)} />
-      );
-    }
+    const { coin, prices } = this.props;
+    const currentPriceDisplayed = !isUndefined(prices) ? `${prices}` : 'Loading...';
 
     return (
       <div className="coin">
@@ -35,7 +43,8 @@ export class Coin extends Component {
           {currentPriceDisplayed}
         </div>
         <div className="actions">
-          {removeButtonHandlerDisplay}
+          <a onClick={() => this.onToggleVisibility(coin)}><span className="glyphicon glyphicon-eye-open toggle-button" /></a>
+          <a onClick={() => this.onRemove(coin)}><span className="glyphicon glyphicon-remove-circle" /></a>
         </div>
       </div>
     );
@@ -47,10 +56,12 @@ Coin.propTypes = {
     ImageUrl: PropTypes.string.isRequired,
     FullName: PropTypes.string.isRequired,
   }).isRequired,
+  to: PropTypes.string,
+  exchange: PropTypes.string,
   prices: PropTypes.shape({
     USD: PropTypes.number,
   }),
-  removeButtonHandler: PropTypes.func.isRequired,
+  removeCoinSettings: PropTypes.func.isRequired,
 };
 
 function mapStateToProps({ coins }, { coin }) {
@@ -59,4 +70,4 @@ function mapStateToProps({ coins }, { coin }) {
   };
 }
 
-export default connect(mapStateToProps, { getCoinPrice })(Coin);
+export default connect(mapStateToProps, { getCoinPrice, removeCoinSettings })(Coin);

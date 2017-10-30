@@ -1,8 +1,9 @@
 $navbar-color: #393a3b;
 $lighter-navbar-color: #6b6f72;
-$content-background-color: rgba(0, 0, 0, 0.3);
+$content-background-color: #ccc;
 $footer-background-color: rgba(0, 0, 0, 0.6);
-$font-color: #c9cdd1;
+$font-color: #333;
+$font-color-inverse: #c9cdd1;
 $blue-color: #011525;
 
 @import "tabs";
@@ -22,17 +23,46 @@ body {
   color: #fff;
 }
 
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
 a,
 a:active,
 a:focus,
 a:visited {
   color: $font-color;
   text-decoration: none;
+  cursor: pointer;
 }
 
 a:hover {
   text-decoration: none;
   color: #fff;
+}
+
+.toggle-button {
+  &.active {
+    @extend .green;
+
+    &:hover {
+      @extend .red;
+    }
+  }
+
+  @extend .red;
+
+  &:hover {
+    @extend .green;
+  }
+}
+
+.error {
+  @extend .red;
 }
 
 .app-container {
@@ -46,6 +76,12 @@ a:hover {
   background: $navbar-color;
   padding-top: 30px;
   margin: 0;
+
+  a {
+    @extend a;
+
+    color: $font-color-inverse;
+  }
 
   h1 {
     font-size: 1.2em;

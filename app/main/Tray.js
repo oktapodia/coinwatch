@@ -44,7 +44,7 @@ class Tray {
     console.log('IPCMAINUPDATE', prices);
 
     const trayDisplay = map(prices, (price, coinName) => {
-      return `${coinName}: $${price.USD}`;
+      return `${coinName}: ${price}`;
     });
 
     this.tray.setTitle(trayDisplay.join(' | '));
