@@ -1,11 +1,10 @@
 // @flow
-import React, { Component } from 'react';
-import { Field, reduxForm, SubmissionError } from 'redux-form';
-import { connect } from 'react-redux';
-import { find, isEmpty, map, values, mapValues } from 'lodash';
-import SelectField from '../../form/SelectField/index';
-import { getCoins, getExchangeList, getSymbolList, getCoinPrice } from '../actions';
-import { saveCoinSettings } from '../../settings/actions';
+import React, { Component } from "react";
+import { Field, reduxForm, SubmissionError } from "redux-form";
+import { connect } from "react-redux";
+import { find, isEmpty, map, mapValues, values } from "lodash";
+import SelectField from "../../form/SelectField/index";
+import { getCoinPrice, getCoins, getExchangeList, getSymbolList, saveCoin } from "../actions";
 
 class CoinsSettings extends Component {
   constructor() {
@@ -31,7 +30,7 @@ class CoinsSettings extends Component {
 
     return this.props.getCoinPrice(props)
       .then(() => {
-        return this.props.saveCoinSettings(props);
+        return this.props.saveCoin(props);
       })
       .then(() => {
         return this.props.closeModal();
@@ -59,24 +58,31 @@ class CoinsSettings extends Component {
         <h3>Add a coin</h3>
         <form onSubmit={handleSubmit(this.onSubmit)}>
           <label>Select your from symbol*</label>
-          <Field
-            name="coin"
-            options={coinsOptions}
-            component={SelectField}
-          />
-          <label>Select your to symbol*</label>
-          <Field
-            name="to"
-            options={symbolsOptions}
-            component={SelectField}
-          />
-          <label>Select your exchange</label>
-          <Field
-            name="exchange"
-            options={exchangesOptions}
-            component={SelectField}
-          />
-          <input type="submit" disabled={submitting} value="submit" className="btn btn-default" />
+          <div className="form-group">
+            <Field
+              name="coin"
+              options={coinsOptions}
+              component={SelectField}
+            />
+          </div>
+          <div className="form-group">
+            <label>Select your to symbol*</label>
+            <Field
+              name="to"
+              options={symbolsOptions}
+              component={SelectField}
+            />
+          </div>
+          <div className="form-group">
+
+            <label>Select your exchange</label>
+            <Field
+              name="exchange"
+              options={exchangesOptions}
+              component={SelectField}
+            />
+          </div>
+          <input type="submit" disabled={submitting} value="Add" className="btn btn-default" />
         </form>
         {error && <div className="error">{error}</div>}
       </div>
@@ -92,4 +98,4 @@ function mapStateToProps({ coins }) {
   };
 }
 
-export default reduxForm({ form: 'settings/coins' })(connect(mapStateToProps, { getCoins, saveCoinSettings, getExchangeList, getSymbolList, getCoinPrice })(CoinsSettings));
+export default reduxForm({ form: "settings/coins" })(connect(mapStateToProps, { getCoins, saveCoin, getExchangeList, getSymbolList, getCoinPrice })(CoinsSettings));

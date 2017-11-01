@@ -1,7 +1,9 @@
 import { BrowserWindow, Tray as TrayElectron, ipcMain } from 'electron';
 import path from 'path';
-import { map } from 'lodash';
+import { map, filter } from 'lodash';
 import TrayMenu from './TrayMenu';
+
+export const TRAY_UPDATE = 'tray-update';
 
 class Tray {
   tray = null;
@@ -37,14 +39,21 @@ class Tray {
     this.tray.on('double-click', this.toggleWindow);
     this.tray.on('right-click', this.toggleWindow);
 
-    ipcMain.on('tray-update', this.onTrayUpdate);
+    ipcMain.on(TRAY_UPDATE, this.onTrayUpdate);
   }
 
-  onTrayUpdate(event, prices) {
-    console.log('IPCMAINUPDATE', prices);
+  onTrayUpdate(event, coins) {
+    console.log('IPCMAINUPDATE', coins);
 
-    const trayDisplay = map(prices, (price, coinName) => {
-      return `${coinName}: ${price}`;
+    const coinsFiltered = filter(coins, 'visibility');
+    if (!coinsFiltered) {
+      return;
+    }
+
+    console.log('UPDATED');
+
+    const trayDisplay = map(coinsFiltered, ({ coin, price }) => {
+      return `${coin.Symbol}: ${price}`;
     });
 
     this.tray.setTitle(trayDisplay.join(' | '));

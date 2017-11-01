@@ -3,9 +3,9 @@ import qs from "query-string";
 
 export const BASE_IMAGE_URL = "https://www.cryptocompare.com";
 
-export function getCoinPriceApi({ from, to, exchange }) {
+export function getCoinPriceApi({ coin, to, exchange }) {
   const query = qs.stringify({
-    fsym: from,
+    fsym: coin.Symbol,
     tsyms: to,
     e: exchange,
   });

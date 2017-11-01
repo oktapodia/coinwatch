@@ -86,6 +86,8 @@ export default store => next => (action) => {
     .catch((err) => {
       const { message, status } = err;
 
+      console.log(err);
+
       /*
        * handle the error
        */

@@ -1,11 +1,14 @@
 $navbar-color: #393a3b;
 $lighter-navbar-color: #6b6f72;
 $content-background-color: #ccc;
+$table-tr-background-color: #e6e6e6;
+$table-tr-background-color-odd: #f2f2f2;
 $footer-background-color: rgba(0, 0, 0, 0.6);
 $font-color: #333;
 $font-color-inverse: #c9cdd1;
 $blue-color: #011525;
 
+@import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "tabs";
 @import "icos";
 @import "coins";
