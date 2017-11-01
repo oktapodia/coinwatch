@@ -1,12 +1,4 @@
 .coins {
-  padding: 10px;
-
-  h3 {
-    text-transform: uppercase;
-    text-align: center;
-    color: #000;
-  }
-
   thead > tr {
     background-color: #333;
 
@@ -77,7 +69,8 @@
 }
 
 form {
-  input[type="submit"] {
+  input[type="submit"],
+  input[type="submit"]:active {
     background: $navbar-color;
     color: #fff;
     margin: 10px auto;

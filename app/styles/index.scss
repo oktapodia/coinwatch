@@ -48,6 +48,12 @@ a:hover {
   color: #fff;
 }
 
+h3 {
+  text-transform: uppercase;
+  text-align: center;
+  color: #000;
+}
+
 .toggle-button {
   &.active {
     @extend .green;
@@ -125,6 +131,10 @@ a:hover {
   display: flex;
   flex-direction: row;
   flex: 1;
+
+  & > .app-container {
+    padding: 10px;
+  }
 }
 
 .column-container {

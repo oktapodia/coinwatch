@@ -1,4 +1,5 @@
 import settings from 'electron-settings';
+import { forEach } from 'lodash';
 
 export const SETTINGS_MAIN_UPDATE = 'SETTINGS_MAIN_UPDATE';
 export function updateMainSettings(data) {

@@ -9,7 +9,7 @@ class MainSettings extends Component {
   constructor() {
     super();
 
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmit = ::this.onSubmit;
   }
 
   onSubmit(settings) {
@@ -23,21 +23,12 @@ class MainSettings extends Component {
     const { handleSubmit } = this.props;
 
     return (
-      <div>
+      <div className="app-container">
         <h3>Main settings</h3>
         <form onSubmit={handleSubmit(this.onSubmit)}>
           <div className="form-group">
-            <label>Decimal:</label>
-            <Field
-              name="decimal"
-              className="form-control"
-              component="input"
-              type="number"
-            />
-          </div>
-          <div className="form-group">
             <label>Launch on startup:</label>
-            <label>
+            <label className="checkbox-inline">
               <Field
                 name="autoLaunch"
                 component="input"
@@ -46,7 +37,7 @@ class MainSettings extends Component {
               />{' '}
               Yes
             </label>
-            <label>
+            <label className="checkbox-inline">
               <Field
                 name="autoLaunch"
                 component="input"

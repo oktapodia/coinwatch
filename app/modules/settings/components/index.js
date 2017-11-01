@@ -6,9 +6,7 @@ import MainSettings from './MainSettings';
 class Settings extends Component {
   render() {
     return (
-      <div>
-        <MainSettings settings={this.props.settings} />
-      </div>
+      <MainSettings settings={this.props.settings} />
     );
   }
 }
