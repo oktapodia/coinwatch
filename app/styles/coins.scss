@@ -1,18 +1,37 @@
 .coins {
-  padding: 10px;
+  thead > tr {
+    background-color: #333;
+
+    a {
+      color: #fff;
+
+      &:hover {
+        color: #ccc;
+      }
+    }
+  }
 
   .coin {
-    display: flex;
+    background-color: $table-tr-background-color;
+    color: #000;
+  }
+
+  .coin:nth-of-type(odd) {
+    background-color: $table-tr-background-color-odd;
+  }
+
+  .coin {
+    //display: flex;
 
     & > div {
       flex-grow: 1;
     }
 
     .name {
-      display: flex;
-      flex-direction: row;
-      text-align: left;
-      flex-grow: 2;
+      //display: flex;
+      //flex-direction: row;
+      //text-align: left;
+      //flex-grow: 2;
 
       img {
         width: 30px;
@@ -26,8 +45,8 @@
     }
 
     .price {
-      display: flex;
-      flex-direction: row;
+      //display: flex;
+      //flex-direction: row;
       margin: 5px 50px;
     }
 
@@ -36,9 +55,30 @@
       color: red;
       text-align: right;
 
-      & > span {
-        cursor: pointer;
+      & > a {
+        margin: 0 5px;
       }
+
+      .remove {
+        &:hover {
+          color: red;
+        }
+      }
+    }
+  }
+}
+
+form {
+  input[type="submit"],
+  input[type="submit"]:active {
+    background: $navbar-color;
+    color: #fff;
+    margin: 10px auto;
+    width: 100%;
+
+    &:hover {
+      background: lighten($navbar-color, 15);
+      color: #fff;
     }
   }
 }

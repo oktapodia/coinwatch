@@ -5,39 +5,48 @@ import { connect } from 'react-redux';
 import { isUndefined, find } from 'lodash';
 import { BASE_IMAGE_URL } from '../../../connectors/cryptocompare/api';
 import { getCoinPrice } from '../actions';
+import { removeCoin, toggleVisibility } from '../actions';
 
 export class Coin extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onRemove = ::this.onRemove;
+    this.onToggleVisibility = ::this.onToggleVisibility;
+  }
+
   componentWillMount() {
-    if (isUndefined(this.props.prices)) {
-      this.props.getCoinPrice(this.props.coin);
+    if (isUndefined(this.props.price)) {
+      this.props.getCoinPrice(this.props);
     }
   }
 
+  onRemove(slug) {
+    this.props.removeCoin(slug);
+  }
+
+  onToggleVisibility(slug) {
+    this.props.toggleVisibility(slug);
+  }
+
   render() {
-    const { coin, prices, removeButtonHandler } = this.props;
-
-    const currentPriceDisplayed = !isUndefined(prices) ? `$${prices.USD}` : 'Loading...';
-
-    let removeButtonHandlerDisplay = null;
-    if (removeButtonHandler) {
-      removeButtonHandlerDisplay = (
-        <span className="glyphicon glyphicon-remove-circle" onClick={() => removeButtonHandler(coin)} />
-      );
-    }
+    const { coin, price, visibility, slug } = this.props;
+    const currentPriceDisplayed = !isUndefined(price) ? `${price}` : 'Loading...';
 
     return (
-      <div className="coin">
-        <div className="name">
+      <tr className="coin">
+        <td className="name">
           <img src={`${BASE_IMAGE_URL}${coin.ImageUrl}`} className="img-circle" />
           <span>{coin.FullName}</span>
-        </div>
-        <div className="price">
+        </td>
+        <td className="price">
           {currentPriceDisplayed}
-        </div>
-        <div className="actions">
-          {removeButtonHandlerDisplay}
-        </div>
-      </div>
+        </td>
+        <td className="actions">
+          <a onClick={() => this.onToggleVisibility(slug)} className="visibility"><span className={`glyphicon glyphicon-eye-open toggle-button ${visibility && 'active'}`} /></a>
+          <a onClick={() => this.onRemove(slug)} className="remove"><span className="glyphicon glyphicon-remove-circle" /></a>
+        </td>
+      </tr>
     );
   }
 }
@@ -47,16 +56,10 @@ Coin.propTypes = {
     ImageUrl: PropTypes.string.isRequired,
     FullName: PropTypes.string.isRequired,
   }).isRequired,
-  prices: PropTypes.shape({
-    USD: PropTypes.number,
-  }),
-  removeButtonHandler: PropTypes.func.isRequired,
+  to: PropTypes.string,
+  exchange: PropTypes.string,
+  price: PropTypes.string,
+  removeCoin: PropTypes.func.isRequired,
 };
 
-function mapStateToProps({ coins }, { coin }) {
-  return {
-    prices: coins.prices[coin.Symbol],
-  };
-}
-
-export default connect(mapStateToProps, { getCoinPrice })(Coin);
+export default connect(null, { getCoinPrice, removeCoin, toggleVisibility })(Coin);

@@ -1,6 +1,7 @@
 // @flow
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import image from "../appIconLarge.png";
 
 class Navbar extends Component {
   render() {
@@ -8,7 +9,7 @@ class Navbar extends Component {
       <nav className="navbar navbar-default navbar-static-top">
         <div className="top-container">
           <div className="title">
-            <h1><Link to="/">Coin Watch</Link></h1>
+            <h1><Link to="/"><img src={image} width={50} /> Coin Watch</Link></h1>
           </div>
           <div className="content">
           </div>

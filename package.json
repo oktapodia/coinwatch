@@ -1,7 +1,7 @@
 {
   "name": "coinwatch",
   "productName": "CoinWatch",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Follow your cryptocurrencies from your Osx menubar",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
@@ -209,9 +209,12 @@
     "menubar": "^5.2.3",
     "moment": "^2.19.1",
     "prop-types": "^15.6.0",
+    "query-string": "^5.0.1",
     "react": "^16.0.0",
+    "react-addons-shallow-compare": "^15.6.2",
     "react-dom": "^16.0.0",
     "react-hot-loader": "3.1.1",
+    "react-modal": "^3.1.0",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",

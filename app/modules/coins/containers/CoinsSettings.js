@@ -1,79 +1,101 @@
 // @flow
-import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
-import { find, isEmpty, map, values } from 'lodash';
-import SelectField from '../../form/SelectField/index';
-import { getCoins } from '../actions';
-import Coin from '../components/Coin';
-import { saveCoinSettings, removeCoinSettings } from '../../settings/actions';
+import React, { Component } from "react";
+import { Field, reduxForm, SubmissionError } from "redux-form";
+import { connect } from "react-redux";
+import { find, isEmpty, map, mapValues, values } from "lodash";
+import SelectField from "../../form/SelectField/index";
+import { getCoinPrice, getCoins, getExchangeList, getSymbolList, saveCoin } from "../actions";
 
 class CoinsSettings extends Component {
   constructor() {
     super();
 
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onRemove = this.onRemove.bind(this);
+    this.onSubmit = ::this.onSubmit;
   }
+
   componentWillMount() {
     if (isEmpty(this.props.coins)) {
       this.props.getCoins();
     }
+    if (isEmpty(this.props.exchanges)) {
+      this.props.getExchangeList();
+    }
+    if (isEmpty(this.props.symbols)) {
+      this.props.getSymbolList();
+    }
   }
 
-  onSubmit({ coin }) {
-    this.props.saveCoinSettings(coin.value);
-  }
+  onSubmit(props) {
+    props = mapValues(props, (p) => p.value);
 
-  onRemove(coin) {
-    this.props.removeCoinSettings(coin);
+    return this.props.getCoinPrice(props)
+      .then(() => {
+        return this.props.saveCoin(props);
+      })
+      .then(() => {
+        return this.props.closeModal();
+      })
+      .catch((error) => {
+        throw new SubmissionError({
+          _error: error.Message,
+        });
+      });
   }
 
   render() {
-    const { coins, handleSubmit, followedCoins } = this.props;
+    const { error, submitting, coins, exchanges, symbols, handleSubmit } = this.props;
 
     if (isEmpty(coins)) {
       return <div>Loading...</div>;
     }
 
-    const options = values(map(coins.Data, (d) => ({ label: d.FullName, value: d })));
-
-    const followedCoinsDisplay = map(followedCoins, (fc) => {
-      return (
-        <Coin key={fc.Id} coin={fc} removeButtonHandler={this.onRemove} />
-      );
-    });
+    const coinsOptions = values(map(coins.Data, (d) => ({ label: d.FullName, value: d })));
+    const exchangesOptions = values(map(exchanges, (d) => ({ label: d, value: d })));
+    const symbolsOptions = values(map(symbols, (d) => ({ label: d, value: d })));
 
     return (
       <div>
-        <h3>Coin settings</h3>
-
+        <h3>Add a coin</h3>
         <form onSubmit={handleSubmit(this.onSubmit)}>
-          <div className="input-group">
+          <label>Select your from symbol*</label>
+          <div className="form-group">
             <Field
               name="coin"
-              options={options}
+              options={coinsOptions}
               component={SelectField}
             />
-            <span className="input-group-btn">
-              <input className="btn btn-default" type="submit" value="Add" />
-            </span>
           </div>
+          <div className="form-group">
+            <label>Select your to symbol*</label>
+            <Field
+              name="to"
+              options={symbolsOptions}
+              component={SelectField}
+            />
+          </div>
+          <div className="form-group">
+
+            <label>Select your exchange</label>
+            <Field
+              name="exchange"
+              options={exchangesOptions}
+              component={SelectField}
+            />
+          </div>
+          <input type="submit" disabled={submitting} value="Add" className="btn btn-default" />
         </form>
-        <div>
-          <h3>You are following these coins:</h3>
-          {followedCoinsDisplay}
-        </div>
+        {error && <div className="error">{error}</div>}
       </div>
     );
   }
 }
 
-function mapStateToProps({ coins, settings }) {
+function mapStateToProps({ coins }) {
   return {
     coins: coins.data,
-    followedCoins: settings.coins,
+    exchanges: coins.exchanges,
+    symbols: coins.symbols,
   };
 }
 
-export default reduxForm({ form: 'settings/coins' })(connect(mapStateToProps, { getCoins, saveCoinSettings, removeCoinSettings })(CoinsSettings));
+export default reduxForm({ form: "settings/coins" })(connect(mapStateToProps, { getCoins, saveCoin, getExchangeList, getSymbolList, getCoinPrice })(CoinsSettings));
