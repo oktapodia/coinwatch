@@ -38,6 +38,7 @@ export class CoinsPage extends Component {
             <thead>
               <tr>
                 <th>Coin</th>
+                <th>Exchange</th>
                 <th>Price</th>
                 <th className="toolbar">
                   <ModalButton className="pull-right"><span className="glyphicon glyphicon-plus" /></ModalButton>

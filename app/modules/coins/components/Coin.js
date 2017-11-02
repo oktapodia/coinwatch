@@ -32,6 +32,7 @@ export class Coin extends Component {
       price,
       visibility,
       slug,
+      exchange,
     } = this.props;
     const currentPriceDisplayed = !isNull(price) ? `${price}` : 'Loading...';
 
@@ -40,6 +41,9 @@ export class Coin extends Component {
         <td className="name">
           <img src={`${BASE_IMAGE_URL}${coin.ImageUrl}`} className="img-circle" alt={coin.FullName} />
           <span>{coin.FullName}</span>
+        </td>
+        <td className="price">
+          {exchange}
         </td>
         <td className="price">
           {currentPriceDisplayed}
@@ -54,6 +58,7 @@ export class Coin extends Component {
 }
 
 Coin.propTypes = {
+  exchange: PropTypes.string.isRequired,
   price: PropTypes.string,
   coin: PropTypes.shape({
     ImageUrl: PropTypes.string.isRequired,
