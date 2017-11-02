@@ -108,7 +108,7 @@ export default merge.smart(baseConfig, {
       { from: 'app/appIcon.png' },
       { from: 'app/appIconLarge.png' },
       { from: 'app/icon.icns' },
-      ]),
+    ]),
     /**
      * Create global constants which can be configured at compile time.
      *
