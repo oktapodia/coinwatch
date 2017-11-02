@@ -4,11 +4,22 @@ import { map } from 'lodash';
 import { connect } from 'react-redux';
 import Coin from '../components/Coin';
 import CoinSettings from './CoinsSettings';
+import { toggleForceRefresh } from '../actions';
 import ModalButton from '../../modal/containers/ModalButton';
 import Modal from '../../modal/containers/Modal';
-import shallowCompare from 'react-addons-shallow-compare'; // ES6
+import shallowCompare from 'react-addons-shallow-compare';
 
 export class CoinsPage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onClickForceRefresh = ::this.onClickForceRefresh;
+  }
+
+  onClickForceRefresh() {
+    this.props.toggleForceRefresh();
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
@@ -31,7 +42,10 @@ export class CoinsPage extends Component {
               <tr>
                 <th>Coin</th>
                 <th>Price</th>
-                <th><ModalButton className="pull-right"><span className="glyphicon glyphicon-plus" /></ModalButton></th>
+                <th className="toolbar">
+                  <ModalButton className="pull-right"><span className="glyphicon glyphicon-plus" /></ModalButton>
+                  <a onClick={this.onClickForceRefresh} className="link-force-refresh pull-right"><span className="glyphicon glyphicon-refresh" aria-hidden="true" /></a>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -51,4 +65,4 @@ function mapStateToProps({ coins }) {
   };
 }
 
-export default connect(mapStateToProps)(CoinsPage);
+export default connect(mapStateToProps, { toggleForceRefresh })(CoinsPage);
