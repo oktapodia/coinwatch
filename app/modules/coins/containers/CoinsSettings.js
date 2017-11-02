@@ -78,7 +78,7 @@ class CoinsSettings extends Component {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="exchange">Select your exchange</label>
+            <label htmlFor="exchange">Select your exchange (default: CCCAGG)</label>
             <Field
               name="exchange"
               id="exchange"
@@ -118,6 +118,9 @@ function mapStateToProps({ coins }) {
     coins: coins.data,
     exchanges: coins.exchanges,
     symbols: coins.symbols,
+    initialValues: {
+      exchange: 'CCCAGG',
+    }
   };
 }
 
@@ -129,4 +132,4 @@ const dispatchProps = {
   getCoinPrice,
 };
 
-export default reduxForm({ form: 'settings/coins' })(connect(mapStateToProps, dispatchProps)(CoinsSettings));
+export default connect(mapStateToProps, dispatchProps)(reduxForm({ form: 'settings/coins' })(CoinsSettings));

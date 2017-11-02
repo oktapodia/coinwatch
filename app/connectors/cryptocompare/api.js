@@ -39,7 +39,7 @@ export function getExchangeListApi() {
       'Bitfinex',
       'Bitstamp',
       'Bittrex',
-      'CCAGG',
+      'CCCAGG',
       'CCEDK',
       'Cexio',
       'Coinbase',
