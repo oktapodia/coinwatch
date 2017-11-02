@@ -104,7 +104,11 @@ export default merge.smart(baseConfig, {
   },
 
   plugins: [
-    new CopyWebpackPlugin([{ from: 'app/appIcon.png' }]),
+    new CopyWebpackPlugin([
+      { from: 'app/appIcon.png' },
+      { from: 'app/appIconLarge.png' },
+      { from: 'app/icon.icns' },
+      ]),
     /**
      * Create global constants which can be configured at compile time.
      *

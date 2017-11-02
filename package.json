@@ -44,6 +44,7 @@
       "package.json"
     ],
     "dmg": {
+      "icon": "app/dist/icon.icns",
       "contents": [
         {
           "x": 130,
@@ -69,7 +70,7 @@
       ]
     },
     "directories": {
-      "buildResources": "resources",
+      "buildResources": "app/dist",
       "output": "release"
     }
   },
