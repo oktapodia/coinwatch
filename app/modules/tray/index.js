@@ -1,16 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { forEach, map, find } from 'lodash';
-import { getCoinPrice } from '../coins/actions';
+import { getCoinPrice, toggleForceRefresh } from '../coins/actions';
 
 class Tray extends Component {
   constructor() {
     super();
-    this.refresh = this.refresh.bind(this);
+    this.refresh = ::this.refresh;
   }
 
   componentDidMount() {
     setInterval(this.refresh, 10000);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.forceRefresh) {
+      this.props.toggleForceRefresh();
+      this.refresh();
+    }
   }
 
   refresh() {
@@ -27,7 +34,8 @@ class Tray extends Component {
 function mapStateToProps({ coins }) {
   return {
     coins: coins.coins,
+    forceRefresh: coins.forceRefresh,
   };
 }
 
-export default connect(mapStateToProps, { getCoinPrice })(Tray);
+export default connect(mapStateToProps, { getCoinPrice, toggleForceRefresh })(Tray);

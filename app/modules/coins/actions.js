@@ -113,3 +113,10 @@ export function toggleVisibility(slug) {
     return dispatch({ type: SETTINGS_TOGGLE_VISIBILITY_SUCCESS, data: { slug } });
   };
 }
+
+export const FORCE_REFRESH_TOGGLE = 'FORCE_REFRESH_TOGGLE';
+export function toggleForceRefresh() {
+  return (dispatch) => {
+    return dispatch({ type: FORCE_REFRESH_TOGGLE });
+  };
+}

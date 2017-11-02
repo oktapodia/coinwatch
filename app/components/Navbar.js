@@ -1,12 +1,24 @@
 // @flow
 import { ipcRenderer } from 'electron';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
+import { toggleForceRefresh } from '../modules/coins/actions';
 import image from "../appIconLarge.png";
 
 class Navbar extends Component {
+  constructor(props) {
+    super(props);
+
+    this.onClickForceRefresh = ::this.onClickForceRefresh;
+  }
+
   onClickUpdateAvailable() {
     ipcRenderer.send('check-update', true);
+  }
+
+  onClickForceRefresh() {
+    this.props.toggleForceRefresh();
   }
 
   render() {
@@ -19,6 +31,7 @@ class Navbar extends Component {
           <div className="content">
           </div>
           <div className="toolbar pull-right">
+            <a onClick={this.onClickForceRefresh} className="link-force-refresh"><span className="glyphicon glyphicon-refresh" aria-hidden="true" /></a>
             <a onClick={this.onClickUpdateAvailable} className="link-update"><span className="glyphicon glyphicon-download-alt" aria-hidden="true" /></a>
             <Link to="/settings" className="link-settings"><span className="glyphicon glyphicon-cog" aria-hidden="true" /></Link>
           </div>
@@ -31,4 +44,4 @@ class Navbar extends Component {
   }
 }
 
-export default Navbar;
+export default connect(null, { toggleForceRefresh })(Navbar);

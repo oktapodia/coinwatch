@@ -11,6 +11,7 @@ import {
   SETTINGS_REMOVE_COIN_SUCCESS,
   SETTINGS_SAVE_COIN_SUCCESS,
   SETTINGS_TOGGLE_VISIBILITY_SUCCESS,
+  FORCE_REFRESH_TOGGLE,
 } from './actions';
 import formatPrice from '../../helpers/formatPrice';
 import { TRAY_UPDATE } from '../../main/Tray';
@@ -20,6 +21,7 @@ const initialState = {
   exchanges: [],
   symbols: [],
   coins: settings.get('coins') || [],
+  forceRefresh: false,
 };
 
 export default function coinsReducer(state = initialState, action) {
@@ -50,6 +52,9 @@ export default function coinsReducer(state = initialState, action) {
       break;
     case GET_SYMBOL_LIST_SUCCESS:
       return { ...state, symbols: action.response };
+      break;
+    case FORCE_REFRESH_TOGGLE:
+      return { ...state, forceRefresh: !state.forceRefresh };
       break;
     case GET_COIN_PRICE_SUCCESS:
       coins = cloneDeep(state.coins);
