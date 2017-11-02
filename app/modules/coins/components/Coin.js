@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isNull } from 'lodash';
 import { BASE_IMAGE_URL } from '../../../connectors/cryptocompare/api';
-import { getCoinPrice, removeCoin, toggleVisibility } from '../actions';
+import { getCoinPrice, removeCoin, toggleVisibility, toggleForceRefresh } from '../actions';
 
 export class Coin extends Component {
   constructor(props) {
@@ -24,6 +24,7 @@ export class Coin extends Component {
 
   onToggleVisibility(slug) {
     this.props.toggleVisibility(slug);
+    this.props.toggleForceRefresh();
   }
 
   render() {
@@ -69,10 +70,18 @@ Coin.propTypes = {
   removeCoin: PropTypes.func.isRequired,
   getCoinPrice: PropTypes.func.isRequired,
   toggleVisibility: PropTypes.func.isRequired,
+  toggleForceRefresh: PropTypes.func.isRequired,
 };
 
 Coin.defaultProps = {
   price: null,
 };
 
-export default connect(null, { getCoinPrice, removeCoin, toggleVisibility })(Coin);
+const dispatchProps = {
+  getCoinPrice,
+  removeCoin,
+  toggleVisibility,
+  toggleForceRefresh,
+};
+
+export default connect(null, dispatchProps)(Coin);
