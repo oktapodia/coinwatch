@@ -21,19 +21,6 @@ class TrayMenu {
       {
         label: 'Check for update...',
         click: () => {
-          if (process.env.NODE_ENV === 'development') {
-            dialog.showMessageBox(
-              {
-                type: 'info',
-                buttons: ['Ok'],
-                title: 'Development env',
-                message:
-                  'Not available into the dev mode',
-              }
-            );
-            return;
-          }
-
           autoUpdater.checkForUpdates();
         }
       },

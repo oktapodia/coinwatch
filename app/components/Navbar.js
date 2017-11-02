@@ -1,9 +1,14 @@
 // @flow
+import { ipcRenderer } from 'electron';
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import image from "../appIconLarge.png";
 
 class Navbar extends Component {
+  onClickUpdateAvailable() {
+    ipcRenderer.send('check-update', true);
+  }
+
   render() {
     return (
       <nav className="navbar navbar-default navbar-static-top">
@@ -14,6 +19,7 @@ class Navbar extends Component {
           <div className="content">
           </div>
           <div className="toolbar pull-right">
+            <a onClick={this.onClickUpdateAvailable} className="link-update"><span className="glyphicon glyphicon-download-alt" aria-hidden="true" /></a>
             <Link to="/settings" className="link-settings"><span className="glyphicon glyphicon-cog" aria-hidden="true" /></Link>
           </div>
         </div>

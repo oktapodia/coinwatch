@@ -1,4 +1,4 @@
-import { dialog } from 'electron';
+import { dialog, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 
@@ -11,14 +11,32 @@ class AutoUpdater {
     this.autoUpdater.logger = log;
     this.autoUpdater.logger.transports.file.level = 'info';
 
-    this.autoUpdater.on('update-downloaded', this.onUpdateDownloaded.bind(this));
-    this.autoUpdater.on('checking-for-update', this.onCheckingForUpdate.bind(this));
-    this.autoUpdater.on('update-available', this.onUpdateAvailable.bind(this));
-    this.autoUpdater.on('update-not-available', this.onUpdateNotAvailable.bind(this));
-    this.autoUpdater.on('download-progress', this.onDownloadProgress.bind(this));
-    this.autoUpdater.on('error', this.onError.bind(this));
+    this.autoUpdater.on('update-downloaded', ::this.onUpdateDownloaded);
+    this.autoUpdater.on('checking-for-update', ::this.onCheckingForUpdate);
+    this.autoUpdater.on('update-available', ::this.onUpdateAvailable);
+    this.autoUpdater.on('update-not-available', ::this.onUpdateNotAvailable);
+    this.autoUpdater.on('download-progress', ::this.onDownloadProgress);
+    this.autoUpdater.on('error', ::this.onError);
 
-    // this.autoUpdater.checkForUpdates();
+    ipcMain.on('check-update', ::this.checkForUpdates);
+  }
+
+  checkForUpdates() {
+    if (process.env.NODE_ENV === 'development') {
+      dialog.showMessageBox(
+        {
+          type: 'info',
+          buttons: ['Ok'],
+          title: 'Development env',
+          message:
+            'Not available in dev mode',
+        }
+      );
+      return;
+    }
+
+    log.debug('checkForUpdates triggered');
+    this.autoUpdater.checkForUpdates();
   }
 
   onUpdateDownloaded(info) {

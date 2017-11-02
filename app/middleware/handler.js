@@ -86,7 +86,7 @@ export default store => next => (action) => {
     .catch((err) => {
       const { message, status } = err;
 
-      console.log(err);
+      console.log(err, err.message, err.status);
 
       /*
        * handle the error
