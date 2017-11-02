@@ -10,6 +10,7 @@ class Tray extends Component {
   }
 
   componentDidMount() {
+    this.refresh();
     setInterval(this.refresh, 30000);
   }
 
