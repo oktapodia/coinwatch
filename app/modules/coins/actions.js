@@ -1,7 +1,5 @@
-// @flow
-
 import settings from 'electron-settings';
-import { findIndex, find, forEach, has } from 'lodash';
+import { find, findIndex } from 'lodash';
 import { CALL_HANDLER } from '../../middleware/handler';
 import { getCoinListApi, getCoinPriceApi, getExchangeListApi, getSymbolListApi } from '../../connectors/cryptocompare/api';
 import { generateSlug } from './helpers';
@@ -62,6 +60,7 @@ export function getSymbolList() {
 export const SETTINGS_SAVE_COIN_ATTEMPT = 'SETTINGS_SAVE_COIN_ATTEMPT';
 export const SETTINGS_SAVE_COIN_SUCCESS = 'SETTINGS_SAVE_COIN_SUCCESS';
 export const SETTINGS_SAVE_COIN_FAILED = 'SETTINGS_SAVE_COIN_FAILED';
+
 export function saveCoin(coin) {
   return (dispatch) => {
     dispatch({ type: SETTINGS_SAVE_COIN_ATTEMPT });
@@ -69,6 +68,8 @@ export function saveCoin(coin) {
     if (!settings.has('coins')) {
       settings.set('coins', []);
     }
+
+    // eslint-disable-next-line
     coin.slug = generateSlug(coin.coin.Symbol, coin.to, coin.exchange);
 
     const coins = settings.get('coins');
@@ -77,18 +78,20 @@ export function saveCoin(coin) {
       return dispatch({ type: SETTINGS_SAVE_COIN_FAILED });
     }
 
+    // eslint-disable-next-line
     coin.visibility = false;
 
     coins.push(coin);
     settings.set('coins', coins);
 
     return dispatch({ type: SETTINGS_SAVE_COIN_SUCCESS });
-  }
+  };
 }
 
 export const SETTINGS_REMOVE_COIN_ATTEMPT = 'SETTINGS_REMOVE_COIN_ATTEMPT';
 export const SETTINGS_REMOVE_COIN_SUCCESS = 'SETTINGS_REMOVE_COIN_SUCCESS';
 export const SETTINGS_REMOVE_COIN_FAILED = 'SETTINGS_REMOVE_COIN_FAILED';
+
 export function removeCoin(slug) {
   return (dispatch) => {
     dispatch({ type: SETTINGS_REMOVE_COIN_ATTEMPT });
@@ -108,15 +111,13 @@ export function removeCoin(slug) {
 }
 
 export const SETTINGS_TOGGLE_VISIBILITY_SUCCESS = 'SETTINGS_TOGGLE_VISIBILITY_SUCCESS';
+
 export function toggleVisibility(slug) {
-  return (dispatch) => {
-    return dispatch({ type: SETTINGS_TOGGLE_VISIBILITY_SUCCESS, data: { slug } });
-  };
+  return (dispatch) => dispatch({ type: SETTINGS_TOGGLE_VISIBILITY_SUCCESS, data: { slug } });
 }
 
 export const FORCE_REFRESH_TOGGLE = 'FORCE_REFRESH_TOGGLE';
+
 export function toggleForceRefresh() {
-  return (dispatch) => {
-    return dispatch({ type: FORCE_REFRESH_TOGGLE });
-  };
+  return (dispatch) => dispatch({ type: FORCE_REFRESH_TOGGLE });
 }

@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import { push } from 'react-router-redux';
 import axios from 'axios';
 
@@ -12,30 +10,29 @@ export const CALL_API = Symbol('Call API');
  * Read more about Normalizr: https://github.com/gaearon/normalizr
  */
 
-const callApi = (method, url, data) => {
-  return axios({ method, url, data })
-    .then((response) => {
-      if (response.status === 204) {
-        return ({ request: {}, response });
-      }
+const callApi = (method, url, data) => axios({ method, url, data })
+  .then((response) => {
+    if (response.status === 204) {
+      return ({ request: {}, response });
+    }
 
-      return {
-        request: data,
-        response,
-      };
-    })
-    .then((response) => {
-      if (!response.statusText === 'OK') {
-        const error = new Error('API middleware: response is not OK');
-        error.json = response.data;
-        error.response = response;
+    return {
+      request: data,
+      response,
+    };
+  })
+  .then((response) => {
+    if (!response.statusText === 'OK') {
+      const error = new Error('API middleware: response is not OK');
+      error.json = response.data;
+      error.response = response;
 
-        return Promise.reject(error);
-      }
+      return Promise.reject(error);
+    }
 
-      return response.response.data;
-    });
-};
+    return response.response.data;
+  });
+
 
 /*
  * A Redux middleware that interprets actions with CALL_API info specified.
@@ -50,12 +47,12 @@ export default store => next => (action) => {
   }
 
   let { endpoint } = callAPI;
-  const { types, method, data, options, extras } = callAPI;
-  // let displayNotification = true;
-
-  /*  if (options && !options.notification) {
-      displayNotification = false;
-    }*/
+  const {
+    types,
+    method,
+    data,
+    extras,
+  } = callAPI;
 
   if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected an array of three action types.');
@@ -84,21 +81,12 @@ export default store => next => (action) => {
   next(actionWith({ type: requestType, endpoint, extras }));
 
   return callApi(method, endpoint, data)
-    .then((response) => {
-      // const locale = store.getState().settings.locale;
-
-      /*      if (displayNotification) {
-              // const notification = options.successMessage[locale] || options.successMessage || {};
-              const notification = {};
-              // notification.level = notification.level || 'success';
-              notification.level = 'success';
-              // notification.message = notification.message || 'Successfull!';
-              notification.message = 'Successfull!';
-              store.dispatch(addNotification(notification));
-            }*/
-
-      return next(actionWith({ response, endpoint, type: successType, extras }));
-    })
+    .then((response) => next(actionWith({
+      response,
+      endpoint,
+      type: successType,
+      extras,
+    })))
     .catch((err) => {
       const { message, status } = err;
 
@@ -114,23 +102,16 @@ export default store => next => (action) => {
 
       error.status = status || 500;
 
-      // if (status === 403) {
-      /*      const notification = {};
-            notification.level = 'error';
-            notification.message = message;
-            store.dispatch(addNotification(notification));*/
-      // }
-
       if (status === 500) {
         return next(push('/error'));
       }
 
-      // const notification = {};
-      // notification.level = 'error';
-      // notification.message = error.message;
-      // store.dispatch(addNotification(notification));
-
-      next(actionWith({ endpoint, type: failureType, error, extras }));
+      next(actionWith({
+        endpoint,
+        type: failureType,
+        error,
+        extras,
+      }));
 
       /*
        * break propagation

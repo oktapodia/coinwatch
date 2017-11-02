@@ -1,4 +1,3 @@
-// @flow
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { createBrowserHistory } from 'history';
@@ -13,16 +12,16 @@ function configureStore(initialState) {
   const middleware = [];
   const enhancers = [];
 
-// Thunk Middleware
+  // Thunk Middleware
   middleware.push(thunk);
 
-// Api middleware
+  // Api middleware
   middleware.push(api);
 
-// Handler middleware
+  // Handler middleware
   middleware.push(handler);
 
-// Router Middleware
+  // Router Middleware
   const router = routerMiddleware(history);
   middleware.push(router);
 

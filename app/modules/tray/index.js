@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { forEach, map, find } from 'lodash';
+import { forEach } from 'lodash';
 import { getCoinPrice, toggleForceRefresh } from '../coins/actions';
 
 class Tray extends Component {
@@ -21,15 +21,24 @@ class Tray extends Component {
   }
 
   refresh() {
-    forEach(this.props.coins, (coin) => {
-      return this.props.getCoinPrice(coin);
-    });
+    forEach(this.props.coins, (coin) => this.props.getCoinPrice(coin));
   }
 
   render() {
     return <div />;
   }
 }
+
+Tray.propTypes = {
+  coins: PropTypes.array.isRequired,
+  forceRefresh: PropTypes.bool.isRequired,
+  getCoinPrice: PropTypes.func.isRequired,
+  toggleForceRefresh: PropTypes.func.isRequired,
+};
+
+Tray.defaultProps = {
+  forceRefresh: false,
+};
 
 function mapStateToProps({ coins }) {
   return {

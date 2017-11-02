@@ -1,4 +1,5 @@
-import { Menu, BrowserWindow, dialog } from 'electron';
+import { BrowserWindow, Menu } from 'electron';
+import path from 'path';
 import { autoUpdater } from 'electron-updater';
 import { isDarwin, isWindows } from '../helpers/env';
 import packageJson from '../../package.json';
@@ -22,19 +23,25 @@ class TrayMenu {
         label: 'Check for update...',
         click: () => {
           autoUpdater.checkForUpdates();
-        }
+        },
       },
       {
         label: 'About',
         click() {
           if (!isWindows) {
-            let aboutWindow = new BrowserWindow({ width: 200, height: 200, show: false, autoHideMenuBar: true, resizable: true });
-            aboutWindow.on("closed", () => {
+            let aboutWindow = new BrowserWindow({
+              width: 200,
+              height: 200,
+              show: false,
+              autoHideMenuBar: true,
+              resizable: true,
+            });
+            aboutWindow.on('closed', () => {
               aboutWindow = null;
             });
 
             // Load a remote URL
-            const basePath = __dirname + (process.env.NODE_ENV === 'development' ? '/..' : '');
+            const basePath = path.join(__dirname, process.env.NODE_ENV === 'development' ? '/..' : '');
             aboutWindow.loadURL(`file://${basePath}/windows/about/about.html`);
 
             aboutWindow.once('ready-to-show', () => {
@@ -45,7 +52,7 @@ class TrayMenu {
               }
             });
           }
-        }
+        },
       },
       {
         type: 'separator',

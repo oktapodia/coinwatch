@@ -1,10 +1,9 @@
-// @flow
-import React, { Component } from "react";
-import { Field, reduxForm, SubmissionError } from "redux-form";
-import { connect } from "react-redux";
-import { find, isEmpty, map, mapValues, values } from "lodash";
-import SelectField from "../../form/SelectField/index";
-import { getCoinPrice, getCoins, getExchangeList, getSymbolList, saveCoin } from "../actions";
+import React, { Component } from 'react';
+import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { connect } from 'react-redux';
+import { isEmpty, map, mapValues, values } from 'lodash';
+import SelectField from '../../form/SelectField/index';
+import { getCoinPrice, getCoins, getExchangeList, getSymbolList, saveCoin } from '../actions';
 
 class CoinsSettings extends Component {
   constructor() {
@@ -26,15 +25,11 @@ class CoinsSettings extends Component {
   }
 
   onSubmit(props) {
-    props = mapValues(props, (p) => p.value);
+    const propsMapped = mapValues(props, (p) => p.value);
 
-    return this.props.getCoinPrice(props)
-      .then(() => {
-        return this.props.saveCoin(props);
-      })
-      .then(() => {
-        return this.props.closeModal();
-      })
+    return this.props.getCoinPrice(propsMapped)
+      .then(() => this.props.saveCoin(propsMapped))
+      .then(() => this.props.closeModal())
       .catch((error) => {
         throw new SubmissionError({
           _error: error.Message,
@@ -43,7 +38,14 @@ class CoinsSettings extends Component {
   }
 
   render() {
-    const { error, submitting, coins, exchanges, symbols, handleSubmit } = this.props;
+    const {
+      error,
+      submitting,
+      coins,
+      exchanges,
+      symbols,
+      handleSubmit,
+    } = this.props;
 
     if (isEmpty(coins)) {
       return <div>Loading...</div>;
@@ -57,27 +59,29 @@ class CoinsSettings extends Component {
       <div>
         <h3>Add a coin</h3>
         <form onSubmit={handleSubmit(this.onSubmit)}>
-          <label>Select your from symbol*</label>
+          <label htmlFor="coin">Select your from symbol*</label>
           <div className="form-group">
             <Field
               name="coin"
+              id="coin"
               options={coinsOptions}
               component={SelectField}
             />
           </div>
           <div className="form-group">
-            <label>Select your to symbol*</label>
+            <label htmlFor="to">Select your to symbol*</label>
             <Field
               name="to"
+              id="to"
               options={symbolsOptions}
               component={SelectField}
             />
           </div>
           <div className="form-group">
-
-            <label>Select your exchange</label>
+            <label htmlFor="exchange">Select your exchange</label>
             <Field
               name="exchange"
+              id="exchange"
               options={exchangesOptions}
               component={SelectField}
             />
@@ -90,6 +94,25 @@ class CoinsSettings extends Component {
   }
 }
 
+CoinsSettings.propTypes = {
+  error: PropTypes.string,
+  submitting: PropTypes.bool.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  coins: PropTypes.object.isRequired,
+  exchanges: PropTypes.array.isRequired,
+  symbols: PropTypes.array.isRequired,
+  getCoins: PropTypes.func.isRequired,
+  getExchangeList: PropTypes.func.isRequired,
+  getSymbolList: PropTypes.func.isRequired,
+  getCoinPrice: PropTypes.func.isRequired,
+  saveCoin: PropTypes.func.isRequired,
+  closeModal: PropTypes.func.isRequired,
+};
+
+CoinsSettings.defaultProps = {
+  error: null,
+};
+
 function mapStateToProps({ coins }) {
   return {
     coins: coins.data,
@@ -98,4 +121,12 @@ function mapStateToProps({ coins }) {
   };
 }
 
-export default reduxForm({ form: "settings/coins" })(connect(mapStateToProps, { getCoins, saveCoin, getExchangeList, getSymbolList, getCoinPrice })(CoinsSettings));
+const dispatchProps = {
+  getCoins,
+  saveCoin,
+  getExchangeList,
+  getSymbolList,
+  getCoinPrice,
+};
+
+export default reduxForm({ form: 'settings/coins' })(connect(mapStateToProps, dispatchProps)(CoinsSettings));

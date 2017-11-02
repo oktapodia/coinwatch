@@ -1,9 +1,8 @@
-
 function formatPrice(price, currency) {
   const symbols = {
-    'USD': '$',
-    'EUR': '€',
-    'GBP': '£',
+    USD: '$',
+    EUR: '€',
+    GBP: '£',
   };
 
   return `${symbols[currency]}${price}`;

@@ -1,5 +1,4 @@
 /* eslint global-require: 1, flowtype-errors/show-errors: 0 */
-
 /**
  * This module executes inside of electron's main process. You can start
  * electron renderer process from here and communicate with the other processes
@@ -13,6 +12,8 @@
 import { app } from 'electron';
 import log from 'electron-log';
 import path from 'path';
+import electronDebug from 'electron-debug';
+import module from 'module';
 import { isDarwin } from './helpers/env';
 
 import initWindow from './main/initWindow';
@@ -20,7 +21,7 @@ import AutoUpdater from './main/AutoUpdater';
 import AutoLaunch from './main/AutoLaunch';
 import Tray from './main/Tray';
 import Menu from './main/menu';
-import { installExtensions } from './helpers/devTools';
+import installExtensions from './helpers/devTools';
 
 log.debug('App starting...');
 
@@ -31,9 +32,9 @@ function setQuitState(state) {
 }
 
 if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
-  require('electron-debug')();
+  electronDebug();
   const p = path.join(__dirname, '..', 'app', 'node_modules');
-  require('module').globalPaths.push(p);
+  module.globalPaths.push(p);
 }
 
 /**
@@ -68,8 +69,8 @@ app.on('ready', async () => {
     }
   });
 
-  new AutoLaunch();
-  new AutoUpdater(setQuitState);
-  new Menu(appWindow);
-  new Tray(appWindow);
+  new AutoLaunch(); // eslint-disable-line no-new
+  new AutoUpdater(setQuitState); // eslint-disable-line no-new
+  new Menu(appWindow); // eslint-disable-line no-new
+  new Tray(appWindow); // eslint-disable-line no-new
 });

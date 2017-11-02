@@ -1,7 +1,7 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { createHashHistory } from 'history';
-import { routerMiddleware, routerActions } from 'react-router-redux';
+import { routerActions, routerMiddleware } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 import api from '../middleware/api';
@@ -26,7 +26,7 @@ const configureStore = (initialState) => {
   // Logging Middleware
   const logger = createLogger({
     level: 'info',
-    collapsed: true
+    collapsed: true,
   });
   middleware.push(logger);
 
@@ -57,9 +57,7 @@ const configureStore = (initialState) => {
 
 
   if (module.hot) {
-    module.hot.accept('../reducers', () =>
-      store.replaceReducer(require('../reducers')) // eslint-disable-line global-require
-    );
+    module.hot.accept('../reducers', () => store.replaceReducer(require('../reducers')));// eslint-disable-line global-require
   }
 
   return store;

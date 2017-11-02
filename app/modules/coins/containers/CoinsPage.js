@@ -1,13 +1,12 @@
-// @flow
 import React, { Component } from 'react';
 import { map } from 'lodash';
 import { connect } from 'react-redux';
+import shallowCompare from 'react-addons-shallow-compare';
 import Coin from '../components/Coin';
 import CoinSettings from './CoinsSettings';
 import { toggleForceRefresh } from '../actions';
 import ModalButton from '../../modal/containers/ModalButton';
 import Modal from '../../modal/containers/Modal';
-import shallowCompare from 'react-addons-shallow-compare';
 
 export class CoinsPage extends Component {
   constructor(props) {
@@ -16,22 +15,20 @@ export class CoinsPage extends Component {
     this.onClickForceRefresh = ::this.onClickForceRefresh;
   }
 
-  onClickForceRefresh() {
-    this.props.toggleForceRefresh();
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
+  }
+
+  onClickForceRefresh() {
+    this.props.toggleForceRefresh();
   }
 
   render() {
     const { followedCoins } = this.props;
 
-    const followedCoinsDisplay = map(followedCoins, (fc, index) => {
-      return (
-        <Coin key={index} {...fc} />
-      );
-    });
+    const followedCoinsDisplay = map(followedCoins, (fc, index) => (
+      <Coin key={index} {...fc} />
+    ));
 
     return (
       <div className="app-container coins">
@@ -44,7 +41,7 @@ export class CoinsPage extends Component {
                 <th>Price</th>
                 <th className="toolbar">
                   <ModalButton className="pull-right"><span className="glyphicon glyphicon-plus" /></ModalButton>
-                  <a onClick={this.onClickForceRefresh} className="link-force-refresh pull-right"><span className="glyphicon glyphicon-refresh" aria-hidden="true" /></a>
+                  <button onClick={this.onClickForceRefresh} className="link-force-refresh pull-right"><span className="glyphicon glyphicon-refresh" aria-hidden="true" /></button>
                 </th>
               </tr>
             </thead>
@@ -53,11 +50,16 @@ export class CoinsPage extends Component {
             </tbody>
           </table>
         </div>
-        <Modal Component={CoinSettings} />
+        <Modal component={CoinSettings} />
       </div>
     );
   }
 }
+
+CoinsPage.propTypes = {
+  followedCoins: PropTypes.array.isRequired,
+  toggleForceRefresh: PropTypes.func.isRequired,
+};
 
 function mapStateToProps({ coins }) {
   return {

@@ -5,3 +5,7 @@ export function getIcosListApi() {
 
   return axios.get(url);
 }
+
+export default {
+  getIcosListApi,
+};

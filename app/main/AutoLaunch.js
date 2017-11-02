@@ -3,6 +3,7 @@ import AutoLaunchPackage from 'auto-launch';
 
 class AutoLaunch {
   autoLaunch: AutoLaunch;
+
   constructor() {
     this.autoLaunch = new AutoLaunchPackage({
       name: app.getName(),

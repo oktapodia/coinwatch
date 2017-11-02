@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import App from './containers/App';
 import CoinsPage from './modules/coins/containers/CoinsPage';
 import IcosPage from './modules/icos/containers/IcosPage';

@@ -10,12 +10,15 @@
       overflow: hidden;
       font-size: 12px;
     }
+
     a {
       color: #2971ff;
     }
+
     a:hover {
       color: #2ed6a1;
     }
+
     .version-area {
       padding-top: 15px;
     }
@@ -38,7 +41,7 @@
     document.write(
       scripts
         .map(script => '<script defer src="' + script + '"><\/script>')
-        .join('')
+        .join(''),
     );
   }
 </script>

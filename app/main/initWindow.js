@@ -1,11 +1,12 @@
 import { BrowserWindow } from 'electron';
+import path from 'path';
 
 export default function initWindow() {
   const defaults = {
-    width: 500,
-    height: 600,
-    minHeight: 300,
-    minWidth: 500,
+    width: 510,
+    height: 560,
+    minHeight: 510,
+    minWidth: 560,
     show: false,
     center: true,
     fullscreenable: false,
@@ -14,7 +15,7 @@ export default function initWindow() {
     },
   };
 
-  const basePath = __dirname + (process.env.NODE_ENV === 'development' ? '/..' : '');
+  const basePath = path.join(__dirname, process.env.NODE_ENV === 'development' ? '/..' : '');
 
   const appWindow = new BrowserWindow(defaults);
   appWindow.loadURL(`file://${basePath}/windows/main/main.html`);

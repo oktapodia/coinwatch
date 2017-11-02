@@ -1,9 +1,7 @@
-// @flow
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { find, isEmpty, map, values } from 'lodash';
-import { updateMainSettings, updateAutolaunchSettings } from '../actions';
+import { updateAutolaunchSettings, updateMainSettings } from '../actions';
 
 class MainSettings extends Component {
   constructor() {
@@ -28,19 +26,21 @@ class MainSettings extends Component {
         <form onSubmit={handleSubmit(this.onSubmit)}>
           <div className="form-group">
             <label>Launch on startup:</label>
-            <label className="checkbox-inline">
+            <label className="checkbox-inline" htmlFor="autoLaunch-yes">
               <Field
                 name="autoLaunch"
+                id="autoLaunch-yes"
                 component="input"
                 type="radio"
                 value="yes"
               />{' '}
               Yes
             </label>
-            <label className="checkbox-inline">
+            <label className="checkbox-inline" htmlFor="autoLaunch-no">
               <Field
                 name="autoLaunch"
                 component="input"
+                id="autoLaunch-no"
                 type="radio"
                 value="no"
               />{' '}
@@ -53,6 +53,12 @@ class MainSettings extends Component {
     );
   }
 }
+
+MainSettings.propTypes = {
+  updateAutolaunchSettings: PropTypes.func.isRequired,
+  updateMainSettings: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+};
 
 function mapStateToProps({ settings }) {
   return {

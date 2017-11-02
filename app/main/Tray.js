@@ -1,15 +1,15 @@
-import { BrowserWindow, Tray as TrayElectron, ipcMain } from 'electron';
+import { ipcMain, Tray as TrayElectron } from 'electron';
 import path from 'path';
-import { map, filter } from 'lodash';
+import { filter, map } from 'lodash';
 import TrayMenu from './TrayMenu';
 
 export const TRAY_UPDATE = 'tray-update';
 
 class Tray {
   tray = null;
-  mainWindow: BrowserWindow;
+  mainWindow;
 
-  constructor(mainWindow: BrowserWindow) {
+  constructor(mainWindow) {
     this.mainWindow = mainWindow;
 
     this.onTrayUpdate = this.onTrayUpdate.bind(this);
@@ -17,8 +17,7 @@ class Tray {
   }
 
   init() {
-    const basePath = __dirname + (process.env.NODE_ENV === 'development' ? '/../' : '/dist/');
-    this.tray = new TrayElectron(path.join(basePath, 'appIcon.png'));
+    this.tray = new TrayElectron(path.join(__dirname, process.env.NODE_ENV === 'development' ? '/../' : '/dist/', 'appIcon.png'));
 
     const trayMenu = new TrayMenu(this, this.autoUpdater);
     this.tray.setContextMenu(trayMenu.getMenu());
@@ -52,9 +51,7 @@ class Tray {
 
     console.log('UPDATED');
 
-    const trayDisplay = map(coinsFiltered, ({ coin, price }) => {
-      return `${coin.Symbol}: ${price}`;
-    });
+    const trayDisplay = map(coinsFiltered, ({ coin, price }) => `${coin.Symbol}: ${price}`);
 
     this.tray.setTitle(trayDisplay.join(' | '));
   }

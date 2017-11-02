@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import MainSettings from './MainSettings';
@@ -11,9 +10,13 @@ class Settings extends Component {
   }
 }
 
+Settings.propTypes = {
+  settings: PropTypes.object.isRequired,
+};
+
 function mapStateToProps({ settings }) {
   return {
-    settings: settings,
+    settings,
   };
 }
 

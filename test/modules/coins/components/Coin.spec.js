@@ -13,6 +13,7 @@ const coin = {
   ImageUrl: '/foo',
   FullName: 'Foo (FOO)',
 };
+
 function setup() {
   const actions = {
     getCoinPrice: spy(),
@@ -32,7 +33,12 @@ function setup() {
 
 describe('Coin component', () => {
   it('should mount without price', () => {
-    const { img, name, price, actions } = setup();
+    const {
+      img,
+      name,
+      price,
+      actions,
+    } = setup();
 
     expect(img.prop('src')).toBe(BASE_IMAGE_URL + coin.ImageUrl);
     expect(name.text()).toBe(`${coin.Name} (${coin.Symbol})`);
@@ -51,43 +57,4 @@ describe('Coin component', () => {
     expect(name.text()).toBe(`${coin.Name} (${coin.Symbol})`);
     expect(price.text()).toBe('Loading...');
   });
-
- /* it('should first button should call increment', () => {
-    const { buttons, actions } = setup();
-    buttons.at(0).simulate('click');
-    expect(actions.increment.called).toBe(true);
-  });
-
-  it('should match exact snapshot', () => {
-    const { actions } = setup();
-    const tree = renderer
-      .create(
-        <div>
-          <Router>
-            <Counter counter={1} {...actions} />
-          </Router>
-        </div>
-      )
-      .toJSON();
-
-    expect(tree).toMatchSnapshot();
-  });
-
-  it('should second button should call decrement', () => {
-    const { buttons, actions } = setup();
-    buttons.at(1).simulate('click');
-    expect(actions.decrement.called).toBe(true);
-  });
-
-  it('should third button should call incrementIfOdd', () => {
-    const { buttons, actions } = setup();
-    buttons.at(2).simulate('click');
-    expect(actions.incrementIfOdd.called).toBe(true);
-  });
-
-  it('should fourth button should call incrementAsync', () => {
-    const { buttons, actions } = setup();
-    buttons.at(3).simulate('click');
-    expect(actions.incrementAsync.called).toBe(true);
-  });*/
 });

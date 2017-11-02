@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { openModal } from '../actions';
 
-class ModalButton extends Component {
-  render() {
-    return (
-      <a className={this.props.className} onClick={this.props.openModal}>{this.props.children}</a>
-    );
-  }
-}
+const ModalButton = ({ className, openModal, children }) => (
+  <button className={className} onClick={openModal}>{children}</button>
+);
+
+ModalButton.propTypes = {
+  className: PropTypes.string.isRequired,
+  openModal: PropTypes.func.isRequired,
+  children: PropTypes.object.isRequired,
+};
 
 export default connect(null, { openModal })(ModalButton);

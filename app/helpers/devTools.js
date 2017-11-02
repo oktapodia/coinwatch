@@ -1,10 +1,9 @@
-
-export const installExtensions = async () => {
-  const installer = require('electron-devtools-installer');
+export default async () => {
+  const installer = require('electron-devtools-installer'); // eslint-disable-line global-require
   const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
   const extensions = [
     'REACT_DEVELOPER_TOOLS',
-    'REDUX_DEVTOOLS'
+    'REDUX_DEVTOOLS',
   ];
 
   return Promise

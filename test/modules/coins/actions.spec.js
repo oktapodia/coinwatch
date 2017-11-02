@@ -1,4 +1,3 @@
-import { spy } from 'sinon';
 import * as actions from '../../../app/modules/coins/actions';
 
 describe('actions', () => {

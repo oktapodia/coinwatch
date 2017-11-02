@@ -1,26 +1,22 @@
-// @flow
-import React, { Component } from 'react';
-import type { Children } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.css'; // TODO: Move css to scss files
+import React from 'react';
 import Tray from '../modules/tray';
 import Navbar from '../components/Navbar';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'font-awesome/css/font-awesome.css';
 import '../styles/index.scss';
 
-export default class App extends Component {
-  props: {
-    children: Children
-  };
+const App = ({ children }) => (
+  <div className="app-container">
+    <Navbar />
+    <div className="main-container">
+      {children}
+    </div>
+    <Tray />
+  </div>
+);
 
-  render() {
-    return (
-      <div className="app-container">
-        <Navbar />
-        <div className="main-container">
-          {this.props.children}
-        </div>
-        <Tray />
-      </div>
-    );
-  }
-}
+App.propTypes = {
+  children: PropTypes.object.isRequired,
+};
+
+export default App;

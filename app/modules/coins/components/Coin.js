@@ -1,11 +1,8 @@
-// @flow
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { isUndefined, find } from 'lodash';
+import { isNull } from 'lodash';
 import { BASE_IMAGE_URL } from '../../../connectors/cryptocompare/api';
-import { getCoinPrice } from '../actions';
-import { removeCoin, toggleVisibility } from '../actions';
+import { getCoinPrice, removeCoin, toggleVisibility } from '../actions';
 
 export class Coin extends Component {
   constructor(props) {
@@ -16,7 +13,7 @@ export class Coin extends Component {
   }
 
   componentWillMount() {
-    if (isUndefined(this.props.price)) {
+    if (isNull(this.props.price)) {
       this.props.getCoinPrice(this.props);
     }
   }
@@ -30,21 +27,26 @@ export class Coin extends Component {
   }
 
   render() {
-    const { coin, price, visibility, slug } = this.props;
-    const currentPriceDisplayed = !isUndefined(price) ? `${price}` : 'Loading...';
+    const {
+      coin,
+      price,
+      visibility,
+      slug,
+    } = this.props;
+    const currentPriceDisplayed = !isNull(price) ? `${price}` : 'Loading...';
 
     return (
       <tr className="coin">
         <td className="name">
-          <img src={`${BASE_IMAGE_URL}${coin.ImageUrl}`} className="img-circle" />
+          <img src={`${BASE_IMAGE_URL}${coin.ImageUrl}`} className="img-circle" alt={coin.FullName} />
           <span>{coin.FullName}</span>
         </td>
         <td className="price">
           {currentPriceDisplayed}
         </td>
-        <td className="actions">
-          <a onClick={() => this.onToggleVisibility(slug)} className="visibility"><span className={`glyphicon glyphicon-eye-open toggle-button ${visibility && 'active'}`} /></a>
-          <a onClick={() => this.onRemove(slug)} className="remove"><span className="glyphicon glyphicon-remove-circle" /></a>
+        <td className="actions toolbar">
+          <button onClick={() => this.onToggleVisibility(slug)} className="visibility"><span className={`glyphicon glyphicon-eye-open toggle-button ${visibility && 'active'}`} /></button>
+          <button onClick={() => this.onRemove(slug)} className="remove"><span className="glyphicon glyphicon-remove-circle" /></button>
         </td>
       </tr>
     );
@@ -52,14 +54,20 @@ export class Coin extends Component {
 }
 
 Coin.propTypes = {
+  price: PropTypes.string,
   coin: PropTypes.shape({
     ImageUrl: PropTypes.string.isRequired,
     FullName: PropTypes.string.isRequired,
   }).isRequired,
-  to: PropTypes.string,
-  exchange: PropTypes.string,
-  price: PropTypes.string,
+  visibility: PropTypes.bool.isRequired,
+  slug: PropTypes.string.isRequired,
   removeCoin: PropTypes.func.isRequired,
+  getCoinPrice: PropTypes.func.isRequired,
+  toggleVisibility: PropTypes.func.isRequired,
+};
+
+Coin.defaultProps = {
+  price: null,
 };
 
 export default connect(null, { getCoinPrice, removeCoin, toggleVisibility })(Coin);

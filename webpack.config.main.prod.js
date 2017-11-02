@@ -21,7 +21,7 @@ export default merge.smart(baseConfig, {
   // 'main.js' in root
   output: {
     path: __dirname,
-    filename: './app/main.prod.js'
+    filename: './app/main.prod.js',
   },
 
   plugins: [
@@ -32,7 +32,7 @@ export default merge.smart(baseConfig, {
 
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
-      openAnalyzer: process.env.OPEN_ANALYZER === 'true'
+      openAnalyzer: process.env.OPEN_ANALYZER === 'true',
     }),
 
     /**
@@ -46,8 +46,8 @@ export default merge.smart(baseConfig, {
      */
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
-      'process.env.DEBUG_PROD': JSON.stringify(process.env.DEBUG_PROD || 'false')
-    })
+      'process.env.DEBUG_PROD': JSON.stringify(process.env.DEBUG_PROD || 'false'),
+    }),
   ],
 
   /**
@@ -57,6 +57,6 @@ export default merge.smart(baseConfig, {
    */
   node: {
     __dirname: false,
-    __filename: false
+    __filename: false,
   },
 });

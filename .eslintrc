@@ -7,7 +7,7 @@
   "extends": "airbnb",
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
   },
   "rules": {
     "arrow-parens": ["off"],
@@ -25,10 +25,21 @@
     "promise/always-return": "error",
     "promise/catch-or-return": "error",
     "promise/no-native": "off",
+    "no-shadow": "off",
     "react/sort-comp": ["error", {
       "order": ["type-annotations", "static-methods", "lifecycle", "everything-else", "render"]
     }],
+    "react/default-props-match-prop-types": "off",
+    "react/forbid-prop-types": "off",
+    "max-len": ["error", 200],
+    "camelcase": "off",
+    "jsx-a11y/anchor-is-valid": [ "error", {
+      "components": [ "Link" ],
+      "specialLink": [ "to" ]
+    }],
     "react/jsx-no-bind": "off",
+    "jsx-a11y/label-has-for": "off",
+    "import/no-named-as-default": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "react/prefer-stateless-function": "off"
   },
@@ -46,5 +57,8 @@
         "config": "webpack.config.eslint.js"
       }
     }
+  },
+  "globals": {
+    "PropTypes": true
   }
 }
