@@ -3,11 +3,11 @@ import path from 'path';
 
 export default function initWindow() {
   const defaults = {
-    width: 510,
-    height: 560,
-    minHeight: 510,
-    minWidth: 560,
-    show: false,
+    width: 550,
+    height: 600,
+    minHeight: 550,
+    minWidth: 600,
+    show: true,
     center: true,
     fullscreenable: false,
     webPreferences: {
