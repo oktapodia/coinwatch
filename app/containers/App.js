@@ -1,5 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'font-awesome/css/font-awesome.css'; // TODO: Move css to scss files
 import React from 'react';
 import Tray from '../modules/tray';
 import Navbar from '../components/Navbar';
