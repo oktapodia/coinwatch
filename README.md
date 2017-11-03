@@ -1,6 +1,6 @@
-# coinwatch [![travis][travis-image]][travis-url]
+# Coinwatch [![travis][travis-image]][travis-url] [![Greenkeeper badge](https://badges.greenkeeper.io/oktapodia/coinwatch.svg)](https://greenkeeper.io/)
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/oktapodia/coinwatch.svg)](https://greenkeeper.io/)
+
 Follow your cryptocurrency prices in your OSX menubar
 
 ![Coinwatch](https://github.com/oktapodia/coinwatch/raw/master/press/press.jpg)
@@ -13,7 +13,7 @@ Coinwatch currently only supports OS X.
 
 ### Prerequisites
 
- - Node 7+
+ - Node 8+
  - [Electron](http://electron.atom.io/)
  - [React](https://facebook.github.io/react/)
  - [Redux](http://redux.js.org/)
@@ -21,19 +21,19 @@ Coinwatch currently only supports OS X.
 
 ### Installation
 
-    npm install
+    yarn install
 
 ### Development
 
 To run the actual **electron app**:
 
-    npm install
-    npm run dev
+    yarn install
+    yarn dev
 
 ### Distribution
 To prepare the app for distribution run:
 
-    npm run release
+    yarn release
 
 
 ### Contributing
