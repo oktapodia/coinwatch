@@ -15,6 +15,16 @@ os:
   - linux
   - osx
 
+addons:
+  apt:
+    packages:
+      - libgnome-keyring-dev
+      - icnsutils
+      - graphicsmagick
+      - xz-utils
+      - rpm
+      - bsdtar
+
 cache:
   directories:
   - node_modules
