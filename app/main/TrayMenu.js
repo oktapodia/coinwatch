@@ -26,7 +26,7 @@ class TrayMenu {
         },
       },
       {
-        label: 'About',
+        label: 'About CoinWatch',
         click() {
           if (!isWindows) {
             let aboutWindow = new BrowserWindow({
