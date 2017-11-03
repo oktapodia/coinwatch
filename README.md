@@ -3,7 +3,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/oktapodia/coinwatch.svg)](https://greenkeeper.io/)
 Follow your cryptocurrency prices in your OSX menubar
 
-![Coinwatch](images/press.jpg)
+![Coinwatch](https://github.com/oktapodia/coinwatch/raw/master/press/press.jpg)
 
 
 ### Download
@@ -51,12 +51,12 @@ To prepare the app for distribution run:
 - [ ] Add tests
 - [ ] Improve code coverage
 - [ ] Clean dependencies
-- [ ] Improve UX/UI
+- [X] Improve UX/UI
 
 #### Crypto
 
 - [ ] Add price alert notifications
-- [ ] Get the price for your exchange
+- [X] Get the price for your exchange
 
 #### ICO
 
