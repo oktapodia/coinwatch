@@ -1,12 +1,17 @@
 # Coinwatch [![travis][travis-image]][travis-url] [![Greenkeeper badge](https://badges.greenkeeper.io/oktapodia/coinwatch.svg)](https://greenkeeper.io/)
 
 
-Follow your cryptocurrency prices in your OSX menubar
+Track your cryptocurrency prices in your OSX menubar
+
+The monoritoring of cryptocurrency becomes easy with CoinWatch. 
+The app is designed to list and track in few steps all your favourites crypocurrencies.
+
+With more than 1000+ currencies!
 
 ![Coinwatch](https://github.com/oktapodia/coinwatch/raw/master/press/press.jpg)
 
 
-### Download
+## Download
 You can download Coinwatch for **free** from the GitHub repository [releases](https://github.com/oktapodia/coinwatch/releases) page.
 
 Coinwatch currently only supports OS X.
@@ -19,24 +24,24 @@ Coinwatch currently only supports OS X.
  - [Redux](http://redux.js.org/)
 
 
-### Installation
+## Installation
 
     yarn install
 
-### Development
+## Development
 
 To run the actual **electron app**:
 
     yarn install
     yarn dev
 
-### Distribution
+## Distribution
 To prepare the app for distribution run:
 
     yarn release
 
 
-### Contributing
+## Contributing
 
 1. Fork it!
 2. Create your feature branch: `git checkout -b feature/my-new-feature`
@@ -44,7 +49,7 @@ To prepare the app for distribution run:
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request
 
-### Todo list
+## Todo list
 
 #### Global
 
@@ -64,7 +69,7 @@ To prepare the app for distribution run:
 - [ ] List the different Live, Upcoming and Finished ICOs
 - [ ] ICO reminder
 
-### Donate
+## Donate
 
 | Coin name | Address |
 | --- | --- |
