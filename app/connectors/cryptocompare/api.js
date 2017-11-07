@@ -98,6 +98,7 @@ export function getSymbolListApi() {
       'USD',
       'GBP',
       'BTC',
+      'ETH',
     ],
   });
 }
