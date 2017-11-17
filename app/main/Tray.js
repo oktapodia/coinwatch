@@ -51,9 +51,7 @@ class Tray {
 
     console.log('UPDATED');
 
-    const trayDisplay = map(coinsFiltered, ({ coin, to, trend, price }) => {
-      return `${trendToArrow(`${coin.Symbol}: ${formatPrice(price, to)}`, trend)}`;
-    });
+    const trayDisplay = map(coinsFiltered, ({ coin, to, trend, price }) => `${trendToArrow(`${coin.Symbol}: ${formatPrice(price, to)}`, trend)}`);
 
     this.tray.setTitle(trayDisplay.join(' | '));
   }

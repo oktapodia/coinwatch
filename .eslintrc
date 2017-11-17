@@ -29,6 +29,7 @@
     "react/sort-comp": ["error", {
       "order": ["type-annotations", "static-methods", "lifecycle", "everything-else", "render"]
     }],
+    "object-curly-newline": "off",
     "react/default-props-match-prop-types": "off",
     "react/forbid-prop-types": "off",
     "max-len": ["error", 200],

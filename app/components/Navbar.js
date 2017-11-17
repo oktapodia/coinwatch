@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { ipcRenderer } from 'electron';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import image from '../appIconLarge.png';
 
 class Navbar extends Component {
@@ -21,9 +21,11 @@ class Navbar extends Component {
             <Link to="/settings" className="link-settings"><span className="glyphicon glyphicon-cog" aria-hidden="true" /></Link>
           </div>
         </div>
+        {/*
         <div className="tabs">
           <NavLink to="/coins" className="tab">Home</NavLink>
         </div>
+        */}
       </nav>
     );
   }
