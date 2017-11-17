@@ -31,7 +31,7 @@ export class CoinsPage extends Component {
     ));
 
     return (
-      <div className="app-container coins">
+      <div className="app-container coins" id="coins">
         <div>
           <h3>coins:</h3>
           <table className="table table-striped">

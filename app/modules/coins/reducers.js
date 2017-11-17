@@ -11,7 +11,6 @@ import {
   SETTINGS_SAVE_COIN_SUCCESS,
   SETTINGS_TOGGLE_VISIBILITY_SUCCESS,
 } from './actions';
-import formatPrice from '../../helpers/formatPrice';
 import { TRAY_UPDATE } from '../../main/Tray';
 
 const initialState = {
@@ -19,6 +18,7 @@ const initialState = {
   exchanges: [],
   symbols: [],
   coins: settings.get('coins') || [],
+  previousCoins: [],
   forceRefresh: false,
 };
 
@@ -50,16 +50,25 @@ export default function coinsReducer(state = initialState, action) {
     case GET_COIN_PRICE_SUCCESS:
       coins = cloneDeep(state.coins);
       coin = find(coins, (c) => c.slug === action.data.slug);
+      const previousCoin = find(state.previousCoins, (c) => c.slug === action.data.slug);
 
       if (!coin) {
         return { ...state };
       }
 
-      coin.price = map(action.response, formatPrice).join('');
+      coin.price = map(action.response).join('');
+
+      if (previousCoin && coin.price < previousCoin.price) {
+        coin.trend = 'lower';
+      } else if (previousCoin && coin.price > previousCoin.price) {
+        coin.trend = 'higher';
+      } else {
+        coin.trend = previousCoin && previousCoin.trend;
+      }
 
       ipcRenderer.send(TRAY_UPDATE, coins);
 
-      return { ...state, coins };
+      return { ...state, coins, previousCoins: state.coins };
     default:
       return state;
   }
