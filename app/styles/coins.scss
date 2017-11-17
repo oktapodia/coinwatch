@@ -48,6 +48,18 @@
       //display: flex;
       //flex-direction: row;
       margin: 5px 50px;
+
+      &.trend- {
+        &higher {
+          color: green;
+        }
+        &lower {
+          color: red;
+        }
+        &equal {
+          color: blue;
+        }
+      }
     }
 
     .actions {
