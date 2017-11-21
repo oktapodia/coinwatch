@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { isNull } from 'lodash';
 import { BASE_IMAGE_URL } from '../../../connectors/cryptocompare/api';
 import { getCoinPrice, removeCoin, toggleVisibility, toggleForceRefresh } from '../actions';
+import formatPrice from '../../../helpers/formatPrice';
 
 export class Coin extends Component {
   constructor(props) {
@@ -33,6 +34,8 @@ export class Coin extends Component {
       price,
       visibility,
       slug,
+      to,
+      trend,
       exchange,
     } = this.props;
     const currentPriceDisplayed = !isNull(price) ? `${price}` : 'Loading...';
@@ -43,11 +46,11 @@ export class Coin extends Component {
           <img src={`${BASE_IMAGE_URL}${coin.ImageUrl}`} className="img-circle" alt={coin.FullName} />
           <span>{coin.FullName}</span>
         </td>
-        <td className="price">
+        <td className="exchange">
           {exchange}
         </td>
-        <td className="price">
-          {currentPriceDisplayed}
+        <td className={`price trend-${trend}`}>
+          {formatPrice(currentPriceDisplayed, to)}
         </td>
         <td className="actions toolbar">
           <button onClick={() => this.onToggleVisibility(slug)} className="visibility"><span className={`glyphicon glyphicon-eye-open toggle-button ${visibility && 'active'}`} /></button>
@@ -67,6 +70,8 @@ Coin.propTypes = {
   }).isRequired,
   visibility: PropTypes.bool.isRequired,
   slug: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
+  trend: PropTypes.string.isRequired,
   removeCoin: PropTypes.func.isRequired,
   getCoinPrice: PropTypes.func.isRequired,
   toggleVisibility: PropTypes.func.isRequired,

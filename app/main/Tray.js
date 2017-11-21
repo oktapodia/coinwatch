@@ -2,6 +2,8 @@ import { ipcMain, Tray as TrayElectron } from 'electron';
 import path from 'path';
 import { filter, map } from 'lodash';
 import TrayMenu from './TrayMenu';
+import formatPrice from '../helpers/formatPrice';
+import trendToArrow from '../helpers/trendToArrow';
 
 export const TRAY_UPDATE = 'tray-update';
 
@@ -12,7 +14,7 @@ class Tray {
   constructor(mainWindow) {
     this.mainWindow = mainWindow;
 
-    this.onTrayUpdate = this.onTrayUpdate.bind(this);
+    this.onTrayUpdate = ::this.onTrayUpdate;
     this.init();
   }
 
@@ -42,8 +44,6 @@ class Tray {
   }
 
   onTrayUpdate(event, coins) {
-    console.log('IPCMAINUPDATE', coins);
-
     const coinsFiltered = filter(coins, 'visibility');
     if (!coinsFiltered) {
       return;
@@ -51,7 +51,7 @@ class Tray {
 
     console.log('UPDATED');
 
-    const trayDisplay = map(coinsFiltered, ({ coin, price }) => `${coin.Symbol}: ${price}`);
+    const trayDisplay = map(coinsFiltered, ({ coin, to, trend, price }) => `${trendToArrow(`${coin.Symbol}: ${formatPrice(price, to)}`, trend)}`);
 
     this.tray.setTitle(trayDisplay.join(' | '));
   }
