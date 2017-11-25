@@ -25,7 +25,7 @@ class CoinsSettings extends Component {
   }
 
   onSubmit(props) {
-    const propsMapped = mapValues(props, (p) => p.value);
+    const propsMapped = mapValues(props, (p) => p.value ? p.value : p);
 
     return this.props.getCoinPrice(propsMapped)
       .then(() => this.props.saveCoin(propsMapped))
