@@ -7,9 +7,9 @@ const initialState = {
 export default function modalReducer(state = initialState, action) {
   switch (action.type) {
     case OPEN_MODAL:
-      return { ...state, isOpen: true };
+      return { ...state, isOpen: true, component: action.component };
     case CLOSE_MODAL:
-      return { ...state, isOpen: false };
+      return { ...state, isOpen: false, component: null };
     default:
       return state;
   }

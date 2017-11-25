@@ -6,7 +6,6 @@ import Coin from '../components/Coin';
 import CoinSettings from './CoinsSettings';
 import { toggleForceRefresh } from '../actions';
 import ModalButton from '../../modal/containers/ModalButton';
-import Modal from '../../modal/containers/Modal';
 
 export class CoinsPage extends Component {
   constructor(props) {
@@ -41,7 +40,7 @@ export class CoinsPage extends Component {
                 <th>Exchange</th>
                 <th>Price</th>
                 <th className="toolbar">
-                  <ModalButton className="pull-right"><span className="glyphicon glyphicon-plus" /></ModalButton>
+                  <ModalButton className="pull-right" component={CoinSettings}><span className="glyphicon glyphicon-plus" /></ModalButton>
                   <button onClick={this.onClickForceRefresh} className="link-force-refresh pull-right"><span className="glyphicon glyphicon-refresh" aria-hidden="true" /></button>
                 </th>
               </tr>
@@ -51,7 +50,6 @@ export class CoinsPage extends Component {
             </tbody>
           </table>
         </div>
-        <Modal component={CoinSettings} />
       </div>
     );
   }

@@ -8,6 +8,10 @@ class ModalClass extends Component {
     const { isOpen } = this.props;
     const CustomComponent = this.props.component;
 
+    if (!CustomComponent) {
+      return null;
+    }
+
     const customStyles = {
       content: {
         top: '100px',
@@ -37,12 +41,13 @@ class ModalClass extends Component {
 ModalClass.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  component: PropTypes.func.isRequired,
+  component: PropTypes.func,
 };
 
 function mapStateToProps({ modal }) {
   return {
     isOpen: modal.isOpen,
+    component: modal.component,
   };
 }
 
