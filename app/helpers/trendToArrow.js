@@ -1,10 +1,10 @@
-function trendToArrow(price, trend) {
-  let formattedPrice = price;
+function trendToArrow(trend) {
+  let formattedPrice = null;
 
   if (trend === 'lower') {
-    formattedPrice += '↓';
+    formattedPrice = '↓';
   } else if (trend === 'higher') {
-    formattedPrice += '↑';
+    formattedPrice = '↑';
   }
 
   return formattedPrice;
