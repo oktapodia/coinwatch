@@ -194,6 +194,7 @@
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {
+    "@exponent/electron-cookies": "^2.0.0",
     "auto-launch": "^5.0.1",
     "axios": "^0.17.0",
     "bootstrap": "^3.3.7",
