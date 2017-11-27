@@ -1,5 +1,5 @@
 function trendToArrow(trend) {
-  let formattedPrice = null;
+  let formattedPrice = '';
 
   if (trend === 'lower') {
     formattedPrice = '↓';
