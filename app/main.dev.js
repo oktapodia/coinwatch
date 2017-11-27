@@ -22,6 +22,7 @@ import AutoLaunch from './main/AutoLaunch';
 import Tray from './main/Tray';
 import Menu from './main/menu';
 import installExtensions from './helpers/devTools';
+import Migrate from './modules/settings/Migrate';
 
 log.debug('App starting...');
 
@@ -55,6 +56,8 @@ app.on('before-quit', () => {
 });
 
 app.on('ready', async () => {
+  await new Migrate(); // eslint-disable-line no-new
+
   if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
     await installExtensions();
   }
