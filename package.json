@@ -187,8 +187,8 @@
     "stylefmt": "^6.0.0",
     "stylelint": "^8.2.0",
     "stylelint-config-standard": "^18.0.0",
+    "webpack": "^4.0.0",
     "url-loader": "^1.0.0",
-    "webpack": "^3.8.1",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^3.0.0",
     "webpack-merge": "^4.1.1"
