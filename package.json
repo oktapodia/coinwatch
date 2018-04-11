@@ -210,7 +210,7 @@
     "menubar": "^5.2.3",
     "moment": "^2.19.1",
     "prop-types": "^15.6.0",
-    "query-string": "^5.0.1",
+    "query-string": "^6.0.0",
     "react": "^16.0.0",
     "react-addons-shallow-compare": "^15.6.2",
     "react-dom": "^16.0.0",
