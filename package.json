@@ -147,7 +147,7 @@
     "electron-devtools-installer": "^2.2.1",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.0.3",
-    "enzyme-redux": "^0.1.7",
+    "enzyme-redux": "^0.2.0",
     "enzyme-to-json": "^3.1.4",
     "eslint": "^4.11.0",
     "eslint-config-airbnb": "^16.1.0",
