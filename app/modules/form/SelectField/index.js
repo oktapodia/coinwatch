@@ -1,6 +1,7 @@
 import React from 'react';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
+import PropTypes from 'prop-types';
 
 const SelectField = (props) => (
   <Select

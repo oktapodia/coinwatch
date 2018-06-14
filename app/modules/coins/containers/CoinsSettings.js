@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { isEmpty, map, mapValues, values } from 'lodash';
 import SelectField from '../../form/SelectField/index';
 import { getCoinPrice, getCoins, getExchangeList, getSymbolList, saveCoin } from '../actions';
+import PropTypes from 'prop-types';
 
 class CoinsSettings extends Component {
   constructor() {

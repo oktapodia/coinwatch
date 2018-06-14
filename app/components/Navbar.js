@@ -8,12 +8,17 @@ class Navbar extends Component {
     ipcRenderer.send('check-update', true);
   }
 
+  notif() {
+    ipcRenderer.send('notification', { type: 'alert' });
+  }
+
   render() {
     return (
       <nav className="navbar navbar-default navbar-static-top">
         <div className="top-container">
           <div className="title">
             <h1><Link to="/"><img src={image} width={50} alt="Coin Watch" /> Coin Watch</Link></h1>
+            <h1 onClick={this.notif}>NOTIFICATION</h1>
           </div>
           <div className="content" />
           <div className="toolbar pull-right">

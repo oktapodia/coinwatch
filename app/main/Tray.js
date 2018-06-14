@@ -10,9 +10,11 @@ export const TRAY_UPDATE = 'tray-update';
 class Tray {
   tray = null;
   mainWindow;
+  notificationCenter;
 
-  constructor(mainWindow) {
+  constructor(mainWindow, notificationCenter) {
     this.mainWindow = mainWindow;
+    this.notificationCenter = notificationCenter;
 
     this.onTrayUpdate = ::this.onTrayUpdate;
     this.init();

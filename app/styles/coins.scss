@@ -72,8 +72,18 @@
       }
 
       .remove {
+        color: grey;
+
         &:hover {
           color: red;
+        }
+      }
+
+      .alert {
+        color: grey;
+
+        &:hover {
+          color: green;
         }
       }
     }

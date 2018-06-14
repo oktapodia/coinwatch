@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { map } from 'lodash';
+import { map, find } from 'lodash';
 import { connect } from 'react-redux';
 import shallowCompare from 'react-addons-shallow-compare';
 import Coin from '../components/Coin';
 import CoinSettings from './CoinsSettings';
 import { toggleForceRefresh } from '../actions';
 import ModalButton from '../../modal/containers/ModalButton';
+import PropTypes from 'prop-types';
 
 export class CoinsPage extends Component {
   constructor(props) {
@@ -23,10 +24,10 @@ export class CoinsPage extends Component {
   }
 
   render() {
-    const { followedCoins } = this.props;
+    const { coins, alerts } = this.props;
 
-    const followedCoinsDisplay = map(followedCoins, (fc, index) => (
-      <Coin key={index} {...fc} />
+    const followedCoinsDisplay = map(coins, (fc, index) => (
+      <Coin key={index} {...fc} alert={alerts[fc.slug]} />
     ));
 
     return (
@@ -56,13 +57,15 @@ export class CoinsPage extends Component {
 }
 
 CoinsPage.propTypes = {
-  followedCoins: PropTypes.array.isRequired,
+  coins: PropTypes.array.isRequired,
+  alerts: PropTypes.object.isRequired,
   toggleForceRefresh: PropTypes.func.isRequired,
 };
 
 function mapStateToProps({ coins }) {
   return {
-    followedCoins: coins.coins,
+    coins: coins.coins,
+    alerts: coins.alerts,
   };
 }
 
