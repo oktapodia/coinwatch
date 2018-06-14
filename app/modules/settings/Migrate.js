@@ -1,4 +1,3 @@
-import path from 'path';
 import settings from 'electron-settings';
 import { forEach } from 'lodash';
 
@@ -30,9 +29,9 @@ class Migrate {
 
   static getMigrations() {
     return [
-      require('./migrations/v0'), // eslint-disable global-require
-      require('./migrations/v1'), // eslint-disable global-require
-      require('./migrations/v2'), // eslint-disable global-require
+      require('./migrations/v0'), // eslint-disable-line global-require
+      require('./migrations/v1'), // eslint-disable-line global-require
+      require('./migrations/v2'), // eslint-disable-line global-require
     ];
   }
 }
