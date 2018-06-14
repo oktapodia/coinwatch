@@ -9,7 +9,7 @@
  *
  * @flow
  */
-import { app, Notification } from 'electron';
+import { app } from 'electron';
 import log from 'electron-log';
 import path from 'path';
 import electronDebug from 'electron-debug';

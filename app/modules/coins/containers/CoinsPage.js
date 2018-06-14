@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { map, find } from 'lodash';
+import { map } from 'lodash';
 import { connect } from 'react-redux';
 import shallowCompare from 'react-addons-shallow-compare';
+import PropTypes from 'prop-types';
 import Coin from '../components/Coin';
 import CoinSettings from './CoinsSettings';
 import { toggleForceRefresh } from '../actions';
 import ModalButton from '../../modal/containers/ModalButton';
-import PropTypes from 'prop-types';
 
 export class CoinsPage extends Component {
   constructor(props) {

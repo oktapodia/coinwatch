@@ -98,7 +98,7 @@ export function saveAlert(alert) {
 
     const alerts = settings.get('alerts');
 
-    console.log(alert)
+    console.log(alert);
 
     alerts[alert.slug] = alert;
 
@@ -109,7 +109,7 @@ export function saveAlert(alert) {
 
     alerts.push(alert);
 
-    console.log('updated', alerts)
+    console.log('updated', alerts);
 
     settings.set('alerts', alerts);
 
