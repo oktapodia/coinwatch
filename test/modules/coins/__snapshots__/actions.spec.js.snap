@@ -4,9 +4,11 @@ exports[`actions should get the coin price with a coin and symbol and exchange a
 Object {
   Symbol(Call Handler): Object {
     "data": Object {
+      "coin": Object {
+        "Symbol": "ETH",
+      },
       "exchange": "Bitfinex",
-      "from": "ETH",
-      "to": "USD",
+      "symbol": "USD",
     },
     "handler": [Function],
     "types": Array [
@@ -22,9 +24,10 @@ exports[`actions should get the coin price with a coin and symbol arguments 1`] 
 Object {
   Symbol(Call Handler): Object {
     "data": Object {
-      "exchange": undefined,
-      "from": "ETH",
-      "to": "USD",
+      "coin": Object {
+        "Symbol": "ETH",
+      },
+      "symbol": "USD",
     },
     "handler": [Function],
     "types": Array [
@@ -40,9 +43,9 @@ exports[`actions should get the coin price with a coin argument only 1`] = `
 Object {
   Symbol(Call Handler): Object {
     "data": Object {
-      "exchange": undefined,
-      "from": "ETH",
-      "to": undefined,
+      "coin": Object {
+        "Symbol": "ETH",
+      },
     },
     "handler": [Function],
     "types": Array [

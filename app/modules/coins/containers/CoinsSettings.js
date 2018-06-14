@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm, SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { isEmpty, map, mapValues, values } from 'lodash';
 import SelectField from '../../form/SelectField/index';
 import { getCoinPrice, getCoins, getExchangeList, getSymbolList, saveCoin } from '../actions';
@@ -25,7 +26,7 @@ class CoinsSettings extends Component {
   }
 
   onSubmit(props) {
-    const propsMapped = mapValues(props, (p) => p.value ? p.value : p);
+    const propsMapped = mapValues(props, (p) => (p.value ? p.value : p));
 
     return this.props.getCoinPrice(propsMapped)
       .then(() => this.props.saveCoin(propsMapped))
