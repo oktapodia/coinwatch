@@ -88,6 +88,35 @@ export function saveCoin(coin) {
   };
 }
 
+export const SETTINGS_SAVE_ALERT_ATTEMPT = 'SETTINGS_SAVE_ALERT_ATTEMPT';
+export const SETTINGS_SAVE_ALERT_SUCCESS = 'SETTINGS_SAVE_ALERT_SUCCESS';
+export const SETTINGS_SAVE_ALERT_FAILED = 'SETTINGS_SAVE_ALERT_FAILED';
+
+export function saveAlert(alert) {
+  return (dispatch) => {
+    dispatch({ type: SETTINGS_SAVE_ALERT_ATTEMPT });
+
+    const alerts = settings.get('alerts');
+
+    console.log(alert);
+
+    alerts[alert.slug] = alert;
+
+    const index = findIndex(alerts, (c) => c.slug === alert.slug);
+    if (index !== -1) {
+      alerts.splice(index, 1);
+    }
+
+    alerts.push(alert);
+
+    console.log('updated', alerts);
+
+    settings.set('alerts', alerts);
+
+    return dispatch({ type: SETTINGS_SAVE_ALERT_SUCCESS });
+  };
+}
+
 export const SETTINGS_REMOVE_COIN_ATTEMPT = 'SETTINGS_REMOVE_COIN_ATTEMPT';
 export const SETTINGS_REMOVE_COIN_SUCCESS = 'SETTINGS_REMOVE_COIN_SUCCESS';
 export const SETTINGS_REMOVE_COIN_FAILED = 'SETTINGS_REMOVE_COIN_FAILED';

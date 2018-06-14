@@ -48,7 +48,7 @@ class TrayMenu {
               aboutWindow.webContents.send('get-version', packageJson.version);
               aboutWindow.show();
               if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
-                aboutWindow.openDevTools();
+                // aboutWindow.openDevTools();
               }
             });
           }

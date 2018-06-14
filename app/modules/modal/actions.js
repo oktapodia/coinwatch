@@ -1,8 +1,8 @@
 export const OPEN_MODAL = 'OPEN_MODAL';
 
-export function openModal(component) {
+export function openModal(component, extras = {}) {
   return (dispatch) => {
-    dispatch({ type: OPEN_MODAL, component });
+    dispatch({ type: OPEN_MODAL, component, extras });
   };
 }
 

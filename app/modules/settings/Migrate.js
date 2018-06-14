@@ -1,12 +1,9 @@
-import { readdirSync } from 'fs';
-import path from 'path';
 import settings from 'electron-settings';
 import { forEach } from 'lodash';
 
 class Migrate {
-  basePath = path.resolve(__dirname, 'migrations');
   constructor() {
-    const migrationFiles = this.constructor.getMigrations(this.basePath);
+    const migrationFiles = this.constructor.getMigrations();
 
     this.settingsUpdated = settings.getAll();
 
@@ -19,7 +16,7 @@ class Migrate {
   }
 
   migrate(migrationFile) {
-    const ClassName = require(path.resolve(this.basePath, migrationFile));
+    const ClassName = migrationFile; // eslint-disable-line global-require,import/no-dynamic-require
     const migration = new ClassName(this.settingsUpdated);
     if (!migration.isVersion()) {
       console.log(`settings are not version ${migrationFile}`);
@@ -30,8 +27,12 @@ class Migrate {
     this.settingsUpdated = migration.up();
   }
 
-  static getMigrations(basePath) {
-    return readdirSync(basePath);
+  static getMigrations() {
+    return [
+      require('./migrations/v0'), // eslint-disable-line global-require
+      require('./migrations/v1'), // eslint-disable-line global-require
+      require('./migrations/v2'), // eslint-disable-line global-require
+    ];
   }
 }
 

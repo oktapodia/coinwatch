@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isNull } from 'lodash';
+import PropTypes from 'prop-types';
 import { BASE_IMAGE_URL } from '../../../connectors/cryptocompare/api';
 import { getCoinPrice, removeCoin, toggleVisibility, toggleForceRefresh } from '../actions';
 import formatPrice from '../../../helpers/formatPrice';
+import trendToArrow from '../../../helpers/trendToArrow';
+import ModalButton from '../../modal/containers/ModalButton';
+import AlertSettings from '../containers/AlertSettings';
 
 export class Coin extends Component {
   constructor(props) {
@@ -33,6 +37,7 @@ export class Coin extends Component {
       coin,
       price,
       visibility,
+      alert,
       slug,
       to,
       trend,
@@ -50,9 +55,12 @@ export class Coin extends Component {
           {exchange}
         </td>
         <td className={`price trend-${trend}`}>
-          {formatPrice(currentPriceDisplayed, to)}
+          {formatPrice(currentPriceDisplayed, to)}{trendToArrow(trend)}
         </td>
         <td className="actions toolbar">
+          {/* <ModalButton className="pull-right"><span className="glyphicon glyphicon-plus" /></ModalButton> */}
+
+          <ModalButton className="alert" component={AlertSettings} extras={{ slug }}><span className={`glyphicon glyphicon-bell toggle-button ${alert && 'active'}`} /></ModalButton>
           <button onClick={() => this.onToggleVisibility(slug)} className="visibility"><span className={`glyphicon glyphicon-eye-open toggle-button ${visibility && 'active'}`} /></button>
           <button onClick={() => this.onRemove(slug)} className="remove"><span className="glyphicon glyphicon-remove-circle" /></button>
         </td>
@@ -64,6 +72,7 @@ export class Coin extends Component {
 Coin.propTypes = {
   exchange: PropTypes.string.isRequired,
   price: PropTypes.string,
+  alert: PropTypes.string,
   coin: PropTypes.shape({
     ImageUrl: PropTypes.string.isRequired,
     FullName: PropTypes.string.isRequired,
@@ -80,6 +89,7 @@ Coin.propTypes = {
 
 Coin.defaultProps = {
   price: null,
+  alert: null,
 };
 
 const dispatchProps = {

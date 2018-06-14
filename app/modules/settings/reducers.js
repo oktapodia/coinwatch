@@ -1,7 +1,7 @@
 import settings from 'electron-settings';
 import { assign } from 'lodash';
 import { ipcRenderer } from 'electron';
-import { SETTINGS_AUTOLAUNCH_OFF, SETTINGS_AUTOLAUNCH_ON, } from './actions';
+import { SETTINGS_AUTOLAUNCH_OFF, SETTINGS_AUTOLAUNCH_ON } from './actions';
 
 const defaultSettings = {
   decimal: 4,

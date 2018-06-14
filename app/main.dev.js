@@ -19,6 +19,7 @@ import { isDarwin } from './helpers/env';
 import initWindow from './main/initWindow';
 import AutoUpdater from './main/AutoUpdater';
 import AutoLaunch from './main/AutoLaunch';
+import NotificationCenter from './main/NotificationCenter';
 import Tray from './main/Tray';
 import Menu from './main/menu';
 import installExtensions from './helpers/devTools';
@@ -72,8 +73,9 @@ app.on('ready', async () => {
     }
   });
 
+  const notificationCenter = new NotificationCenter(); // eslint-disable-line no-new
   new AutoLaunch(); // eslint-disable-line no-new
   new AutoUpdater(setQuitState); // eslint-disable-line no-new
   new Menu(appWindow); // eslint-disable-line no-new
-  new Tray(appWindow); // eslint-disable-line no-new
+  new Tray(appWindow, notificationCenter); // eslint-disable-line no-new
 });

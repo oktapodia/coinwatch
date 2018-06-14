@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { openModal } from '../actions';
 
 class ModalButton extends Component {
@@ -10,7 +11,7 @@ class ModalButton extends Component {
   }
 
   onOpenModal() {
-    return this.props.openModal(this.props.component);
+    return this.props.openModal(this.props.component, this.props.extras);
   }
 
   render() {
@@ -27,6 +28,11 @@ ModalButton.propTypes = {
   openModal: PropTypes.func.isRequired,
   component: PropTypes.func.isRequired,
   children: PropTypes.object.isRequired,
+  extras: PropTypes.object,
+};
+
+ModalButton.defaultProps = {
+  extras: {},
 };
 
 export default connect(null, { openModal })(ModalButton);
