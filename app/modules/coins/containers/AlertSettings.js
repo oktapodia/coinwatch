@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Field, reduxForm, SubmissionError } from 'redux-form';
+import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { saveAlert } from '../actions';
 import { find } from 'lodash';
 import PropTypes from 'prop-types';
+import { saveAlert } from '../actions';
 
 class AlertSettings extends Component {
   constructor() {
@@ -23,13 +23,12 @@ class AlertSettings extends Component {
     const {
       error,
       submitting,
-      alert,
       handleSubmit,
     } = this.props;
 
-    console.log(this.props)
+    console.log(this.props);
 
-/*
+    /*
 
     const coinsOptions = values(map(coins.Data, (d) => ({ label: d.FullName, value: d })));
     const exchangesOptions = values(map(exchanges, (d) => ({ label: d, value: d })));
@@ -87,7 +86,6 @@ AlertSettings.propTypes = {
   saveAlert: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   extras: PropTypes.object.isRequired,
-  alert: PropTypes.object,
 };
 
 AlertSettings.defaultProps = {
@@ -95,7 +93,6 @@ AlertSettings.defaultProps = {
 };
 
 function mapStateToProps({ settings }, { extras }) {
-
   return {
     alert: find(settings.alerts, (a) => a.slug === extras.slug)
   };

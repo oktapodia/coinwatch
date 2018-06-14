@@ -99,7 +99,6 @@ export default function coinsReducer(state = initialState, action) {
       if (alertSetting.trend === 'down' && coin.price < alertSetting.price) {
         ipcRenderer.send(NOTIFICATION, { type: 'alert', title: coin.slug, body: `Price is lower than ${coin.price}` });
         isAlerted = true;
-
       } else if (alertSetting.trend === 'up' && coin.price > alertSetting.price) {
         ipcRenderer.send(NOTIFICATION, { type: 'alert', title: coin.slug, body: `Price is greater than ${coin.price}` });
         isAlerted = true;

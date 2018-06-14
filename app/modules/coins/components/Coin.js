@@ -7,7 +7,6 @@ import { getCoinPrice, removeCoin, toggleVisibility, toggleForceRefresh } from '
 import formatPrice from '../../../helpers/formatPrice';
 import trendToArrow from '../../../helpers/trendToArrow';
 import ModalButton from '../../modal/containers/ModalButton';
-import Modal from '../../modal/containers/Modal';
 import AlertSettings from '../containers/AlertSettings';
 
 export class Coin extends Component {
@@ -59,7 +58,7 @@ export class Coin extends Component {
           {formatPrice(currentPriceDisplayed, to)}{trendToArrow(trend)}
         </td>
         <td className="actions toolbar">
-          {/*<ModalButton className="pull-right"><span className="glyphicon glyphicon-plus" /></ModalButton>*/}
+          {/* <ModalButton className="pull-right"><span className="glyphicon glyphicon-plus" /></ModalButton> */}
 
           <ModalButton className="alert" component={AlertSettings} extras={{ slug }}><span className={`glyphicon glyphicon-bell toggle-button ${alert && 'active'}`} /></ModalButton>
           <button onClick={() => this.onToggleVisibility(slug)} className="visibility"><span className={`glyphicon glyphicon-eye-open toggle-button ${visibility && 'active'}`} /></button>
@@ -90,6 +89,7 @@ Coin.propTypes = {
 
 Coin.defaultProps = {
   price: null,
+  alert: null,
 };
 
 const dispatchProps = {

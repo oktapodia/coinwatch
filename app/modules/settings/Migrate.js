@@ -19,7 +19,7 @@ class Migrate {
   }
 
   migrate(migrationFile) {
-    const ClassName = require(path.resolve(this.basePath, migrationFile));
+    const ClassName = require(path.resolve(this.basePath, migrationFile)); // eslint-disable-line global-require,import/no-dynamic-require
     const migration = new ClassName(this.settingsUpdated);
     if (!migration.isVersion()) {
       console.log(`settings are not version ${migrationFile}`);
