@@ -124,7 +124,7 @@
     "babel-eslint": "^8.0.1",
     "babel-jest": "^23.0.0",
     "babel-loader": "^7.1.2",
-    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-add-module-exports": "^0.3.0",
     "babel-plugin-dev-expression": "^0.2.1",
     "babel-plugin-dynamic-import-webpack": "^1.0.1",
     "babel-plugin-flow-runtime": "^0.17.0",
