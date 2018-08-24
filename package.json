@@ -138,7 +138,7 @@
     "babel-register": "^6.26.0",
     "babili-webpack-plugin": "^0.1.2",
     "chalk": "^2.3.0",
-    "concurrently": "^3.5.0",
+    "concurrently": "^4.0.0",
     "copy-webpack-plugin": "^4.2.0",
     "cross-env": "^5.1.1",
     "cross-spawn": "^6.0.0",
