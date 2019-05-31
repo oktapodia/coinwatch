@@ -208,7 +208,7 @@
     "font-awesome": "^4.7.0",
     "history": "^4.7.2",
     "lodash": "^4.17.4",
-    "menubar": "^5.2.3",
+    "menubar": "^6.0.0",
     "moment": "^2.19.1",
     "prop-types": "^15.6.0",
     "query-string": "^6.0.0",
