@@ -4,7 +4,7 @@
 
 import path from 'path';
 import webpack from 'webpack';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import merge from 'webpack-merge';
 import BabiliPlugin from 'babili-webpack-plugin';
@@ -30,21 +30,19 @@ export default merge.smart(baseConfig, {
       // Pipe other styles through css modules and append to style.css
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          use: {
-            loader: 'css-loader',
-          },
-        }),
+        use: [
+          MiniCssExtractPlugin.loader,
+          { loader: 'css-loader' },
+        ],
       },
       // Add SASS support  - compile all other .scss files and pipe it to style.css
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          use: [
-            { loader: 'css-loader' },
-            { loader: 'sass-loader' },
-          ],
-        }),
+        use: [
+          MiniCssExtractPlugin.loader,
+          { loader: 'css-loader' },
+          { loader: 'sass-loader' },
+        ],
       },
       // WOFF Font
       {
@@ -127,7 +125,7 @@ export default merge.smart(baseConfig, {
      */
     new BabiliPlugin(),
 
-    new ExtractTextPlugin('style.css'),
+    new MiniCssExtractPlugin('style.css'),
 
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
