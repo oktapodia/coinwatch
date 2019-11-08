@@ -1,12 +1,12 @@
 {
   "name": "CoinWatch",
   "productName": "CoinWatch",
-  "version": "0.2.2",
+  "version": "1.0.0",
   "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
   "main": "./main.prod.js",
   "author": {
     "name": "BRAMILLE Sebastien",
-    "email": "chentsulin@gmail.com",
+    "email": "sebastien@bramille.com",
     "url": "https://github.com/oktapodia"
   },
   "scripts": {
