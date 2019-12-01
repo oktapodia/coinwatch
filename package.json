@@ -210,7 +210,7 @@
     "jquery": "^3.4.1",
     "lodash": "^4.17.13",
     "menubar": "^5.2.3",
-    "moment": "^2.19.1",
+    "moment": "^2.19.3",
     "popper.js": "^1.16.0",
     "prop-types": "^15.7.2",
     "query-string": "^6.0.0",
