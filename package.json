@@ -213,7 +213,7 @@
     "moment": "^2.19.1",
     "popper.js": "^1.16.0",
     "prop-types": "^15.7.2",
-    "query-string": "^6.0.0",
+    "query-string": "^6.9.0",
     "react": "^16.0.0",
     "react-addons-shallow-compare": "^15.6.2",
     "react-dom": "^16.0.1",
