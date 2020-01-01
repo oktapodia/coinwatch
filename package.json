@@ -204,7 +204,7 @@
     "electron-log": "^2.2.11",
     "electron-osx-sign": "^0.4.7",
     "electron-settings": "^3.1.3",
-    "electron-updater": "^2.15.0",
+    "electron-updater": "^4.2.0",
     "font-awesome": "^4.7.0",
     "history": "^4.7.2",
     "jquery": "^3.4.1",
