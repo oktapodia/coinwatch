@@ -14,6 +14,9 @@ class MainSettings extends Component {
     if (settings.autoLaunch) {
       this.props.updateAutolaunchSettings(settings.autoLaunch);
     }
+
+    console.log(settings);
+
     this.props.updateMainSettings(settings);
   }
 
@@ -21,7 +24,7 @@ class MainSettings extends Component {
     const { handleSubmit } = this.props;
 
     return (
-      <div className="app-container">
+      <div className="app-container mainsettings">
         <h3>Main settings</h3>
         <form onSubmit={handleSubmit(this.onSubmit)}>
           <div className="form-group">
@@ -47,7 +50,16 @@ class MainSettings extends Component {
               No
             </label>
           </div>
-          <input className="btn btn-default" type="submit" value="Save" />
+          <div className="form-group">
+            <label>CryptoCompare API Key:</label>
+            <Field
+              name="cryptocompareApiKey"
+              component="input"
+              type="text"
+            />
+            <abbr>You can create one<a href="https://www.cryptocompare.com/cryptopian/api-keys">here</a></abbr>
+          </div>
+          <input className="btn btn-default" type="submit" value="Save"/>
         </form>
       </div>
     );
@@ -66,6 +78,7 @@ function mapStateToProps({ settings }) {
     initialValues: {
       decimal: settings.decimal,
       autoLaunch: settings.autoLaunch,
+      cryptocompareApiKey: settings.cryptocompareApiKey,
     },
   };
 }

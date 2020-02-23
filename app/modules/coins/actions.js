@@ -21,11 +21,11 @@ export const GET_COIN_PRICE_ATTEMPT = 'GET_COIN_PRICE_ATTEMPT';
 export const GET_COIN_PRICE_SUCCESS = 'GET_COIN_PRICE_SUCCESS';
 export const GET_COIN_PRICE_FAILURE = 'GET_COIN_PRICE_FAILURE';
 
-export function getCoinPrice(coin) {
+export function getCoinPrice(coin, cryptocompareApiKey) {
   return {
     [CALL_HANDLER]: {
       types: [GET_COIN_PRICE_ATTEMPT, GET_COIN_PRICE_SUCCESS, GET_COIN_PRICE_FAILURE],
-      handler: getCoinPriceApi,
+      handler: (coin) => getCoinPriceApi(coin, cryptocompareApiKey),
       data: coin,
     },
   };

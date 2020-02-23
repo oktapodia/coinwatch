@@ -21,8 +21,8 @@ class Tray extends Component {
     }
   }
 
-  refresh() {
-    forEach(this.props.coins, (coin) => this.props.getCoinPrice(coin));
+  refresh = () => {
+    forEach(this.props.coins, (coin) => this.props.getCoinPrice(coin, this.props.cryptocompareApiKey).catch(console.log));
   }
 
   render() {
@@ -41,8 +41,9 @@ Tray.defaultProps = {
   forceRefresh: false,
 };
 
-function mapStateToProps({ coins }) {
+function mapStateToProps({ coins, settings }) {
   return {
+    cryptocompareApiKey: settings.cryptocompareApiKey,
     coins: coins.coins,
     forceRefresh: coins.forceRefresh,
   };

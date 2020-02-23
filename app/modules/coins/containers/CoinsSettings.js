@@ -28,7 +28,7 @@ class CoinsSettings extends Component {
   onSubmit(props) {
     const propsMapped = mapValues(props, (p) => (p.value ? p.value : p));
 
-    return this.props.getCoinPrice(propsMapped)
+    return this.props.getCoinPrice(propsMapped, this.props.cryptocompareApiKey)
       .then(() => this.props.saveCoin(propsMapped))
       .then(() => this.props.closeModal())
       .catch((error) => {
@@ -108,14 +108,16 @@ CoinsSettings.propTypes = {
   getCoinPrice: PropTypes.func.isRequired,
   saveCoin: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
+  cryptocompareApiKey: PropTypes.string.isRequired,
 };
 
 CoinsSettings.defaultProps = {
   error: null,
 };
 
-function mapStateToProps({ coins }) {
+function mapStateToProps({ coins, settings }) {
   return {
+    cryptocompareApiKey: settings.cryptocompareApiKey,
     coins: coins.data,
     exchanges: coins.exchanges,
     symbols: coins.symbols,

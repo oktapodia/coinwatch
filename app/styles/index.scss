@@ -121,10 +121,16 @@ h3 {
   .top-container {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    padding: 0 10px;
   }
 
-  .top-container {
-    padding: 0 10px;
+  .margin-right-auto {
+    margin-right: auto;
+  }
+
+  .fill-remaining-space {
+    flex: auto;
   }
 }
 
@@ -136,7 +142,12 @@ h3 {
 
   & > .app-container {
     padding: 10px;
+
+    &.mainsettings {
+      color: #000;
+    }
   }
+
 }
 
 .column-container {

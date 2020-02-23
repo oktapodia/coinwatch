@@ -19,7 +19,7 @@ export class Coin extends Component {
 
   componentWillMount() {
     if (isNull(this.props.price)) {
-      this.props.getCoinPrice(this.props);
+      this.props.getCoinPrice(this.props, this.props.cryptocompareApiKey);
     }
   }
 
@@ -85,6 +85,7 @@ Coin.propTypes = {
   getCoinPrice: PropTypes.func.isRequired,
   toggleVisibility: PropTypes.func.isRequired,
   toggleForceRefresh: PropTypes.func.isRequired,
+  cryptocompareApiKey: PropTypes.string.isRequired,
 };
 
 Coin.defaultProps = {
@@ -101,4 +102,8 @@ const dispatchProps = {
   toggleForceRefresh,
 };
 
-export default connect(null, dispatchProps)(Coin);
+function mapStateToProps({ settings }) {
+  return { cryptocompareApiKey: settings.cryptocompareApiKey };
+}
+
+export default connect(mapStateToProps, dispatchProps)(Coin);
