@@ -6,7 +6,7 @@ class AutoLaunch {
 
   constructor() {
     this.autoLaunch = new AutoLaunchPackage({
-      name: app.getName(),
+      name: app.name,
       path: process.execPath.match(/.*?\.app/)[0],
       isHidden: true,
     });

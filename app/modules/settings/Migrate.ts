@@ -16,15 +16,15 @@ class Migrate {
     });
   }
 
-  migrate(migrationFile) {
-    const ClassName = migrationFile; // eslint-disable-line global-require,import/no-dynamic-require
-    const migration = new ClassName(this.settingsUpdated);
-    console.log(migration.isVersion());
+migrate(migrationFile) {
+    const MigrationClassName = migrationFile instanceof Function || migrationFile.default; // eslint-disable-line global-require,import/no-dynamic-require
+
+    const migration = new MigrationClassName(this.settingsUpdated);
     if (!migration.isVersion()) {
-      console.log(`settings are not version ${migrationFile.name}`);
+      console.log(`settings are not version ${MigrationClassName.name}`);
       return;
     }
-    console.log(`settings are version ${migrationFile.name}, upgrade...`);
+    console.log(`settings are version ${MigrationClassName.name}, upgrade...`);
 
     this.settingsUpdated = migration.up();
   }

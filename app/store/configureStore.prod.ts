@@ -8,7 +8,7 @@ import handler from '../middleware/handler';
 
 const history = createHashHistory();
 
-function configureStore(initialState) {
+function configureStore(initialState = null) {
   const middleware = [];
   const enhancers = [];
 

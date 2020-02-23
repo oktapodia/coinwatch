@@ -1,4 +1,3 @@
-import React from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import App from './containers/App';
 import CoinsPage from './modules/coins/containers/CoinsPage';
