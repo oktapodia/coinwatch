@@ -9,19 +9,13 @@ import { toggleForceRefresh } from '../actions';
 import ModalButton from '../../modal/containers/ModalButton';
 
 export class CoinsPage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.onClickForceRefresh = ::this.onClickForceRefresh;
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     return shallowCompare(this, nextProps, nextState);
   }
 
-  onClickForceRefresh() {
+  onClickForceRefresh = () => {
     this.props.toggleForceRefresh();
-  }
+  };
 
   render() {
     const { coins, alerts } = this.props;
@@ -41,14 +35,22 @@ export class CoinsPage extends Component {
                 <th>Exchange</th>
                 <th>Price</th>
                 <th className="toolbar">
-                  <ModalButton className="pull-right" component={CoinSettings}><span className="glyphicon glyphicon-plus" /></ModalButton>
-                  <button onClick={this.onClickForceRefresh} className="link-force-refresh pull-right"><span className="glyphicon glyphicon-refresh" aria-hidden="true" /></button>
+                  <ModalButton className="pull-right" component={CoinSettings}>
+                    <span className="glyphicon glyphicon-plus" />
+                  </ModalButton>
+                  <button
+                    onClick={this.onClickForceRefresh}
+                    className="link-force-refresh pull-right"
+                  >
+                    <span
+                      className="glyphicon glyphicon-refresh"
+                      aria-hidden="true"
+                    />
+                  </button>
                 </th>
               </tr>
             </thead>
-            <tbody>
-              {followedCoinsDisplay}
-            </tbody>
+            <tbody>{followedCoinsDisplay}</tbody>
           </table>
         </div>
       </div>
@@ -59,13 +61,13 @@ export class CoinsPage extends Component {
 CoinsPage.propTypes = {
   coins: PropTypes.array.isRequired,
   alerts: PropTypes.object.isRequired,
-  toggleForceRefresh: PropTypes.func.isRequired,
+  toggleForceRefresh: PropTypes.func.isRequired
 };
 
 function mapStateToProps({ coins }) {
   return {
     coins: coins.coins,
-    alerts: coins.alerts,
+    alerts: coins.alerts
   };
 }
 

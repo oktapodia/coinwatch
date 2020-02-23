@@ -4,7 +4,7 @@ import { ipcRenderer } from 'electron';
 import { SETTINGS_AUTOLAUNCH_OFF, SETTINGS_AUTOLAUNCH_ON } from './actions';
 
 const defaultSettings = {
-  decimal: 4,
+  decimal: 4
 };
 const initialState = assign(defaultSettings, settings.getAll());
 

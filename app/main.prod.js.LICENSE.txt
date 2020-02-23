@@ -1,0 +1,46 @@
+/*! http://mths.be/fromcodepoint v0.1.0 by @mathias */
+
+/**
+ * @license
+ * Lodash <https://lodash.com/>
+ * Copyright OpenJS Foundation and other contributors <https://openjsf.org/>
+ * Released under MIT license <https://lodash.com/license>
+ * Based on Underscore.js 1.8.3 <http://underscorejs.org/LICENSE>
+ * Copyright Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
+ */
+
+/**
+ * A module that contains key path helpers. Adapted from atom/key-path-helpers.
+ *
+ * @module settings-helpers
+ * @author Nathan Buchar
+ * @copyright 2016-2017 Nathan Buchar <hello@nathanbuchar.com>
+ * @license ISC
+ */
+
+/**
+ * A module that delegates settings changes.
+ *
+ * @module settings-observer
+ * @author Nathan Buchar
+ * @copyright 2016-2017 Nathan Buchar <hello@nathanbuchar.com>
+ * @license ISC
+ */
+
+/**
+ * A module that handles read and writing to the disk.
+ *
+ * @module settings
+ * @author Nathan Buchar
+ * @copyright 2016-2017 Nathan Buchar <hello@nathanbuchar.com>
+ * @license ISC
+ */
+
+/**
+ * A simple persistent user settings framework for Electron.
+ *
+ * @module main
+ * @author Nathan Buchar
+ * @copyright 2016-2017 Nathan Buchar <hello@nathanbuchar.com>
+ * @license ISC
+ */

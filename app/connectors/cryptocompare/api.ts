@@ -8,19 +8,17 @@ export function getCoinPriceApi({ coin, to, exchange }, cryptocompareApiKey) {
     fsym: coin.Symbol,
     tsyms: to,
     e: exchange,
-    api_key: cryptocompareApiKey,
+    api_key: cryptocompareApiKey
   });
 
   const url = `https://min-api.cryptocompare.com/data/price?${query}`;
-  return axios
-    .get(url)
-    .then((response) => {
-      if (response.data.Response === 'Error') {
-        throw response.data;
-      }
+  return axios.get(url).then(response => {
+    if (response.data.Response === 'Error') {
+      throw response.data;
+    }
 
-      return response;
-    });
+    return response;
+  });
 }
 
 export function getCoinListApi() {
@@ -87,19 +85,13 @@ export function getExchangeListApi() {
       'Coinone',
       'Tidex',
       'Bleutrade',
-      'EthexIndia',
-    ],
+      'EthexIndia'
+    ]
   });
 }
 
 export function getSymbolListApi() {
   return Promise.resolve({
-    data: [
-      'EUR',
-      'USD',
-      'GBP',
-      'BTC',
-      'ETH',
-    ],
+    data: ['EUR', 'USD', 'GBP', 'BTC', 'ETH']
   });
 }

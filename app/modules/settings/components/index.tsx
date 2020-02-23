@@ -4,19 +4,17 @@ import MainSettings from './MainSettings';
 
 class Settings extends Component {
   render() {
-    return (
-      <MainSettings settings={this.props.settings} />
-    );
+    return <MainSettings settings={this.props.settings} />;
   }
 }
 
 Settings.propTypes = {
-  settings: PropTypes.object.isRequired,
+  settings: PropTypes.object.isRequired
 };
 
 function mapStateToProps({ settings }) {
   return {
-    settings,
+    settings
   };
 }
 

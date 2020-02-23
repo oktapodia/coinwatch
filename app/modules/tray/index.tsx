@@ -4,11 +4,6 @@ import { forEach } from 'lodash';
 import { getCoinPrice, toggleForceRefresh } from '../coins/actions';
 
 class Tray extends Component {
-  constructor() {
-    super();
-    this.refresh = ::this.refresh;
-  }
-
   componentDidMount() {
     this.refresh();
     setInterval(this.refresh, 60000);
@@ -22,8 +17,12 @@ class Tray extends Component {
   }
 
   refresh = () => {
-    forEach(this.props.coins, (coin) => this.props.getCoinPrice(coin, this.props.cryptocompareApiKey).catch(console.log));
-  }
+    forEach(this.props.coins, coin =>
+      this.props
+        .getCoinPrice(coin, this.props.cryptocompareApiKey)
+        .catch(console.log)
+    );
+  };
 
   render() {
     return <div />;
@@ -34,19 +33,21 @@ Tray.propTypes = {
   coins: PropTypes.array.isRequired,
   forceRefresh: PropTypes.bool.isRequired,
   getCoinPrice: PropTypes.func.isRequired,
-  toggleForceRefresh: PropTypes.func.isRequired,
+  toggleForceRefresh: PropTypes.func.isRequired
 };
 
 Tray.defaultProps = {
-  forceRefresh: false,
+  forceRefresh: false
 };
 
 function mapStateToProps({ coins, settings }) {
   return {
     cryptocompareApiKey: settings.cryptocompareApiKey,
     coins: coins.coins,
-    forceRefresh: coins.forceRefresh,
+    forceRefresh: coins.forceRefresh
   };
 }
 
-export default connect(mapStateToProps, { getCoinPrice, toggleForceRefresh })(Tray);
+export default connect(mapStateToProps, { getCoinPrice, toggleForceRefresh })(
+  Tray
+);

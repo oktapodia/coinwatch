@@ -10,7 +10,7 @@ import {
   SETTINGS_REMOVE_COIN_SUCCESS,
   SETTINGS_SAVE_COIN_SUCCESS,
   SETTINGS_TOGGLE_VISIBILITY_SUCCESS,
-  SETTINGS_SAVE_ALERT_SUCCESS,
+  SETTINGS_SAVE_ALERT_SUCCESS
 } from './actions';
 import { TRAY_UPDATE } from '../../main/Tray';
 import { NOTIFICATION } from '../../main/NotificationCenter';
@@ -26,14 +26,14 @@ const initialState = {
   previousCoins: [],
   forceRefresh: false,
   alertsSettings: settings.get('alerts') || [],
-  alerts: {},
+  alerts: {}
 };
 
 export default function coinsReducer(state = initialState, action) {
   switch (action.type) {
     case SETTINGS_TOGGLE_VISIBILITY_SUCCESS: {
       const coins = cloneDeep(state.coins);
-      const coin = find(coins, (c) => c.slug === action.data.slug);
+      const coin = find(coins, c => c.slug === action.data.slug);
 
       coin.visibility = !coin.visibility;
 
@@ -58,8 +58,11 @@ export default function coinsReducer(state = initialState, action) {
     case GET_COIN_PRICE_SUCCESS: {
       const coins = cloneDeep(state.coins);
       const previousCoins = cloneDeep(state.coins);
-      const coin = find(coins, (c) => c.slug === action.data.slug);
-      const previousCoin = find(state.previousCoins, (c) => c.slug === action.data.slug);
+      const coin = find(coins, c => c.slug === action.data.slug);
+      const previousCoin = find(
+        state.previousCoins,
+        c => c.slug === action.data.slug
+      );
 
       if (!coin) {
         return { ...state };
@@ -82,7 +85,10 @@ export default function coinsReducer(state = initialState, action) {
       // ------------------------------------------------------------------------------------------------------Alert
       const alerts = cloneDeep(state.alerts);
 
-      const alertSetting = find(state.alertsSettings, (a) => a.slug === action.data.slug);
+      const alertSetting = find(
+        state.alertsSettings,
+        a => a.slug === action.data.slug
+      );
       if (!alertSetting) {
         return response;
       }
@@ -97,15 +103,29 @@ export default function coinsReducer(state = initialState, action) {
 
       let isAlerted = false;
       if (alertSetting.trend === 'down' && coin.price < alertSetting.price) {
-        ipcRenderer.send(NOTIFICATION, { type: 'alert', title: coin.slug, body: `Price is lower than ${coin.price}` });
+        ipcRenderer.send(NOTIFICATION, {
+          type: 'alert',
+          title: coin.slug,
+          body: `Price is lower than ${coin.price}`
+        });
         isAlerted = true;
-      } else if (alertSetting.trend === 'up' && coin.price > alertSetting.price) {
-        ipcRenderer.send(NOTIFICATION, { type: 'alert', title: coin.slug, body: `Price is greater than ${coin.price}` });
+      } else if (
+        alertSetting.trend === 'up' &&
+        coin.price > alertSetting.price
+      ) {
+        ipcRenderer.send(NOTIFICATION, {
+          type: 'alert',
+          title: coin.slug,
+          body: `Price is greater than ${coin.price}`
+        });
         isAlerted = true;
       }
 
       if (isAlerted) {
-        const index = findIndex(state.alertsSettings, (s) => s.slug === coin.slug);
+        const index = findIndex(
+          state.alertsSettings,
+          s => s.slug === coin.slug
+        );
         state.alertsSettings.splice(index, 1);
 
         settings.set('alerts', state.alertsSettings);

@@ -17,13 +17,13 @@ class TrayMenu {
         label: 'Toggle window',
         click: () => {
           this.tray.toggleWindow();
-        },
+        }
       },
       {
         label: 'Check for update...',
         click: () => {
           autoUpdater.checkForUpdates();
-        },
+        }
       },
       {
         label: 'About CoinWatch',
@@ -36,35 +36,41 @@ class TrayMenu {
               autoHideMenuBar: true,
               resizable: true,
               webPreferences: {
-                nodeIntegration: true,
-              },
+                nodeIntegration: true
+              }
             });
             aboutWindow.on('closed', () => {
               aboutWindow = null;
             });
 
             // Load a remote URL
-            const basePath = path.join(__dirname, process.env.NODE_ENV === 'development' ? '/..' : '');
+            const basePath = path.join(
+              __dirname,
+              process.env.NODE_ENV === 'development' ? '/..' : ''
+            );
             aboutWindow.loadURL(`file://${basePath}/windows/about/about.html`);
 
             aboutWindow.once('ready-to-show', () => {
               aboutWindow.webContents.send('get-version', packageJson.version);
               aboutWindow.show();
-              if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+              if (
+                process.env.NODE_ENV === 'development' ||
+                process.env.DEBUG_PROD === 'true'
+              ) {
                 // aboutWindow.openDevTools();
               }
             });
           }
-        },
+        }
       },
       {
-        type: 'separator',
+        type: 'separator'
       },
       {
         label: 'Quit',
         accelerator: isDarwin ? 'Command+Q' : 'Alt+F4',
-        role: 'quit',
-      },
+        role: 'quit'
+      }
     ]);
   }
 }

@@ -29,7 +29,7 @@ install:
 
 test_script:
   - node --version
-  - yarn lint
+#  - yarn lint
   - yarn package
-  - yarn test
-  - yarn test-e2e
+#  - yarn test
+#  - yarn test-e2e

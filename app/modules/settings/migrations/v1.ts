@@ -1,5 +1,6 @@
 import AbstractMigration from '../AbstractMigration';
 
+// eslint-disable-next-line @typescript-eslint/class-name-casing
 class v1 extends AbstractMigration {
   isVersion() {
     if (!this.settings.version) {

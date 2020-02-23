@@ -6,7 +6,7 @@ function formatPrice(price, currency) {
     EUR: '€',
     GBP: '£',
     BTC: '฿',
-    ETH: 'Ξ',
+    ETH: 'Ξ'
   };
 
   if (!has(symbols, currency)) {

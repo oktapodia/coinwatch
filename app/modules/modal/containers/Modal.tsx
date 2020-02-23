@@ -19,10 +19,9 @@ class ModalClass extends Component {
         left: '100px',
         right: '100px',
         bottom: '100px',
-        color: '#000000',
-      },
+        color: '#000000'
+      }
     };
-
 
     return (
       <Modal
@@ -31,9 +30,14 @@ class ModalClass extends Component {
         shouldCloseOnOverlayClick
         style={customStyles}
       >
-        <button onClick={this.props.closeModal} className="pull-right"><span className="glyphicon glyphicon-remove" /></button>
+        <button onClick={this.props.closeModal} className="pull-right">
+          <span className="glyphicon glyphicon-remove" />
+        </button>
         <div>
-          <CustomComponent closeModal={this.props.closeModal} extras={this.props.extras} />
+          <CustomComponent
+            closeModal={this.props.closeModal}
+            extras={this.props.extras}
+          />
         </div>
       </Modal>
     );
@@ -44,21 +48,20 @@ ModalClass.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
   component: PropTypes.func,
-  extras: PropTypes.object,
+  extras: PropTypes.object
 };
 
 ModalClass.defaultProps = {
   component: null,
-  extras: {},
+  extras: {}
 };
 
 function mapStateToProps({ modal }) {
   return {
     isOpen: modal.isOpen,
     component: modal.component,
-    extras: modal.extras,
+    extras: modal.extras
   };
 }
 
 export default connect(mapStateToProps, { closeModal })(ModalClass);
-

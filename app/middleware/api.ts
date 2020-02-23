@@ -10,36 +10,36 @@ export const CALL_API = Symbol('Call API');
  * Read more about Normalizr: https://github.com/gaearon/normalizr
  */
 
-const callApi = (method, url, data) => axios({ method, url, data })
-  .then((response) => {
-    if (response.status === 204) {
-      return ({ request: {}, response });
-    }
+const callApi = (method, url, data) =>
+  axios({ method, url, data })
+    .then(response => {
+      if (response.status === 204) {
+        return { request: {}, response };
+      }
 
-    return {
-      request: data,
-      response,
-    };
-  })
-  .then((response) => {
-    if (!response.statusText === 'OK') {
-      const error = new Error('API middleware: response is not OK');
-      error.json = response.data;
-      error.response = response;
+      return {
+        request: data,
+        response
+      };
+    })
+    .then(response => {
+      if (!response.statusText === 'OK') {
+        const error = new Error('API middleware: response is not OK');
+        error.json = response.data;
+        error.response = response;
 
-      return Promise.reject(error);
-    }
+        return Promise.reject(error);
+      }
 
-    return response.response.data;
-  });
-
+      return response.response.data;
+    });
 
 /*
  * A Redux middleware that interprets actions with CALL_API info specified.
  * Performs the call and promises when such actions are dispatched.
  */
 
-export default store => next => (action) => {
+export default store => next => action => {
   const callAPI = action[CALL_API];
 
   if (typeof callAPI === 'undefined') {
@@ -47,12 +47,7 @@ export default store => next => (action) => {
   }
 
   let { endpoint } = callAPI;
-  const {
-    types,
-    method,
-    data,
-    extras,
-  } = callAPI;
+  const { types, method, data, extras } = callAPI;
 
   if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected an array of three action types.');
@@ -72,7 +67,7 @@ export default store => next => (action) => {
   }
 
   function actionWith(body) {
-    const finalAction = Object.assign({}, action, body);
+    const finalAction = { ...action, ...body };
     delete finalAction[CALL_API];
     return finalAction;
   }
@@ -81,13 +76,17 @@ export default store => next => (action) => {
   next(actionWith({ type: requestType, endpoint, extras }));
 
   return callApi(method, endpoint, data)
-    .then((response) => next(actionWith({
-      response,
-      endpoint,
-      type: successType,
-      extras,
-    })))
-    .catch((err) => {
+    .then(response =>
+      next(
+        actionWith({
+          response,
+          endpoint,
+          type: successType,
+          extras
+        })
+      )
+    )
+    .catch(err => {
       const { message, status } = err;
 
       /*
@@ -106,12 +105,14 @@ export default store => next => (action) => {
         return next(push('/error'));
       }
 
-      next(actionWith({
-        endpoint,
-        type: failureType,
-        error,
-        extras,
-      }));
+      next(
+        actionWith({
+          endpoint,
+          type: failureType,
+          error,
+          extras
+        })
+      );
 
       /*
        * break propagation

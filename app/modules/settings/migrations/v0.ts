@@ -1,6 +1,7 @@
 import { isEmpty } from 'lodash';
 import AbstractMigration from '../AbstractMigration';
 
+// eslint-disable-next-line @typescript-eslint/class-name-casing
 class v0 extends AbstractMigration {
   isVersion() {
     return isEmpty(this.settings);

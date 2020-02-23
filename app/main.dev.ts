@@ -48,7 +48,10 @@ if (
 const createWindow = async () => {
   await new Migrate(); // eslint-disable-line no-new
 
-  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
+  if (
+    process.env.NODE_ENV === 'development' ||
+    process.env.DEBUG_PROD === 'true'
+  ) {
     await installExtensions();
   }
 
@@ -63,11 +66,11 @@ const createWindow = async () => {
     webPreferences:
       process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true'
         ? {
-          nodeIntegration: true
-        }
+            nodeIntegration: true
+          }
         : {
-          preload: path.join(__dirname, 'dist/renderer.prod.js')
-        }
+            preload: path.join(__dirname, 'dist/renderer.prod.js')
+          }
   });
   mainWindow.loadURL(`file://${__dirname}/main.html`);
 
@@ -89,7 +92,7 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
-  mainWindow.on('close', (event) => {
+  mainWindow.on('close', event => {
     if (!isQuitting) {
       event.preventDefault();
       mainWindow.hide();

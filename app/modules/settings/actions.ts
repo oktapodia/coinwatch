@@ -8,7 +8,7 @@ export function updateMainSettings(data) {
     settings.set(key, value);
   });
 
-  return (dispatch) => {
+  return dispatch => {
     dispatch({ type: SETTINGS_MAIN_UPDATE });
   };
 }
@@ -18,12 +18,12 @@ export const SETTINGS_AUTOLAUNCH_OFF = 'SETTINGS_AUTOLAUNCH_OFF';
 
 export function updateAutolaunchSettings(data) {
   if (data === 'yes') {
-    return (dispatch) => {
+    return dispatch => {
       dispatch({ type: SETTINGS_AUTOLAUNCH_ON });
     };
   }
 
-  return (dispatch) => {
+  return dispatch => {
     dispatch({ type: SETTINGS_AUTOLAUNCH_OFF });
   };
 }

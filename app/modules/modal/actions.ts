@@ -1,7 +1,7 @@
 export const OPEN_MODAL = 'OPEN_MODAL';
 
 export function openModal(component, extras = {}) {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({ type: OPEN_MODAL, component, extras });
   };
 }
@@ -9,7 +9,7 @@ export function openModal(component, extras = {}) {
 export const CLOSE_MODAL = 'CLOSE_MODAL';
 
 export function closeModal() {
-  return (dispatch) => {
+  return dispatch => {
     dispatch({ type: CLOSE_MODAL });
   };
 }
