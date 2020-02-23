@@ -2,7 +2,7 @@ import { app, ipcMain } from 'electron';
 import AutoLaunchPackage from 'auto-launch';
 
 class AutoLaunch {
-  autoLaunch: AutoLaunch;
+  autoLaunch;
 
   constructor() {
     this.autoLaunch = new AutoLaunchPackage({
