@@ -51,8 +51,6 @@ class Tray {
       return;
     }
 
-    console.log('UPDATED');
-
     const trayDisplay = map(coinsFiltered, ({ coin, to, trend, price }) => `${coin.Symbol}: ${formatPrice(price, to)} ${trendToArrow(trend)}`);
 
     this.tray.setTitle(trayDisplay.join(' | '));

@@ -2,7 +2,6 @@ import React from 'react';
 import Tray from '../modules/tray';
 import Navbar from '../components/Navbar';
 import Modal from '../modules/modal/containers/Modal';
-import '../styles/index.scss';
 
 const App = ({ children }) => (
   <div className="app-container">

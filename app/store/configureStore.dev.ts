@@ -1,13 +1,15 @@
 import { applyMiddleware, compose, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import { createHashHistory } from 'history';
-import { routerActions, routerMiddleware } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
-import rootReducer from '../reducers';
+import createRootReducer from '../reducers';
 import api from '../middleware/api';
 import handler from '../middleware/handler';
+import { routerMiddleware, routerActions } from 'connected-react-router';
 
 const history = createHashHistory();
+
+const rootReducer = createRootReducer(history);
 
 const configureStore = (initialState) => {
   // Redux Configuration

@@ -90,7 +90,6 @@ const createWindow = async () => {
   });
 
   mainWindow.on('close', (event) => {
-    console.log('CALLED closed', event);
     if (!isQuitting) {
       event.preventDefault();
       mainWindow.hide();

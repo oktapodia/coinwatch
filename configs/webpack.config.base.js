@@ -45,6 +45,9 @@ export default {
     new webpack.ProvidePlugin({
       PropTypes: 'prop-types',
     }),
+    new webpack.ProvidePlugin({
+      React: 'react',
+    }),
     new webpack.NamedModulesPlugin()
   ]
 };
