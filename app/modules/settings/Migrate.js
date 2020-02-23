@@ -9,6 +9,7 @@ class Migrate {
 
     return new Promise((resolve) => {
       forEach(migrationFiles, ::this.migrate);
+      console.log('Settings are up to date');
       settings.setAll(this.settingsUpdated);
 
       resolve();
@@ -18,11 +19,12 @@ class Migrate {
   migrate(migrationFile) {
     const ClassName = migrationFile; // eslint-disable-line global-require,import/no-dynamic-require
     const migration = new ClassName(this.settingsUpdated);
+    console.log(migration.isVersion());
     if (!migration.isVersion()) {
-      console.log(`settings are not version ${migrationFile}`);
+      console.log(`settings are not version ${migrationFile.name}`);
       return;
     }
-    console.log(`settings are version ${migrationFile}, upgrade...`);
+    console.log(`settings are version ${migrationFile.name}, upgrade...`);
 
     this.settingsUpdated = migration.up();
   }

@@ -70,7 +70,7 @@ export class Coin extends Component {
 }
 
 Coin.propTypes = {
-  exchange: PropTypes.string.isRequired,
+  exchange: PropTypes.string,
   price: PropTypes.string,
   alert: PropTypes.string,
   coin: PropTypes.shape({
@@ -80,7 +80,7 @@ Coin.propTypes = {
   visibility: PropTypes.bool.isRequired,
   slug: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
-  trend: PropTypes.string.isRequired,
+  trend: PropTypes.string,
   removeCoin: PropTypes.func.isRequired,
   getCoinPrice: PropTypes.func.isRequired,
   toggleVisibility: PropTypes.func.isRequired,
@@ -90,6 +90,8 @@ Coin.propTypes = {
 Coin.defaultProps = {
   price: null,
   alert: null,
+  exchange: 'CCCAGG',
+  trend: 'lower',
 };
 
 const dispatchProps = {

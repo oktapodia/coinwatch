@@ -35,6 +35,9 @@ class TrayMenu {
               show: false,
               autoHideMenuBar: true,
               resizable: true,
+              webPreferences: {
+                nodeIntegration: true,
+              },
             });
             aboutWindow.on('closed', () => {
               aboutWindow = null;

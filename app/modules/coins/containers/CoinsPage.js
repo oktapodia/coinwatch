@@ -37,7 +37,7 @@ export class CoinsPage extends Component {
           <table className="table table-striped">
             <thead>
               <tr>
-                <th>Coin</th>
+                <th data-theme="light">Coin</th>
                 <th>Exchange</th>
                 <th>Price</th>
                 <th className="toolbar">

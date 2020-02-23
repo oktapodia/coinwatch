@@ -11,7 +11,7 @@ class Tray extends Component {
 
   componentDidMount() {
     this.refresh();
-    setInterval(this.refresh, 10000);
+    setInterval(this.refresh, 60000);
   }
 
   componentWillReceiveProps(nextProps) {

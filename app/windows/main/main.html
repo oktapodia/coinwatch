@@ -5,6 +5,33 @@
   <title>Coinwatch</title>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script>
+
+    const { remote } = require('electron')
+
+    if (process.platform === 'darwin') {
+      const { systemPreferences } = remote
+
+      const setOSTheme = () => {
+        const theme = systemPreferences.shouldUseDarkColors ? 'dark' : 'light'
+        window.localStorage.os_theme = theme
+
+        //
+        // Defined in index.html, so undefined when launching the app.
+        // Will be defined for `systemPreferences.subscribeNotification` callback.
+        //
+        if ('__setTheme' in window) {
+          window.__setTheme();
+        }
+      }
+
+      systemPreferences.subscribeNotification(
+        'AppleInterfaceThemeChangedNotification',
+        setOSTheme,
+      )
+
+      setOSTheme();
+    }
+
     if (process.env.NODE_ENV !== 'development') {
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -22,6 +49,19 @@
         ga('send', 'pageview');
       })();
     }
+
+    window.__setTheme = () => {
+      let userTheme = localStorage.user_theme
+      let OSTheme = localStorage.os_theme
+      let defaultTheme = 'light'
+
+      document.documentElement.setAttribute(
+        'data-theme',
+        userTheme || OSTheme || defaultTheme,
+      )
+    }
+
+    __setTheme()
   </script>
   <script>
     (function () {

@@ -12,6 +12,7 @@ export default function initWindow() {
     fullscreenable: false,
     webPreferences: {
       overlayScrollbars: true,
+      nodeIntegration: true,
     },
   };
 
