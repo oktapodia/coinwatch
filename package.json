@@ -1,7 +1,7 @@
 {
   "name": "coinwatch",
   "productName": "CoinWatch",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Follow your cryptocurrencies from your Osx menubar",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",

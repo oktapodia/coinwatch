@@ -15,7 +15,7 @@ import merge from 'webpack-merge';
 import { execSync, spawn } from 'child_process';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import baseConfig from './webpack.config.base';
-import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
+import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
 
 CheckNodeEnv('development');
 
@@ -41,7 +41,7 @@ export default merge.smart(baseConfig, {
     'react-hot-loader/patch',
     `webpack-dev-server/client?http://localhost:${port}/`,
     'webpack/hot/only-dev-server',
-    path.join(__dirname, 'app/index.js'),
+    path.join(__dirname, 'app/index.tsx'),
   ],
 
   output: {

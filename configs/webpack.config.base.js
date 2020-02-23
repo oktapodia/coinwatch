@@ -43,10 +43,10 @@ export default {
       NODE_ENV: 'production'
     }),
     new webpack.ProvidePlugin({
-      PropTypes: 'prop-types',
+      PropTypes: 'prop-types'
     }),
     new webpack.ProvidePlugin({
-      React: 'react',
+      React: 'react'
     }),
     new webpack.NamedModulesPlugin()
   ]

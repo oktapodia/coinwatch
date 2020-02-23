@@ -14,9 +14,9 @@ $blue-color: #011525;
  */
 @import '~@fortawesome/fontawesome-free/css/all.css';
 
-@import "tabs";
-@import "icos";
-@import "coins";
+@import 'tabs';
+@import 'icos';
+@import 'coins';
 
 html,
 body,
@@ -152,7 +152,6 @@ h3 {
       color: #000;
     }
   }
-
 }
 
 .column-container {
@@ -189,16 +188,16 @@ footer {
   --green-color: green;
 }
 
-[data-theme^="light"],
-[data-theme] [data-theme^="light"] {
+[data-theme^='light'],
+[data-theme] [data-theme^='light'] {
   --main-color: #000;
   --background-color: #fff;
   --box-color: lightgrey;
 }
 
-[data-theme^="dark"],
-[data-theme] [data-theme^="dark"],
-[data-theme="light-dark-sidebar"] nav {
+[data-theme^='dark'],
+[data-theme] [data-theme^='dark'],
+[data-theme='light-dark-sidebar'] nav {
   --blue-color: #1da1f2;
   --main-color: #fff;
   --background-color: #000;

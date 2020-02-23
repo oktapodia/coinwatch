@@ -10,7 +10,7 @@ import merge from 'webpack-merge';
 import BabiliPlugin from 'babili-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import baseConfig from './webpack.config.base';
-import CheckNodeEnv from './internals/scripts/CheckNodeEnv';
+import CheckNodeEnv from '../internals/scripts/CheckNodeEnv';
 
 CheckNodeEnv('production');
 
