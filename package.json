@@ -173,7 +173,7 @@
     "jsdom": "^11.3.0",
     "mini-css-extract-plugin": "^0.8.0",
     "minimist": "^1.2.2",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "react-addons-test-utils": "^15.6.2",
     "react-test-renderer": "^16.0.0",
     "redux-logger": "^3.0.6",
