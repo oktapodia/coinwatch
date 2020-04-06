@@ -198,7 +198,7 @@
     "@exponent/electron-cookies": "^2.0.0",
     "auto-launch": "^5.0.1",
     "axios": "^0.18.0",
-    "bootstrap": "^4.0.0",
+    "bootstrap": "^4.4.1",
     "devtron": "^1.4.0",
     "electron-debug": "^2.0.0",
     "electron-log": "^2.2.11",
