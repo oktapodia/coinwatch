@@ -202,7 +202,7 @@
     "devtron": "^1.4.0",
     "electron-debug": "^2.0.0",
     "electron-log": "^2.2.11",
-    "electron-osx-sign": "^0.4.7",
+    "electron-osx-sign": "^0.4.15",
     "electron-settings": "^3.1.3",
     "electron-updater": "^4.2.0",
     "font-awesome": "^4.7.0",
