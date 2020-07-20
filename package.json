@@ -142,7 +142,7 @@
     "copy-webpack-plugin": "^5.0.5",
     "cross-env": "^5.1.1",
     "cross-spawn": "^7.0.1",
-    "css-loader": "^0.28.7",
+    "css-loader": "^3.6.0",
     "electron": "^7.2.4",
     "electron-builder": "^20.0.4",
     "electron-devtools-installer": "^2.2.1",
