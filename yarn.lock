@@ -4668,10 +4668,10 @@ enzyme-redux@^0.2.0:
   resolved "https://registry.yarnpkg.com/enzyme-redux/-/enzyme-redux-0.2.1.tgz#7c2ebebc8a4dd62749d632c5a12d5a23bcabc1ff"
   integrity sha1-fC6+vIpN1idJ1jLFoS1aI7yrwf8=
 
-enzyme-to-json@^3.1.4:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/enzyme-to-json/-/enzyme-to-json-3.2.0.tgz#f3274ff1c1444fb6e638cca67b22e1da4eecf49c"
-  integrity sha512-NZ20EcUFzS2xikUJwRXg6LSNvU3GWxy14enJ+8Z+gwGz++n1R+3CMtmZCoDtrdH228IfKRxIYCkA5H0L4oeLkA==
+enzyme-to-json@^3.3.5:
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/enzyme-to-json/-/enzyme-to-json-3.3.5.tgz#f8eb82bd3d5941c9d8bc6fd9140030777d17d0af"
+  integrity sha512-DmH1wJ68HyPqKSYXdQqB33ZotwfUhwQZW3IGXaNXgR69Iodaoj8TF/D9RjLdz4pEhGq2Tx2zwNUIjBuqoZeTgA==
   dependencies:
     lodash "^4.17.4"
 
