@@ -17,13 +17,13 @@ class TrayMenu {
         label: 'Toggle window',
         click: () => {
           this.tray.toggleWindow();
-        }
+        },
       },
       {
         label: 'Check for update...',
         click: () => {
           autoUpdater.checkForUpdates();
-        }
+        },
       },
       {
         label: 'About CoinWatch',
@@ -36,8 +36,8 @@ class TrayMenu {
               autoHideMenuBar: true,
               resizable: true,
               webPreferences: {
-                nodeIntegration: true
-              }
+                nodeIntegration: true,
+              },
             });
             aboutWindow.on('closed', () => {
               aboutWindow = null;
@@ -61,16 +61,16 @@ class TrayMenu {
               }
             });
           }
-        }
+        },
       },
       {
-        type: 'separator'
+        type: 'separator',
       },
       {
         label: 'Quit',
         accelerator: isDarwin ? 'Command+Q' : 'Alt+F4',
-        role: 'quit'
-      }
+        role: 'quit',
+      },
     ]);
   }
 }

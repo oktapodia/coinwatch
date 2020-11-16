@@ -1,4 +1,3 @@
-import { push } from 'react-router-redux';
 import axios from 'axios';
 
 // Action key that carries API call info interpreted by this Redux middleware.
@@ -12,17 +11,17 @@ export const CALL_API = Symbol('Call API');
 
 const callApi = (method, url, data) =>
   axios({ method, url, data })
-    .then(response => {
+    .then((response) => {
       if (response.status === 204) {
         return { request: {}, response };
       }
 
       return {
         request: data,
-        response
+        response,
       };
     })
-    .then(response => {
+    .then((response) => {
       if (!response.statusText === 'OK') {
         const error = new Error('API middleware: response is not OK');
         error.json = response.data;
@@ -39,7 +38,7 @@ const callApi = (method, url, data) =>
  * Performs the call and promises when such actions are dispatched.
  */
 
-export default store => next => action => {
+export default (store) => (next) => (action) => {
   const callAPI = action[CALL_API];
 
   if (typeof callAPI === 'undefined') {
@@ -52,7 +51,7 @@ export default store => next => action => {
   if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected an array of three action types.');
   }
-  if (!types.every(type => typeof type === 'string')) {
+  if (!types.every((type) => typeof type === 'string')) {
     throw new Error('Expected action types to be strings.');
   }
 
@@ -76,17 +75,17 @@ export default store => next => action => {
   next(actionWith({ type: requestType, endpoint, extras }));
 
   return callApi(method, endpoint, data)
-    .then(response =>
+    .then((response) =>
       next(
         actionWith({
           response,
           endpoint,
           type: successType,
-          extras
+          extras,
         })
       )
     )
-    .catch(err => {
+    .catch((err) => {
       const { message, status } = err;
 
       /*
@@ -102,7 +101,7 @@ export default store => next => action => {
       error.status = status || 500;
 
       if (status === 500) {
-        return next(push('/error'));
+        return next();
       }
 
       next(
@@ -110,7 +109,7 @@ export default store => next => action => {
           endpoint,
           type: failureType,
           error,
-          extras
+          extras,
         })
       );
 

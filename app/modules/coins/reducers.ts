@@ -5,52 +5,47 @@ import {
   FORCE_REFRESH_TOGGLE,
   GET_COIN_PRICE_SUCCESS,
   GET_COINS_SUCCESS,
-  GET_EXCHANGE_LIST_SUCCESS,
   GET_SYMBOL_LIST_SUCCESS,
   SETTINGS_REMOVE_COIN_SUCCESS,
   SETTINGS_SAVE_COIN_SUCCESS,
   SETTINGS_TOGGLE_VISIBILITY_SUCCESS,
-  SETTINGS_SAVE_ALERT_SUCCESS
+  SETTINGS_SAVE_ALERT_SUCCESS,
 } from './actions';
 import { TRAY_UPDATE } from '../../main/Tray';
 import { NOTIFICATION } from '../../main/NotificationCenter';
-
-const TREND_LOWER = 'lower';
-const TREND_HIGHER = 'higher';
+import ETrend from '../../types/ETrend';
 
 const initialState = {
   data: {},
   exchanges: [],
   symbols: [],
-  coins: settings.get('coins') || [],
+  coins: settings.getSync('coins') || [],
   previousCoins: [],
   forceRefresh: false,
-  alertsSettings: settings.get('alerts') || [],
-  alerts: {}
+  alertsSettings: settings.getSync('alerts') || [],
+  alerts: {},
 };
 
 export default function coinsReducer(state = initialState, action) {
   switch (action.type) {
     case SETTINGS_TOGGLE_VISIBILITY_SUCCESS: {
       const coins = cloneDeep(state.coins);
-      const coin = find(coins, c => c.slug === action.data.slug);
+      const coin = find(coins, (c) => c.slug === action.data.slug);
 
       coin.visibility = !coin.visibility;
 
-      settings.set('coins', coins);
+      settings.setSync('coins', coins);
 
       return { ...state, coins };
     }
     case SETTINGS_SAVE_ALERT_SUCCESS:
-      return { ...state, alertsSettings: settings.get('alerts') };
+      return { ...state, alertsSettings: settings.getSync('alerts') };
     case SETTINGS_SAVE_COIN_SUCCESS:
-      return { ...state, coins: settings.get('coins') };
+      return { ...state, coins: settings.getSync('coins') };
     case SETTINGS_REMOVE_COIN_SUCCESS:
-      return { ...state, coins: settings.get('coins') };
+      return { ...state, coins: settings.getSync('coins') };
     case GET_COINS_SUCCESS:
       return { ...state, data: action.response };
-    case GET_EXCHANGE_LIST_SUCCESS:
-      return { ...state, exchanges: action.response };
     case GET_SYMBOL_LIST_SUCCESS:
       return { ...state, symbols: action.response };
     case FORCE_REFRESH_TOGGLE:
@@ -58,10 +53,10 @@ export default function coinsReducer(state = initialState, action) {
     case GET_COIN_PRICE_SUCCESS: {
       const coins = cloneDeep(state.coins);
       const previousCoins = cloneDeep(state.coins);
-      const coin = find(coins, c => c.slug === action.data.slug);
+      const coin = find(coins, (c) => c.slug === action.data.slug);
       const previousCoin = find(
         state.previousCoins,
-        c => c.slug === action.data.slug
+        (c) => c.slug === action.data.slug
       );
 
       if (!coin) {
@@ -71,11 +66,11 @@ export default function coinsReducer(state = initialState, action) {
       coin.price = map(action.response).join('');
 
       if (previousCoin && coin.price < previousCoin.price) {
-        coin.trend = TREND_LOWER;
+        coin.trend = ETrend.LOWER;
       } else if (previousCoin && coin.price > previousCoin.price) {
-        coin.trend = TREND_HIGHER;
+        coin.trend = ETrend.HIGHER;
       } else {
-        coin.trend = previousCoin && previousCoin.trend;
+        coin.trend = '';
       }
 
       ipcRenderer.send(TRAY_UPDATE, coins);
@@ -87,7 +82,7 @@ export default function coinsReducer(state = initialState, action) {
 
       const alertSetting = find(
         state.alertsSettings,
-        a => a.slug === action.data.slug
+        (a) => a.slug === action.data.slug
       );
       if (!alertSetting) {
         return response;
@@ -106,7 +101,7 @@ export default function coinsReducer(state = initialState, action) {
         ipcRenderer.send(NOTIFICATION, {
           type: 'alert',
           title: coin.slug,
-          body: `Price is lower than ${coin.price}`
+          body: `Price is lower than ${coin.price}`,
         });
         isAlerted = true;
       } else if (
@@ -116,7 +111,7 @@ export default function coinsReducer(state = initialState, action) {
         ipcRenderer.send(NOTIFICATION, {
           type: 'alert',
           title: coin.slug,
-          body: `Price is greater than ${coin.price}`
+          body: `Price is greater than ${coin.price}`,
         });
         isAlerted = true;
       }
@@ -124,11 +119,11 @@ export default function coinsReducer(state = initialState, action) {
       if (isAlerted) {
         const index = findIndex(
           state.alertsSettings,
-          s => s.slug === coin.slug
+          (s) => s.slug === coin.slug
         );
         state.alertsSettings.splice(index, 1);
 
-        settings.set('alerts', state.alertsSettings);
+        settings.setSync('alerts', state.alertsSettings);
       }
 
       return response;

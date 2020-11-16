@@ -1,66 +1,79 @@
-import React, { Component } from 'react';
-import Modal from 'react-modal';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+import { Backdrop, Fade } from '@material-ui/core';
 import { closeModal } from '../actions';
 
-class ModalClass extends Component {
-  render() {
-    const { isOpen } = this.props;
-    const CustomComponent = this.props.component;
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+    },
+  })
+);
 
-    if (!CustomComponent) {
-      return null;
-    }
+function ModalClass(props) {
+  const CustomComponent = props.component;
 
-    const customStyles = {
-      content: {
-        top: '100px',
-        left: '100px',
-        right: '100px',
-        bottom: '100px',
-        color: '#000000'
-      }
-    };
-
-    return (
-      <Modal
-        isOpen={isOpen}
-        onRequestClose={this.props.closeModal}
-        shouldCloseOnOverlayClick
-        style={customStyles}
-      >
-        <button onClick={this.props.closeModal} className="pull-right">
-          <span className="glyphicon glyphicon-remove" />
-        </button>
-        <div>
-          <CustomComponent
-            closeModal={this.props.closeModal}
-            extras={this.props.extras}
-          />
-        </div>
-      </Modal>
-    );
+  if (!CustomComponent) {
+    return null;
   }
+
+  const classes = useStyles();
+
+  const handleClose = () => {
+    props.closeModal();
+  };
+
+  const { isOpen, component, extras } = useSelector((state) => state.modal);
+
+  return (
+    <Modal
+      className={classes.modal}
+      open={isOpen}
+      onClose={handleClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
+      }}
+    >
+      <Fade in={isOpen}>
+        <div className={classes.paper}>
+          <CustomComponent closeModal={props.closeModal} extras={extras} />
+        </div>
+      </Fade>
+    </Modal>
+  );
 }
 
 ModalClass.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeModal: PropTypes.func.isRequired,
-  component: PropTypes.func,
-  extras: PropTypes.object
+  component: PropTypes.object,
+  extras: PropTypes.object,
 };
 
 ModalClass.defaultProps = {
   component: null,
-  extras: {}
+  extras: {},
 };
 
 function mapStateToProps({ modal }) {
   return {
     isOpen: modal.isOpen,
     component: modal.component,
-    extras: modal.extras
+    extras: modal.extras,
   };
 }
 

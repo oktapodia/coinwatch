@@ -1,4 +1,4 @@
-export function generateSlug(from, to, exchange) {
+export function generateSlug(from: string, to: string, exchange: string) {
   return `${from}-${to}-${exchange}`;
 }
 

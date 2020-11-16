@@ -1,82 +1,84 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { isNull } from 'lodash';
 import PropTypes from 'prop-types';
-import { BASE_IMAGE_URL } from '../../../connectors/cryptocompare/api';
-import { getCoinPrice, removeCoin, toggleVisibility, toggleForceRefresh } from '../actions';
+import { IconButton, TableCell, TableRow } from '@material-ui/core';
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import ETrend from '../../../types/ETrend';
 import formatPrice from '../../../helpers/formatPrice';
-import trendToArrow from '../../../helpers/trendToArrow';
-import ModalButton from '../../modal/containers/ModalButton';
-import AlertSettings from '../containers/AlertSettings';
+import {
+  getCoinPrice,
+  removeCoin,
+  toggleForceRefresh,
+  toggleVisibility,
+} from '../actions';
 
-export class Coin extends Component {
-  constructor(props) {
-    super(props);
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    lower: {
+      color: theme.palette.error.main,
+    },
+    higher: {
+      color: theme.palette.success.main,
+    },
+  })
+);
 
-    this.onRemove = ::this.onRemove;
-    this.onToggleVisibility = ::this.onToggleVisibility;
-  }
+export function Coin(props) {
+  const classes = useStyles();
 
-  componentWillMount() {
-    if (isNull(this.props.price)) {
-      this.props.getCoinPrice(this.props, this.props.cryptocompareApiKey);
+  useEffect(() => {
+    if (isNull(props.price)) {
+      props.getCoinPrice(props);
     }
+  }, []);
+
+  function onToggleVisibility(slug) {
+    props.toggleVisibility(slug);
+    props.toggleForceRefresh();
   }
 
-  onRemove(slug) {
-    this.props.removeCoin(slug);
+  function onRemoveCoin(slug) {
+    return props.removeCoin(slug)
+      .then(() => props.toggleForceRefresh());
   }
 
-  onToggleVisibility(slug) {
-    this.props.toggleVisibility(slug);
-    this.props.toggleForceRefresh();
-  }
+  const { coin, price, visibility, slug, to, trend } = props;
+  const currentPriceDisplayed = !isNull(price) ? `${price}` : 'Loading...';
 
-  render() {
-    const {
-      coin,
-      price,
-      visibility,
-      alert,
-      slug,
-      to,
-      trend,
-      exchange,
-    } = this.props;
-    const currentPriceDisplayed = !isNull(price) ? `${price}` : 'Loading...';
+  return (
+    <TableRow key={coin.name}>
+      <TableCell component="th" scope="row" size="small">
+        {coin.name}
+      </TableCell>
+      <TableCell
+        size="small"
+        className={trend === ETrend.LOWER ? classes.lower : classes.higher}
+      >
+        {formatPrice(currentPriceDisplayed, to)}
+        {trend}
+      </TableCell>
+      <TableCell align="right" size="small">
+        <IconButton color="primary" onClick={() => onToggleVisibility(slug)}>
+          {visibility ? <VisibilityOffIcon /> : <VisibilityIcon />}
+        </IconButton>
 
-    return (
-      <tr className="coin">
-        <td className="name">
-          <img src={`${BASE_IMAGE_URL}${coin.ImageUrl}`} className="img-circle" alt={coin.FullName} />
-          <span>{coin.FullName}</span>
-        </td>
-        <td className="exchange">
-          {exchange}
-        </td>
-        <td className={`price trend-${trend}`}>
-          {formatPrice(currentPriceDisplayed, to)}{trendToArrow(trend)}
-        </td>
-        <td className="actions toolbar">
-          {/* <ModalButton className="pull-right"><span className="glyphicon glyphicon-plus" /></ModalButton> */}
-
-          <ModalButton className="alert" component={AlertSettings} extras={{ slug }}><span className={`glyphicon glyphicon-bell toggle-button ${alert && 'active'}`} /></ModalButton>
-          <button onClick={() => this.onToggleVisibility(slug)} className="visibility"><span className={`glyphicon glyphicon-eye-open toggle-button ${visibility && 'active'}`} /></button>
-          <button onClick={() => this.onRemove(slug)} className="remove"><span className="glyphicon glyphicon-remove-circle" /></button>
-        </td>
-      </tr>
-    );
-  }
+        <IconButton color="primary" onClick={() => onRemoveCoin(slug)}>
+          <RemoveCircleIcon />
+        </IconButton>
+      </TableCell>
+    </TableRow>
+  );
 }
 
 Coin.propTypes = {
   exchange: PropTypes.string,
   price: PropTypes.string,
   alert: PropTypes.string,
-  coin: PropTypes.shape({
-    ImageUrl: PropTypes.string.isRequired,
-    FullName: PropTypes.string.isRequired,
-  }).isRequired,
+  coin: PropTypes.shape({}).isRequired,
   visibility: PropTypes.bool.isRequired,
   slug: PropTypes.string.isRequired,
   to: PropTypes.string.isRequired,
@@ -85,14 +87,13 @@ Coin.propTypes = {
   getCoinPrice: PropTypes.func.isRequired,
   toggleVisibility: PropTypes.func.isRequired,
   toggleForceRefresh: PropTypes.func.isRequired,
-  cryptocompareApiKey: PropTypes.string.isRequired,
 };
 
 Coin.defaultProps = {
   price: null,
   alert: null,
   exchange: 'CCCAGG',
-  trend: 'lower',
+  trend: ETrend.LOWER,
 };
 
 const dispatchProps = {
@@ -102,8 +103,4 @@ const dispatchProps = {
   toggleForceRefresh,
 };
 
-function mapStateToProps({ settings }) {
-  return { cryptocompareApiKey: settings.cryptocompareApiKey };
-}
-
-export default connect(mapStateToProps, dispatchProps)(Coin);
+export default connect(null, dispatchProps)(Coin);

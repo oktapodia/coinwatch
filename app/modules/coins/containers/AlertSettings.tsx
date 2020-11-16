@@ -26,8 +26,6 @@ class AlertSettings extends Component {
       handleSubmit,
     } = this.props;
 
-    console.log(this.props);
-
     /*
 
     const coinsOptions = values(map(coins.Data, (d) => ({ label: d.FullName, value: d })));

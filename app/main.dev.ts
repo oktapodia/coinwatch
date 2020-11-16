@@ -8,19 +8,19 @@
  * When running `yarn build` or `yarn build-main`, this file is compiled to
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  */
-import { app, BrowserWindow } from 'electron';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
+
+import { app, BrowserWindow, session } from 'electron';
 import log from 'electron-log';
 import path from 'path';
-import electronDebug from 'electron-debug';
-import module from 'module';
 import { isDarwin } from './helpers/env';
 
 import AutoUpdater from './main/AutoUpdater';
 import AutoLaunch from './main/AutoLaunch';
 import NotificationCenter from './main/NotificationCenter';
 import Tray from './main/Tray';
-import Menu from './main/menu';
-import installExtensions from './helpers/devTools';
+import MenuBuilder from './main/menu';
 import Migrate from './modules/settings/Migrate';
 
 log.debug('App starting...');
@@ -45,8 +45,21 @@ if (
   require('electron-debug')();
 }
 
+const installExtensions = async () => {
+  const installer = require('electron-devtools-installer');
+  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+  const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS'];
+
+  return installer
+    .default(
+      extensions.map((name) => installer[name]),
+      forceDownload
+    )
+    .catch(console.log);
+};
+
 const createWindow = async () => {
-  await new Migrate(); // eslint-disable-line no-new
+  await new Migrate();
 
   if (
     process.env.NODE_ENV === 'development' ||
@@ -54,6 +67,14 @@ const createWindow = async () => {
   ) {
     await installExtensions();
   }
+
+  const RESOURCES_PATH = app.isPackaged
+    ? path.join(process.resourcesPath, 'resources')
+    : path.join(__dirname, '../resources');
+
+  const getAssetPath = (...paths: string[]): string => {
+    return path.join(RESOURCES_PATH, ...paths);
+  };
 
   mainWindow = new BrowserWindow({
     show: true,
@@ -63,16 +84,24 @@ const createWindow = async () => {
     minHeight: 550,
     minWidth: 600,
     fullscreenable: false,
-    webPreferences:
-      process.env.NODE_ENV === 'development' || process.env.E2E_BUILD === 'true'
+    icon: getAssetPath('icon.png'),
+    webPreferences: {
+      nodeIntegration: true,
+      enableRemoteModule: true
+    }
+/*    webPreferences:
+      (process.env.NODE_ENV === 'development' ||
+        process.env.E2E_BUILD === 'true') &&
+      process.env.ERB_SECURE !== 'true'
         ? {
-            nodeIntegration: true
+            nodeIntegration: true,
           }
         : {
-            preload: path.join(__dirname, 'dist/renderer.prod.js')
-          }
+            preload: path.join(__dirname, 'dist/renderer.prod.js'),
+          },*/
   });
-  mainWindow.loadURL(`file://${__dirname}/main.html`);
+
+  mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
@@ -92,23 +121,19 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
-  mainWindow.on('close', event => {
+  mainWindow.on('close', (event) => {
     if (!isQuitting) {
       event.preventDefault();
       mainWindow.hide();
     }
   });
 
-  const notificationCenter = new NotificationCenter(); // eslint-disable-line no-new
-  new AutoLaunch(); // eslint-disable-line no-new
-  new AutoUpdater(setQuitState); // eslint-disable-line no-new
-  new Menu(mainWindow); // eslint-disable-line no-new
-  new Tray(mainWindow, notificationCenter); // eslint-disable-line no-new
-
-  /*  mainWindow.on('closed', () => {
-      mainWindow = null;
-    });
-    */
+  const notificationCenter = new NotificationCenter();
+  new AutoLaunch();
+  new AutoUpdater(setQuitState);
+  const menuBuilder = new MenuBuilder(mainWindow);
+  menuBuilder.buildMenu();
+  new Tray(mainWindow, notificationCenter);
 };
 
 /**

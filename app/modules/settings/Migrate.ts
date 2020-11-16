@@ -1,27 +1,31 @@
 import settings from 'electron-settings';
 import { forEach } from 'lodash';
+import JsonValue from '../../types/JsonValue';
 
 class Migrate {
+  settingsUpdated: JsonValue;
+
   constructor() {
-    const migrationFiles = this.constructor.getMigrations();
+    const migrationFiles = Migrate.getMigrations();
 
-    this.settingsUpdated = settings.getAll();
-
-    return new Promise((resolve) => {
-      forEach(migrationFiles, ::this.migrate);
+    // @ts-ignore
+    return new Promise(async (resolve) => {
+      this.settingsUpdated = await settings.get();
+      forEach(migrationFiles, this.migrate.bind(this));
       console.log('Settings are up to date');
-      settings.setAll(this.settingsUpdated);
+      await settings.set(this.settingsUpdated);
 
-      resolve();
+      return resolve();
     });
   }
 
-migrate(migrationFile) {
-    const MigrationClassName = migrationFile instanceof Function || migrationFile.default; // eslint-disable-line global-require,import/no-dynamic-require
+  migrate(migrationFile: () => void) {
+    // @ts-ignore
+    const MigrationClassName =
+      migrationFile instanceof Function || migrationFile.default; // eslint-disable-line global-require,import/no-dynamic-require
 
     const migration = new MigrationClassName(this.settingsUpdated);
     if (!migration.isVersion()) {
-      console.log(`settings are not version ${MigrationClassName.name}`);
       return;
     }
     console.log(`settings are version ${MigrationClassName.name}, upgrade...`);

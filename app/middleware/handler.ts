@@ -1,21 +1,20 @@
-import { push } from 'react-router-redux';
 
 // Action key that carries API call info interpreted by this Redux middleware.
 export const CALL_HANDLER = Symbol('Call Handler');
 
 const callHandler = (handler, data) =>
   handler(data)
-    .then(response => {
+    .then((response) => {
       if (response.status === 204) {
         return { request: {}, response };
       }
 
       return {
         request: data,
-        response
+        response,
       };
     })
-    .then(response => {
+    .then((response) => {
       if (response.Response === 'Error') {
         const error = {};
         error.raw = response;
@@ -45,7 +44,7 @@ export default store => next => (action) => {
   if (!Array.isArray(types) || types.length !== 3) {
     throw new Error('Expected an array of three action types.');
   }
-  if (!types.every(type => typeof type === 'string')) {
+  if (!types.every((type) => typeof type === 'string')) {
     throw new Error('Expected action types to be strings.');
   }
 
@@ -59,17 +58,17 @@ export default store => next => (action) => {
   next(actionWith({ type: requestType, extras }));
 
   return callHandler(handler, data)
-    .then(response =>
+    .then((response) =>
       next(
         actionWith({
           response,
           type: successType,
           extras,
-          data
+          data,
         })
       )
     )
-    .catch(err => {
+    .catch((err) => {
       const { message, status } = err;
 
       console.log(err, err.message, err.status);
@@ -87,7 +86,7 @@ export default store => next => (action) => {
       error.status = status || 500;
 
       if (status === 500) {
-        return next(push('/error'));
+        return next();
       }
 
       next(actionWith({ type: failureType, error, extras }));

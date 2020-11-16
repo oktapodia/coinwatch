@@ -1,23 +1,24 @@
 import axios from 'axios';
 import qs from 'query-string';
+import { map, values } from 'lodash';
 
+export const BASE_URL = 'https://www.cryptocompare.com';
 export const BASE_IMAGE_URL = 'https://www.cryptocompare.com';
 
-export function getCoinPriceApi({ coin, to, exchange }, cryptocompareApiKey) {
+export function getCoinPriceApi({ coin, to, exchange }) {
   const query = qs.stringify({
     fsym: coin.Symbol,
     tsyms: to,
     e: exchange,
-    api_key: cryptocompareApiKey
   });
 
   const url = `https://min-api.cryptocompare.com/data/price?${query}`;
-  return axios.get(url).then(response => {
+  return axios.get(url).then((response) => {
     if (response.data.Response === 'Error') {
       throw response.data;
     }
 
-    return response;
+    return values(map(response.Data, (d) => ({ label: d.FullName, value: d })));
   });
 }
 
@@ -85,13 +86,13 @@ export function getExchangeListApi() {
       'Coinone',
       'Tidex',
       'Bleutrade',
-      'EthexIndia'
-    ]
+      'EthexIndia',
+    ],
   });
 }
 
 export function getSymbolListApi() {
   return Promise.resolve({
-    data: ['EUR', 'USD', 'GBP', 'BTC', 'ETH']
+    data: ['EUR', 'USD', 'GBP', 'BTC', 'ETH'],
   });
 }

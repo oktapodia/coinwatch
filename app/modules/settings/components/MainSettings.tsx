@@ -1,88 +1,98 @@
-import React, { Component } from 'react';
-import { Field, reduxForm } from 'redux-form';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
+import {
+  Button,
+  Container,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { updateAutolaunchSettings, updateMainSettings } from '../actions';
+import Title from '../../Title';
 
-class MainSettings extends Component {
-  constructor() {
-    super();
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(3),
+  },
+  button: {
+    margin: theme.spacing(1, 1, 0, 0),
+  },
+}));
 
-    this.onSubmit = ::this.onSubmit;
-  }
+function MainSettings(props: {
+  updateAutolaunchSettings: (arg0: boolean) => void;
+  close: () => void;
+  autoLaunch: any;
+}) {
+  const classes = useStyles();
+  const [isAutoLaunch, setAutoLaunch] = useState(false);
 
-  onSubmit(settings) {
-    if (settings.autoLaunch) {
-      this.props.updateAutolaunchSettings(settings.autoLaunch);
-    }
+  const handleRadioChange = (event) => {
+    setAutoLaunch(event.target.value);
+  };
 
-    console.log(settings);
+  const onSubmit = (e) => {
+    e.preventDefault();
 
-    this.props.updateMainSettings(settings);
-  }
+    props.updateAutolaunchSettings(isAutoLaunch);
+    props.close();
+  };
 
-  render() {
-    const { handleSubmit } = this.props;
-
-    return (
-      <div className="app-container mainsettings">
-        <h3>Main settings</h3>
-        <form onSubmit={handleSubmit(this.onSubmit)}>
-          <div className="form-group">
-            <label>Launch on startup:</label>
-            <label className="checkbox-inline" htmlFor="autoLaunch-yes">
-              <Field
-                name="autoLaunch"
-                id="autoLaunch-yes"
-                component="input"
-                type="radio"
-                value="yes"
-              />{' '}
-              Yes
-            </label>
-            <label className="checkbox-inline" htmlFor="autoLaunch-no">
-              <Field
-                name="autoLaunch"
-                component="input"
-                id="autoLaunch-no"
-                type="radio"
-                value="no"
-              />{' '}
-              No
-            </label>
-          </div>
-          <div className="form-group">
-            <label>CryptoCompare API Key:</label>
-            <Field
-              name="cryptocompareApiKey"
-              component="input"
-              type="text"
-            />
-            <abbr>You can create one<a href="https://www.cryptocompare.com/cryptopian/api-keys">here</a></abbr>
-          </div>
-          <input className="btn btn-default" type="submit" value="Save"/>
-        </form>
-      </div>
-    );
-  }
+  return (
+    <Container>
+      <Title>Main settings</Title>
+      <form onSubmit={onSubmit}>
+        <FormControl component="fieldset" className={classes.formControl}>
+          <FormLabel component="legend">AutoLaunch at startup</FormLabel>
+          <RadioGroup
+            aria-label="autoLaunch"
+            name="autoLaunch"
+            value={props.autoLaunch}
+            onChange={handleRadioChange}
+          >
+            <FormControlLabel value="yes" control={<Radio />} label="Yes" />
+            <FormControlLabel value="no" control={<Radio />} label="No" />
+          </RadioGroup>
+          <Button
+            type="submit"
+            variant="outlined"
+            color="primary"
+            className={classes.button}
+          >
+            Save
+          </Button>
+        </FormControl>
+      </form>
+    </Container>
+  );
 }
 
 MainSettings.propTypes = {
+  close: PropTypes.func.isRequired,
   updateAutolaunchSettings: PropTypes.func.isRequired,
   updateMainSettings: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
 };
 
 function mapStateToProps({ settings }) {
+  console.log(JSON.stringify(settings));
   return {
     settings,
     initialValues: {
       decimal: settings.decimal,
       autoLaunch: settings.autoLaunch,
-      cryptocompareApiKey: settings.cryptocompareApiKey,
     },
   };
 }
 
 const form = reduxForm({ form: 'settings/main' })(MainSettings);
 
-export default connect(mapStateToProps, { updateMainSettings, updateAutolaunchSettings })(form);
+export default connect(mapStateToProps, {
+  updateMainSettings,
+  updateAutolaunchSettings,
+})(form);

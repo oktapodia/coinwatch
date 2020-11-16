@@ -1,19 +1,23 @@
 import React, { Fragment } from 'react';
 import { render } from 'react-dom';
 import { AppContainer as ReactHotAppContainer } from 'react-hot-loader';
-import Root from './containers/Root';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { configureStore, history } from './store/configureStore';
-import './styles/app.global.scss';
 
-const store = configureStore();
+const store = configureStore({});
 
 const AppContainer = process.env.PLAIN_HMR ? Fragment : ReactHotAppContainer;
 
-document.addEventListener('DOMContentLoaded', () =>
+document.addEventListener('DOMContentLoaded', () => {
+  // eslint-disable-next-line global-require
+  const Root = require('./containers/Root').default;
   render(
-    <AppContainer>
-      <Root store={store} history={history} />
-    </AppContainer>,
+    <>
+      <CssBaseline/>
+      <AppContainer>
+        <Root store={store} history={history}/>
+      </AppContainer>
+    </>,
     document.getElementById('root')
-  )
-);
+  );
+});

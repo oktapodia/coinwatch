@@ -1,46 +1,77 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ipcRenderer } from 'electron';
-import { Link } from 'react-router-dom';
-// @ts-ignore
-import image from '../appIconLarge.png';
+import {
+  AppBar,
+  IconButton,
+  SwipeableDrawer,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
+import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
+import SettingsIcon from '@material-ui/icons/Settings';
+import { makeStyles } from '@material-ui/core/styles';
+import image from '../../resources/appIconLarge.png';
+import MainSettings from '../modules/settings/components/MainSettings';
 
-class Navbar extends Component {
-  static onClickUpdateAvailable() {
-    ipcRenderer.send('check-update', true);
-  }
+const useStyles = makeStyles((theme) => ({
+  grow: {
+    flexGrow: 1,
+  },
+  logo: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+  customizeToolbarHeight: {
+    minHeight: theme.spacing(10),
+  },
+}));
 
-  render() {
-    return (
-      <nav className="navbar navbar-default navbar-static-top">
-        <div className="title">
-          <h1>
-            <Link to="/">
-              <img src={image} width={50} alt="Coin Watch" /> Coin Watch
-            </Link>
-          </h1>
-        </div>
-        <div className="toolbar">
-          <button
-            onClick={Navbar.onClickUpdateAvailable}
-            className="link-update"
-          >
-            <span
-              className="glyphicon glyphicon-download-alt"
-              aria-hidden="true"
-            />
-          </button>
-          <Link to="/settings" className="link-settings">
-            <span className="glyphicon glyphicon-cog" aria-hidden="true" />
-          </Link>
-        </div>
-        {/*
-        <div className="tabs">
-          <NavLink to="/coins" className="tab">Home</NavLink>
-        </div>
-        */}
-      </nav>
-    );
-  }
+function onClickUpdateButton() {
+  ipcRenderer.send('check-update', true);
+}
+
+function Navbar() {
+  const classes = useStyles();
+
+  const [isDrawerOpen, setDrawerOpen] = React.useState(false);
+
+  const toggleDrawer = (open: boolean) => {
+    setDrawerOpen(open);
+  };
+
+  return (
+    <div className={classes.grow}>
+      <AppBar position="static">
+        <Toolbar className={classes.customizeToolbarHeight}>
+          <img
+            src={image}
+            width={50}
+            alt="Coin Watch"
+            className={classes.logo}
+          />
+          <Typography variant="h4" className={classes.title}>
+            Coin Watch
+          </Typography>
+          <IconButton color="inherit" onClick={onClickUpdateButton}>
+            <SystemUpdateAltIcon />
+          </IconButton>
+          <IconButton color="inherit" onClick={() => toggleDrawer(true)}>
+            <SettingsIcon />
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+      <SwipeableDrawer
+        anchor="bottom"
+        open={isDrawerOpen}
+        onClose={() => toggleDrawer(false)}
+        onOpen={() => toggleDrawer(true)}
+      >
+        <MainSettings close={() => toggleDrawer(false)} />
+      </SwipeableDrawer>
+    </div>
+  );
 }
 
 export default Navbar;

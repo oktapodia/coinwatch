@@ -1,38 +1,34 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import PropTypes, { InferProps } from 'prop-types';
 import { openModal } from '../actions';
 
-class ModalButton extends Component {
-  constructor(props) {
-    super(props);
+const connector = connect(null, { openModal });
 
-    this.onOpenModal = ::this.onOpenModal;
-  }
+type ModalButtonProps = ConnectedProps<typeof connector> & {
+  component: FunctionComponent<any>;
+  extras: any;
+};
 
-  onOpenModal() {
-    return this.props.openModal(this.props.component, this.props.extras);
-  }
+const ModalButton: FunctionComponent<ModalButtonProps> = ({
+  openModal,
+  component,
+  extras,
+  children,
+}) => {
+  const onOpenModal = () => {
+    return openModal(component, extras);
+  };
 
-  render() {
-    const { className, children } = this.props;
-
-    return (
-      <button className={className} onClick={this.onOpenModal}>{children}</button>
-    );
-  }
-}
+  return <span onClick={onOpenModal}>{children}</span>;
+};
 
 ModalButton.propTypes = {
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
   openModal: PropTypes.func.isRequired,
-  component: PropTypes.func.isRequired,
+  component: PropTypes.object.isRequired,
   children: PropTypes.object.isRequired,
   extras: PropTypes.object,
 };
 
-ModalButton.defaultProps = {
-  extras: {},
-};
-
-export default connect(null, { openModal })(ModalButton);
+export default connector(ModalButton);
