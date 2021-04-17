@@ -184,7 +184,7 @@
     "@types/redux-logger": "^3.0.8",
     "@types/tapable": "^1.0.5",
     "@types/vfile-message": "^2.0.0",
-    "@types/webpack": "^4.41.21",
+    "@types/webpack": "^4.41.26",
     "@types/webpack-env": "^1.15.2",
     "@typescript-eslint/eslint-plugin": "4.14.1",
     "@typescript-eslint/parser": "4.8.0",
