@@ -243,7 +243,7 @@
     "sass-loader": "10.1.0",
     "spectron": "12.0.0",
     "style-loader": "2.0.0",
-    "stylelint": "^13.6.1",
+    "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0",
     "terser-webpack-plugin": "^3.0.7",
