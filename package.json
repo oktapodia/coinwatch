@@ -212,7 +212,7 @@
     "enzyme-adapter-react-16": "^1.15.6",
     "enzyme-redux": "^0.2.0",
     "enzyme-to-json": "^3.5.0",
-    "eslint": "^7.16.0",
+    "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-airbnb-typescript": "12.0.0",
     "eslint-config-erb": "^2.0.0",
