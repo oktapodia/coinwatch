@@ -277,7 +277,7 @@
     "react-hot-loader": "^4.12.21",
     "react-redux": "^7.2.4",
     "react-router": "^5.1.2",
-    "redux": "^4.1.0",
+    "redux": "^4.1.1",
     "redux-form": "8.3.7",
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.5",
