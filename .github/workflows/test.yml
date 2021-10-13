@@ -1,0 +1,32 @@
+name: CI
+on: [push]
+jobs:
+  test:
+    name: tests
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        node-version: ['16.4']
+    steps:
+      - name: Setup Xcode version
+        uses: maxim-lobanov/setup-xcode@v1
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v2
+        id: yarn-cache
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install repository dependencies
+        run: yarn install
+      - name: Run tests
+        run: yarn test
+
