@@ -181,7 +181,7 @@
     "@types/react-router": "^5.1.16",
     "@types/react-test-renderer": "^16.9.3",
     "@types/redux-form": "^8.3.2",
-    "@types/redux-logger": "^3.0.8",
+    "@types/redux-logger": "^3.0.9",
     "@types/tapable": "^2.2.2",
     "@types/vfile-message": "^2.0.0",
     "@types/webpack": "^4.41.26",
