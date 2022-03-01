@@ -7113,10 +7113,10 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "2.1.1"
 
-fbjs-scripts@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/fbjs-scripts/-/fbjs-scripts-3.0.0.tgz#42d802826cfe746407d39e2bffab13ae66044e15"
-  integrity sha512-vrCXMDbgDZh6FHT1OQaU4v2cNW4MLsAFH6u23xJEe6SC7X1HrsL9QgU56toLQfuX8VNL0qQj+/w0patF2PjPGQ==
+fbjs-scripts@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/fbjs-scripts/-/fbjs-scripts-3.0.1.tgz#5265699e158700b453786e4892aa9730c0cb0f75"
+  integrity sha512-UHsf5lk5G33mSZIviQqulKvyV/kPIMwODH3tpkuoXbsBewFaWwT9KTfEvkoPj+WSGMGI6n+bRsc8VVdSa9Jh+w==
   dependencies:
     "@babel/core" "^7.0.0"
     ansi-colors "^1.0.1"
