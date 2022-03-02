@@ -214,7 +214,7 @@
     "enzyme-to-json": "^3.5.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.0",
-    "eslint-config-airbnb-typescript": "12.0.0",
+    "eslint-config-airbnb-typescript": "13.0.1",
     "eslint-config-erb": "^4.0.3",
     "eslint-config-prettier": "^6.11.0",
     "eslint-import-resolver-webpack": "0.13.0",
