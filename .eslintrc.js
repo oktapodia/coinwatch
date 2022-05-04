@@ -3,7 +3,6 @@ module.exports = {
   rules: {
     // A temporary hack related to IDE not resolving correct package.json
     'import/no-extraneous-dependencies': 'off',
-    'no-new': 'off',
   },
   parserOptions: {
     ecmaVersion: 2020,
@@ -17,7 +16,7 @@ module.exports = {
       // See https://github.com/benmosher/eslint-plugin-import/issues/1396#issuecomment-575727774 for line below
       node: {},
       webpack: {
-        config: require.resolve('./configs/webpack.config.eslint.js'),
+        config: require.resolve('./.erb/configs/webpack.config.eslint.ts'),
       },
     },
     'import/parsers': {

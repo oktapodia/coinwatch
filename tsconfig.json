@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES2018",
+    "target": "ES2019",
     "module": "CommonJS",
     "lib": ["dom", "esnext"],
     "declaration": true,
     "declarationMap": true,
-    "noEmit": true,
     "jsx": "react",
     "strict": true,
     "pretty": true,
     "sourceMap": true,
+    "baseUrl": "./src",
     /* Additional Checks */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -20,14 +20,10 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
-    "allowJs": true
+    "allowJs": true,
+    "outDir": "release/app/dist"
   },
-  "exclude": [
-    "test",
-    "release",
-    "app/main.prod.js",
-    "app/renderer.prod.js",
-    "app/dist",
-    "dll"
+  "exclude": ["test", "release/build", "release/app/dist",
+    ".erb.bak/dll"
   ]
 }
