@@ -1,51 +1,44 @@
 {
   "name": "coinwatch",
   "productName": "CoinWatch",
-  "version": "0.3.0",
+  "version": "1.2.0",
   "description": "Follow your cryptocurrencies from your Osx menubar",
+  "main": "./src/main/main.ts",
   "scripts": {
-    "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
-    "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
-    "build-main": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.main.prod.js --colors",
-    "build-renderer": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.prod.js --colors",
-    "dev": "cross-env START_HOT=1 npm run start-renderer-dev",
-    "flow": "flow",
-    "flow-typed": "rimraf flow-typed/npm && flow-typed install --overwrite || true",
-    "lint": "eslint --cache --format=node_modules/eslint-formatter-pretty .",
-    "lint-fix": "npm run lint -- --fix",
-    "lint-styles": "stylelint app/*.css app/components/*.css --syntax scss",
-    "lint-styles-fix": "stylefmt -r app/*.css app/components/*.css",
-    "release": "npm run package",
-    "package": "npm run build && build --publish onTagOrDraft",
-    "package-all": "npm run build && build -mwl",
-    "package-mac": "npm run build && build --mac",
-    "package-linux": "npm run build && build --linux",
-    "package-win": "npm run build && build --win --x64",
-    "postinstall": "concurrently \"npm run build-dll\" \"electron-builder install-app-deps\" \"node node_modules/fbjs-scripts/node/check-dev-engines.js package.json\"",
-    "prestart": "npm run build",
-    "start": "cross-env NODE_ENV=production electron ./app/",
-    "start-main-dev": "cross-env HOT=1 NODE_ENV=development electron -r babel-register ./app/main.dev",
-    "start-renderer-dev": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config webpack.config.renderer.dev.js",
-    "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js",
-    "test-all": "npm run lint && npm run flow && npm run build && npm run test && npm run test-e2e",
-    "test-e2e": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js e2e",
-    "test-watch": "npm test -- --watch"
+    "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
+    "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config .erb/configs/webpack.config.main.prod.ts",
+    "build:renderer": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config .erb/configs/webpack.config.renderer.prod.ts",
+    "postinstall": "ts-node .erb/scripts/check-native-dep.js && electron-builder install-app-deps && cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config .erb/configs/webpack.config.renderer.dev.dll.ts",
+    "lint": "cross-env NODE_ENV=development eslint . --ext .js,.jsx,.ts,.tsx",
+    "package": "ts-node .erb/scripts/clean.js dist && npm run build && electron-builder build --publish never",
+    "prepare": "husky install",
+    "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir release/app",
+    "start": "ts-node .erb/scripts/check-port-in-use.js && npm run start:renderer",
+    "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
+    "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config .erb/configs/webpack.config.preload.dev.ts",
+    "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config .erb/configs/webpack.config.renderer.dev.ts",
+    "test": "jest"
   },
-  "main": "main.prod.js",
-  "browserslist": "electron 1.6",
   "build": {
     "productName": "CoinWatch",
-    "appId": "org.oktapodia.CoinWatch",
+    "appId": "org.oktapodia.coinwatch",
+    "asar": true,
+    "asarUnpack": "**\\*.{node,dll}",
     "files": [
-      "dist/",
-      "node_modules/",
-      "windows/",
-      "main.prod.js",
-      "main.prod.js.map",
+      "dist",
+      "node_modules",
+      "app.html",
       "package.json"
     ],
+    "afterSign": ".erb/scripts/notarize.js",
+    "mac": {
+      "type": "distribution",
+      "hardenedRuntime": true,
+      "entitlements": "assets/entitlements.mac.plist",
+      "entitlementsInherit": "assets/entitlements.mac.plist",
+      "gatekeeperAssess": false
+    },
     "dmg": {
-      "icon": "app/dist/icon.icns",
       "contents": [
         {
           "x": 130,
@@ -59,20 +52,20 @@
         }
       ]
     },
-    "win": {
-      "target": [
-        "nsis"
-      ]
-    },
-    "linux": {
-      "target": [
-        "deb",
-        "AppImage"
-      ]
-    },
     "directories": {
-      "buildResources": "app/dist",
-      "output": "release"
+      "app": "release/app",
+      "buildResources": "assets",
+      "output": "release/build"
+    },
+    "extraResources": [
+      "./assets/**",
+      "./resources/**"
+    ],
+    "publish": {
+      "provider": "github",
+      "owner": "oktapodia",
+      "repo": "coinwatch",
+      "private": false
     }
   },
   "repository": {
@@ -81,7 +74,7 @@
   },
   "author": {
     "name": "BRAMILLE Sebastien",
-    "email": "chentsulin@gmail.com",
+    "email": "2752200+oktapodia@users.noreply.github.com",
     "url": "https://github.com/oktapodia"
   },
   "license": "MIT",
@@ -89,150 +82,195 @@
     "url": "https://github.com/oktapodia/coinwatch/issues"
   },
   "keywords": [
-    "electron",
-    "boilerplate",
-    "react",
-    "redux",
-    "flow",
-    "sass",
-    "webpack",
-    "hot",
-    "reload"
+    "coinwatch",
+    "crypto",
+    "tracker"
   ],
   "homepage": "https://github.com/oktapodia/coinwatch#readme",
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
-      "\\.(css|less|sass|scss)$": "identity-obj-proxy"
-    },
-    "moduleFileExtensions": [
-      "js"
-    ],
-    "moduleDirectories": [
-      "node_modules",
-      "app/node_modules"
-    ],
-    "transform": {
-      "^.+\\.js$": "babel-jest"
-    },
-    "setupFiles": [
-      "./internals/scripts/CheckBuiltsExist.js"
-    ]
-  },
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-eslint": "^8.0.1",
-    "babel-jest": "^23.0.0",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-add-module-exports": "^0.2.1",
-    "babel-plugin-dev-expression": "^0.2.1",
-    "babel-plugin-dynamic-import-webpack": "^1.0.1",
-    "babel-plugin-flow-runtime": "^0.17.0",
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-plugin-transform-es2015-classes": "^6.24.1",
-    "babel-preset-bluebird": "^1.0.1",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-react-optimize": "^1.0.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-register": "^6.26.0",
-    "babili-webpack-plugin": "^0.1.2",
-    "chalk": "^2.3.0",
-    "concurrently": "^5.1.0",
-    "copy-webpack-plugin": "^5.0.5",
-    "cross-env": "^5.1.1",
-    "cross-spawn": "^7.0.1",
-    "css-loader": "^3.6.0",
-    "electron": "^7.2.4",
-    "electron-builder": "^20.0.4",
-    "electron-devtools-installer": "^2.2.1",
-    "enzyme": "^3.1.0",
-    "enzyme-adapter-react-16": "^1.0.3",
-    "enzyme-redux": "^0.2.0",
-    "enzyme-to-json": "^3.1.4",
-    "eslint": "^4.11.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-formatter-pretty": "^1.3.0",
-    "eslint-import-resolver-webpack": "^0.10.0",
-    "eslint-plugin-compat": "^2.1.0",
-    "eslint-plugin-flowtype": "^2.39.1",
-    "eslint-plugin-flowtype-errors": "^4.1.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jest": "^21.27.2",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-react": "^7.4.0",
-    "express": "^4.16.2",
-    "fbjs-scripts": "^0.8.1",
-    "file-loader": "^5.0.2",
-    "flow-runtime": "^0.17.0",
-    "flow-typed": "^2.2.3",
-    "html-webpack-plugin": "^3.0.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.9",
+    "@svgr/webpack": "^6.5.1",
+    "@teamsupercell/typings-for-css-modules-loader": "^2.5.1",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@types/auto-launch": "^5.0.2",
+    "@types/history": "4.7.11",
+    "@types/jest": "^29.2.2",
+    "@types/lodash": "^4.14.188",
+    "@types/node": "18.11.9",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.8",
+    "@types/react-redux": "^7.1.24",
+    "@types/react-test-renderer": "^18.0.0",
+    "@types/redux-form": "^8.3.5",
+    "@types/redux-logger": "^3.0.9",
+    "@types/tapable": "^2.2.2",
+    "@types/terser-webpack-plugin": "^5.0.4",
+    "@types/vfile-message": "^2.0.0",
+    "@types/webpack": "^5.28.0",
+    "@types/webpack-bundle-analyzer": "^4.6.0",
+    "@types/webpack-env": "^1.18.0",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "browserslist-config-erb": "^0.0.3",
+    "chalk": "^4.1.2",
+    "concurrently": "^7.5.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "core-js": "^3.26.0",
+    "cross-env": "^7.0.3",
+    "cross-spawn": "7.0.3",
+    "css-loader": "^6.7.2",
+    "css-minimizer-webpack-plugin": "^4.2.2",
+    "detect-port": "^1.5.1",
+    "electron": "^21.2.3",
+    "electron-builder": "23.5.1",
+    "electron-devtools-installer": "^3.2.0",
+    "electron-notarize": "^1.2.1",
+    "electron-rebuild": "^3.2.9",
+    "electronmon": "^2.0.2",
+    "eslint": "^8.27.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-erb": "^4.0.3",
+    "eslint-import-resolver-typescript": "^3.5.2",
+    "eslint-import-resolver-webpack": "^0.13.2",
+    "eslint-plugin-compat": "^4.0.2",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jest": "^27.1.5",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.2",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^22.0.0",
-    "jsdom": "^11.3.0",
-    "mini-css-extract-plugin": "^0.8.0",
-    "node-sass": "^4.13.1",
-    "minimist": "^1.2.3",
-    "react-addons-test-utils": "^15.6.2",
-    "react-test-renderer": "^16.0.0",
+    "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
+    "lint-staged": "^13.0.3",
+    "mini-css-extract-plugin": "^2.6.1",
+    "opencollective-postinstall": "^2.0.3",
+    "path-browserify": "^1.0.1",
+    "prettier": "^2.7.1",
+    "react-refresh": "^0.14.0",
+    "react-refresh-typescript": "^2.0.7",
+    "react-test-renderer": "^18.2.0",
     "redux-logger": "^3.0.6",
-    "redux-mock-store": "^1.5.4",
-    "redux-test-utils": "^0.2.0",
-    "rimraf": "^2.6.2",
-    "sass-loader": "^8.0.0",
-    "sinon": "^8.1.1",
-    "spectron": "^3.7.2",
-    "style-loader": "^0.21.0",
-    "stylefmt": "^6.0.0",
-    "stylelint": "^13.2.1",
-    "stylelint-config-standard": "^18.0.0",
-    "url-loader": "^1.0.0",
-    "webpack": "^4.0.0",
-    "webpack-bundle-analyzer": "^3.6.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.0.0",
-    "webpack-merge": "^4.1.1"
+    "rimraf": "^3.0.2",
+    "sass": "^1.56.1",
+    "sass-loader": "^13.2.0",
+    "source-map-support": "^0.5.21",
+    "spectron": "19.0.0",
+    "style-loader": "^3.3.1",
+    "stylelint": "^14.15.0",
+    "stylelint-config-prettier": "^9.0.4",
+    "stylelint-config-standard": "^29.0.0",
+    "terser-webpack-plugin": "^5.3.6",
+    "ts-jest": "^29.0.3",
+    "ts-loader": "^9.4.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.75.0",
+    "webpack-bundle-analyzer": "^4.7.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.1",
+    "webpack-merge": "^5.8.0"
   },
   "dependencies": {
-    "@exponent/electron-cookies": "^2.0.0",
-    "auto-launch": "^5.0.1",
-    "axios": "^0.18.0",
-    "bootstrap": "^4.4.1",
-    "devtron": "^1.4.0",
-    "electron-debug": "^2.0.0",
-    "electron-log": "^2.2.11",
-    "electron-osx-sign": "^0.4.15",
-    "electron-settings": "^3.1.3",
-    "electron-updater": "^4.2.0",
-    "font-awesome": "^4.7.0",
-    "history": "^4.7.2",
-    "jquery": "^3.5.0",
-    "lodash": "^4.17.19",
-    "menubar": "^5.2.3",
-    "moment": "^2.24.0",
-    "popper.js": "^1.16.1",
-    "prop-types": "^15.7.2",
-    "query-string": "^6.9.0",
-    "react": "^16.0.0",
-    "react-addons-shallow-compare": "^15.6.2",
-    "react-dom": "^16.0.1",
-    "react-hot-loader": "4.1.0",
-    "react-modal": "^3.1.0",
-    "react-redux": "^5.1.2",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
-    "react-router-redux": "^5.0.0-alpha.6",
-    "react-select": "^1.0.0-rc.10",
-    "redux": "^3.7.2",
-    "redux-form": "^7.4.2",
-    "redux-thunk": "^2.2.0",
-    "reselect": "^3.0.1",
-    "source-map-support": "^0.5.0"
+    "@coinpaprika/api-nodejs-client": "^1.2.0",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@material-ui/core": "^4.12.4",
+    "@material-ui/icons": "^4.11.3",
+    "@material-ui/lab": "^4.0.0-alpha.61",
+    "@mui/icons-material": "^5.10.9",
+    "@mui/material": "^5.10.13",
+    "auto-launch": "^5.0.5",
+    "axios": "1.1.3",
+    "caniuse-lite": "^1.0.30001431",
+    "electron-debug": "^3.2.0",
+    "electron-log": "^4.4.8",
+    "electron-osx-sign": "0.5.0",
+    "electron-settings": "^4.0.2",
+    "electron-updater": "^5.3.0",
+    "final-form": "^4.20.7",
+    "history": "^5.3.0",
+    "lodash": "^4.17.21",
+    "prop-types": "^15.8.1",
+    "query-string": "7.1.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-final-form": "^6.5.9",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.4.3",
+    "redux": "^4.2.0",
+    "redux-form": "8.3.8",
+    "redux-thunk": "^2.4.2",
+    "regenerator-runtime": "^0.13.10",
+    "reselect": "^4.1.7"
   },
   "devEngines": {
-    "node": ">=7.x",
-    "npm": ">=4.x",
-    "yarn": ">=0.21.3"
+    "node": ">=14.x",
+    "yarn": ">=1.x"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "cross-env NODE_ENV=development eslint --cache"
+    ],
+    "*.json,.{eslintrc,prettierrc}": [
+      "prettier --ignore-path .eslintignore --parser json --write"
+    ],
+    "*.{css,scss}": [
+      "prettier --ignore-path .eslintignore --single-quote --write"
+    ],
+    "*.{html,md,yml}": [
+      "prettier --ignore-path .eslintignore --single-quote --write"
+    ]
+  },
+  "browserslist": [],
+  "prettier": {
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": [
+          ".prettierrc",
+          ".eslintrc"
+        ],
+        "options": {
+          "parser": "json"
+        }
+      }
+    ]
+  },
+  "jest": {
+    "moduleDirectories": [
+      "node_modules",
+      "release/app/node_modules",
+      "src"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "ts",
+      "tsx",
+      "json"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/.erb/mocks/fileMock.js",
+      "\\.(css|less|sass|scss)$": "identity-obj-proxy"
+    },
+    "setupFiles": [
+      "./.erb/scripts/check-build-exists.ts"
+    ],
+    "testEnvironment": "jsdom",
+    "testEnvironmentOptions": {
+      "url": "http://localhost/"
+    },
+    "testPathIgnorePatterns": [
+      "release/app/dist"
+    ],
+    "transform": {
+      "\\.(ts|tsx|js|jsx)$": "ts-jest"
+    }
   }
 }

@@ -11,5 +11,5 @@ module.exports = {
   shell: {
     openExternal: jest.fn(),
   },
-  get: jest.fn()
+  get: jest.fn(),
 };

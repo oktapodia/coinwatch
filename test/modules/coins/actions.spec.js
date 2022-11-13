@@ -1,4 +1,4 @@
-import * as actions from '../../../app/modules/coins/actions';
+import * as actions from '../../../src/renderer/modules/coins/actions';
 
 describe('actions', () => {
   it('should get the coins list', () => {
