@@ -161,7 +161,7 @@
     "source-map-support": "^0.5.21",
     "spectron": "19.0.0",
     "style-loader": "^3.3.1",
-    "stylelint": "^14.15.0",
+    "stylelint": "^14.16.1",
     "stylelint-config-prettier": "^9.0.4",
     "stylelint-config-standard": "^29.0.0",
     "terser-webpack-plugin": "^5.3.6",
