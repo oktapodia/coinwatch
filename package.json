@@ -178,7 +178,7 @@
   },
   "dependencies": {
     "@coinpaprika/api-nodejs-client": "^1.2.0",
-    "@emotion/react": "^11.10.5",
+    "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.5",
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
