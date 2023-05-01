@@ -4100,10 +4100,10 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001251, caniuse-lite@^1.0.30001435, caniuse-lite@^1.0.30001449, caniuse-lite@^1.0.30001451:
-  version "1.0.30001458"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001458.tgz#871e35866b4654a7d25eccca86864f411825540c"
-  integrity sha512-lQ1VlUUq5q9ro9X+5gOEyH7i3vm+AYVT1WDCVB69XOZ17KZRhnZ9J0Sqz7wTHQaLBJccNCHq8/Ww5LlOIZbB0w==
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001251, caniuse-lite@^1.0.30001449, caniuse-lite@^1.0.30001451, caniuse-lite@^1.0.30001481:
+  version "1.0.30001481"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001481.tgz#f58a717afe92f9e69d0e35ff64df596bfad93912"
+  integrity sha512-KCqHwRnaa1InZBtqXzP98LPg0ajCVujMKjqKDhZEthIpAsJl/YEIa3YvXjGXPVqzZVguccuu7ga9KOE1J9rKPQ==
 
 chalk@5.2.0, chalk@^5.2.0:
   version "5.2.0"
