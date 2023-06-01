@@ -202,7 +202,7 @@
     "react-dom": "18.2.0",
     "react-final-form": "^6.5.9",
     "react-redux": "^8.0.5",
-    "react-router-dom": "^6.4.3",
+    "react-router-dom": "^6.11.2",
     "redux": "^4.2.0",
     "redux-form": "8.3.9",
     "redux-thunk": "^2.4.2",
