@@ -145,7 +145,7 @@
     "husky": "^8.0.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.5.0",
-    "jest-environment-jsdom": "^29.3.1",
+    "jest-environment-jsdom": "^29.5.0",
     "lint-staged": "^13.2.0",
     "mini-css-extract-plugin": "^2.6.1",
     "opencollective-postinstall": "^2.0.3",
