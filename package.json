@@ -120,7 +120,7 @@
     "cross-env": "^7.0.3",
     "cross-spawn": "7.0.3",
     "css-loader": "^6.7.3",
-    "css-minimizer-webpack-plugin": "^4.2.2",
+    "css-minimizer-webpack-plugin": "^5.0.1",
     "detect-port": "^1.5.1",
     "electron": "^23.1.1",
     "electron-builder": "23.6.0",
