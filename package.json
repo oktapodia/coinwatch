@@ -109,7 +109,7 @@
     "@types/vfile-message": "^2.0.0",
     "@types/webpack": "^5.28.1",
     "@types/webpack-bundle-analyzer": "^4.6.0",
-    "@types/webpack-env": "^1.18.0",
+    "@types/webpack-env": "^1.18.1",
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.57.0",
     "browserslist-config-erb": "^0.0.3",
