@@ -207,7 +207,7 @@
     "redux-form": "8.3.9",
     "redux-thunk": "^2.4.2",
     "regenerator-runtime": "^0.13.10",
-    "reselect": "^4.1.7"
+    "reselect": "^4.1.8"
   },
   "devEngines": {
     "node": ">=14.x",
