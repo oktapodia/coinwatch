@@ -1,12 +1,12 @@
 {
   "name": "coinwatch",
   "version": "1.2.1",
-  "description": "A foundation for scalable desktop apps",
+  "description": "Follow your cryptocurrencies from your Osx menubar",
   "license": "MIT",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "BRAMILLE Sebastien",
+    "email": "2752200+oktapodia@users.noreply.github.com",
+    "url": "https://github.com/oktapodia"
   },
   "main": "./dist/main/main.js",
   "scripts": {

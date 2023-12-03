@@ -1,5 +1,4 @@
 {
-  "version": "1.2.1",
   "description": "Follow your cryptocurrencies from your Osx menubar",
   "main": "./src/main/main.ts",
   "scripts": {
