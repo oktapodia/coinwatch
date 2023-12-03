@@ -93,12 +93,7 @@ const configuration: webpack.Configuration = {
 
   optimization: {
     minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        parallel: true,
-      }),
-      new CssMinimizerPlugin(),
-    ],
+    minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
   },
 
   plugins: [
@@ -122,6 +117,7 @@ const configuration: webpack.Configuration = {
 
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.ANALYZE === 'true' ? 'server' : 'disabled',
+      analyzerPort: 8889,
     }),
 
     new HtmlWebpackPlugin({
@@ -133,7 +129,7 @@ const configuration: webpack.Configuration = {
         removeComments: true,
       },
       isBrowser: false,
-      isDevelopment: process.env.NODE_ENV !== 'production',
+      isDevelopment: false,
     }),
 
     new webpack.DefinePlugin({
