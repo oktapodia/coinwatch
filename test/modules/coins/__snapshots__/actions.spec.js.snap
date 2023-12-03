@@ -1,17 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`actions should get the coin price with a coin and symbol and exchange arguments 1`] = `
-Object {
-  Symbol(Call Handler): Object {
-    "data": Object {
-      "coin": Object {
+{
+  Symbol(Call Handler): {
+    "data": {
+      "coin": {
         "Symbol": "ETH",
       },
       "exchange": "Bitfinex",
       "symbol": "USD",
     },
     "handler": [Function],
-    "types": Array [
+    "types": [
       "GET_COIN_PRICE_ATTEMPT",
       "GET_COIN_PRICE_SUCCESS",
       "GET_COIN_PRICE_FAILURE",
@@ -21,16 +21,16 @@ Object {
 `;
 
 exports[`actions should get the coin price with a coin and symbol arguments 1`] = `
-Object {
-  Symbol(Call Handler): Object {
-    "data": Object {
-      "coin": Object {
+{
+  Symbol(Call Handler): {
+    "data": {
+      "coin": {
         "Symbol": "ETH",
       },
       "symbol": "USD",
     },
     "handler": [Function],
-    "types": Array [
+    "types": [
       "GET_COIN_PRICE_ATTEMPT",
       "GET_COIN_PRICE_SUCCESS",
       "GET_COIN_PRICE_FAILURE",
@@ -40,15 +40,15 @@ Object {
 `;
 
 exports[`actions should get the coin price with a coin argument only 1`] = `
-Object {
-  Symbol(Call Handler): Object {
-    "data": Object {
-      "coin": Object {
+{
+  Symbol(Call Handler): {
+    "data": {
+      "coin": {
         "Symbol": "ETH",
       },
     },
     "handler": [Function],
-    "types": Array [
+    "types": [
       "GET_COIN_PRICE_ATTEMPT",
       "GET_COIN_PRICE_SUCCESS",
       "GET_COIN_PRICE_FAILURE",
@@ -58,26 +58,13 @@ Object {
 `;
 
 exports[`actions should get the coins list 1`] = `
-Object {
-  Symbol(Call Handler): Object {
+{
+  Symbol(Call Handler): {
     "handler": [Function],
-    "types": Array [
+    "types": [
       "GET_COINS_ATTEMPT",
       "GET_COINS_SUCCESS",
       "GET_COINS_FAILURE",
-    ],
-  },
-}
-`;
-
-exports[`actions should get the exchanges list 1`] = `
-Object {
-  Symbol(Call Handler): Object {
-    "handler": [Function],
-    "types": Array [
-      "GET_EXCHANGE_LIST_ATTEMPT",
-      "GET_EXCHANGE_LIST_SUCCESS",
-      "GET_EXCHANGE_LIST_FAILURE",
     ],
   },
 }

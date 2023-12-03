@@ -5,10 +5,6 @@ describe('actions', () => {
     expect(actions.getCoins()).toMatchSnapshot();
   });
 
-  it('should get the exchanges list', () => {
-    expect(actions.getExchangeList()).toMatchSnapshot();
-  });
-
   it('should get the coin price with a coin argument only', () => {
     const data = {
       coin: {

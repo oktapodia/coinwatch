@@ -48,10 +48,8 @@ interface IErrorResponse {
 // @ts-ignore
 export async function getCoinPriceApi({
   coin,
-  to,
 }: {
   coin: ICoin;
-  to: ESymbol;
 }) {
   // const ticker = await coinpaprika.getTicker({ coinId: coin.id });
 
