@@ -8,8 +8,8 @@ import NotificationCenter from './NotificationCenter';
 import ICoin from '../types/ICoin';
 
 const EXTRA_RESOURCES_PATH = app.isPackaged
-  ? path.join(process.resourcesPath, 'resources')
-  : path.join(__dirname, '../../resources'); // Your relative path may be different!
+  ? path.join(process.resourcesPath, 'assets')
+  : path.join(__dirname, '../../assets'); // Your relative path may be different!
 
 const getAssetPath = (resourceFilename: string): string => {
   return path.join(EXTRA_RESOURCES_PATH, resourceFilename);
