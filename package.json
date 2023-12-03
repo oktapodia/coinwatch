@@ -187,7 +187,7 @@
     "@mui/material": "^5.11.11",
     "auto-launch": "^5.0.5",
     "axios": "1.6.2",
-    "caniuse-lite": "^1.0.30001541",
+    "caniuse-lite": "^1.0.30001565",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",
     "electron-osx-sign": "0.6.0",
