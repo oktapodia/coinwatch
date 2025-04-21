@@ -2,8 +2,9 @@ import axios from 'axios';
 // @ts-ignore
 import qs from 'query-string';
 
+const APIKEY="APIKEY";
 // export const BASE_URL = 'https://api.coinpaprika.com/v1';
-export const BASE_URL = 'https://api.coincap.io/v2';
+export const BASE_URL = 'https://rest.coincap.io/v3';
 export const BASE_IMAGE_URL = 'https://api.coinpaprika.com/';
 
 enum ESymbol {
@@ -61,7 +62,7 @@ export async function getCoinPriceApi({
   //   quotes: to,
   // });
 
-  const url = `${BASE_URL}/assets/${coin.id}`;
+  const url = `${BASE_URL}/assets/${coin.id}?apiKey=${APIKEY}`;
   return axios.get<{ data: ITicker & IErrorResponse }>(url).then((response) => {
     console.log(response.data.data.priceUsd);
     return { data: { to: parseFloat(response.data.data.priceUsd).toFixed(2) } };
@@ -82,7 +83,7 @@ export async function getCoinListApi() {
 
   // console.log('cc', coins)
   //   return coins.map((coin: ICoin) => ({ label: coin.name, value: coin }));
-  const url = `${BASE_URL}/assets`;
+  const url = `${BASE_URL}/assets?apiKey=${APIKEY}`;
 
   // const request = new Request(url, { method: 'GET' });
   // const data = await fetch(request);
